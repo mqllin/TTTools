@@ -1,0 +1,1 @@
+text2image --text="C:\Users\A\Documents\Project\windows\TTTools\data\xunlian\aa.txt" --outputbase="C:\Users\A\Documents\Project\windows\TTTools\data\xunlian\chi_wzeros.font.exp0" --fontconfig_tmpdir="%temp%" --font="simsun" --fonts_dir="C:\Users\A\Documents\Project\windows\TTTools\data\xunlian\simsun.ttc"
