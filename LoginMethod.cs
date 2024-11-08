@@ -54,6 +54,12 @@ namespace TTTools
         {
             // 从textBox6获取游戏客户端的目录路径
             string gameDir = iniFileHelper.IniReadValue("gamepath", "path", "");
+            //判断gameDir不为空
+            if (gameDir == "")
+            {
+                Instance.AppendGlobalLog("游戏目录为空");
+                return;
+            }
 
             // 拼接完整的应用目录
             string fullGamePath = System.IO.Path.Combine(gameDir, "ggegame.exe");
@@ -77,15 +83,14 @@ namespace TTTools
             api.InitWindows();
 
             // 绝对路径或确保相对路径正确
-            string dllPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "x64", "Debug", "Dll1.dll");
+            string dllPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "dll", "Dll1.dll");
             if (gameWindowHandle == IntPtr.Zero)
             {
                 Instance.AppendGlobalLog("找不到游戏窗口句柄。");
                 return;
             }
             // Inject the DLL
-            Injector inj = new Injector(gameWindowHandle);
-            inj.Inject(dllPath);  // 使用绝对路径或确保的相对路径
+         
 
             // 现在你有了游戏窗口的句柄，可以继续你的其他操作
             api.loginAuto(userInedx,username,password);

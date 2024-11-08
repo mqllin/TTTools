@@ -53,6 +53,9 @@ namespace TTTools
             button11 = new System.Windows.Forms.Button();
             tabControl1 = new System.Windows.Forms.TabControl();
             tabPage2 = new System.Windows.Forms.TabPage();
+            label14 = new System.Windows.Forms.Label();
+            label13 = new System.Windows.Forms.Label();
+            label12 = new System.Windows.Forms.Label();
             button10 = new System.Windows.Forms.Button();
             button9 = new System.Windows.Forms.Button();
             comboBox1 = new System.Windows.Forms.ComboBox();
@@ -134,7 +137,6 @@ namespace TTTools
             button21.TabIndex = 12;
             button21.Text = "button21";
             button21.UseVisualStyleBackColor = true;
-            button21.Visible = false;
             button21.Click += button21_Click;
             // 
             // button20
@@ -145,7 +147,6 @@ namespace TTTools
             button20.TabIndex = 11;
             button20.Text = "button20";
             button20.UseVisualStyleBackColor = true;
-            button20.Visible = false;
             button20.Click += button20_Click;
             // 
             // label11
@@ -333,6 +334,9 @@ namespace TTTools
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(label14);
+            tabPage2.Controls.Add(label13);
+            tabPage2.Controls.Add(label12);
             tabPage2.Controls.Add(button10);
             tabPage2.Controls.Add(button9);
             tabPage2.Controls.Add(comboBox1);
@@ -344,6 +348,33 @@ namespace TTTools
             tabPage2.TabIndex = 1;
             tabPage2.Text = "采集";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new System.Drawing.Point(15, 115);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(243, 17);
+            label14.TabIndex = 33;
+            label14.Text = "问2：找不到？答：被遮挡了换一个地方吧。";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new System.Drawing.Point(15, 89);
+            label13.Name = "label13";
+            label13.Size = new System.Drawing.Size(266, 17);
+            label13.TabIndex = 32;
+            label13.Text = "问1：点击有偏差？答;关闭显示设置125%倍放大";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new System.Drawing.Point(15, 61);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(310, 17);
+            label12.TabIndex = 31;
+            label12.Text = "用法：1.获取 2.全选或者选择要采集的号 3.开始原地采集";
             // 
             // button10
             // 
@@ -681,6 +712,7 @@ namespace TTTools
             mainTabPage2.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
             tabPage3.ResumeLayout(false);
@@ -743,6 +775,9 @@ namespace TTTools
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.TextBox textBox_log;
         private System.Windows.Forms.Button button21;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
     }
 }
 

@@ -85,10 +85,11 @@ namespace TTTools
             TextBox_wid.Text = iniFileHelper.IniReadValue("win", "id", "");
             textBox6.Text = iniFileHelper.IniReadValue("gamepath", "path", "");
 
+            //tabControl2.TabPages.Remove(mainTabPage1);
 
             comboBox1.SelectedIndex = 0;
             //tabControl1.TabPages.Remove(tabPage1);
-            tabControl1.TabPages.Remove(tabPage3);
+            //tabControl1.TabPages.Remove(tabPage3);
 
             InitList();
 
@@ -774,7 +775,7 @@ namespace TTTools
 
         private void button20_Click(object sender, EventArgs e)
         {
-            var login = new LoginMethod("mqllin1", "123321000", 0, this);
+            var login = new LoginMethod("584363361", "123321000", 0, this);
             login.LoginGame();
 
         }
@@ -789,7 +790,36 @@ namespace TTTools
 
         private void button21_Click(object sender, EventArgs e)
         {
-            // Assume the window handle ID is provided as a command-line argument
+            // 绝对路径或确保相对路径正确
+            string dllPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "dll", "Dll1.dll");
+
+            // 判断是否有dllPath这个文件
+            if (!File.Exists(dllPath))
+            {
+                MessageBox.Show("文件不存在");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("找到了");
+            }
+
+            // 获取所有Galaxy2DEngine窗口的进程ID
+            List<int> processIds = WindowInfo.GetProcessIdsByClassName("Galaxy2DEngine");
+
+            // 遍历所有进程ID并注入DLL
+            foreach (int targetProcessId in processIds)
+            {
+                if (DLLInjector.InjectDLL(targetProcessId, dllPath))
+                {
+                    DLLInjector.CallExportedFunction(dllPath, "myDLLcall");
+                }
+                else
+                {
+                    MessageBox.Show($"DLL注入失败，进程ID：{targetProcessId}");
+                }
+            }
+
 
         }
 

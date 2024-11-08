@@ -658,38 +658,39 @@ namespace TTTools
         {
             // 按下 Alt 键（虚拟键码 0xA4）
             wx.SendKey(0xA4);
-            // 按下 Shift 键（虚拟键码 0x10）
+            // 按下 Shift 键
             wx.SendKey(0x10);
 
          
         }
         public void loginAuto(int index,string username,string password)
         {
-            SwitchToEnglishInput();
+            WindowUtilities.ChangeInputEn();
+            //SwitchToEnglishInput();
             wx.PushClick(574,132);
             wx.PushClick(543,445);
             wx.PushClick(612, 454);
             // 删除账号
             Thread.Sleep(100);
 
-            wx.PushClick(483, 245);
+            wx.PushClick(459, 265);
             for (var i = 0; i < 30; i++) {
                 wx.SendKey(0x08);
             }
             wx.SendString(username);
 
-            wx.PushClick(483, 272);
+            wx.PushClick(459, 290);
             for (var i = 0; i < 30; i++)
             {
                 wx.SendKey(0x08);
             }
             wx.SendString(password);
 
-            wx.PushClick(612, 454);
+            wx.PushClick(470, 352);
             int userX = 286 + (index * 62);
-            int userY = 384;
+            int userY = 370;
             wx.PushClick(userX, userY);
-            wx.PushClick(293, 434);
+            wx.PushClick(userX, userY);
             Instance.AppendGlobalLog($"角色{index},登录完成");
         }
     }

@@ -141,7 +141,7 @@ namespace TTTools
         {
             foreach (char c in str)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(50);
 
 
                 ushort vk = 0;

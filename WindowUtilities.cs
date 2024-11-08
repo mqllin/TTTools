@@ -7,6 +7,14 @@ namespace TTTools
 {
     public  class WindowUtilities
     {
+        // 导入 Windows API 函数
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr LoadKeyboardLayout(string pwszKLID, uint Flags);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern bool ActivateKeyboardLayout(IntPtr hkl, uint Flags);
+
+
         [DllImport("user32.dll", SetLastError = true)]
         private static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
@@ -52,6 +60,20 @@ namespace TTTools
                 SetWindowText(entry.Key, entry.Value);
             }
             originalTitles.Clear();
+        }
+
+
+
+  
+        public static void ChangeInputEn()
+        {
+            // 加载英语键盘布局（例如美国英语："00000409"）
+            IntPtr hklEnglish = LoadKeyboardLayout("00000409", 1);
+
+            // 激活加载的键盘布局
+            ActivateKeyboardLayout(hklEnglish, 0);
+
+            Console.WriteLine("已切换到默认的英文输入法");
         }
     }
 
