@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Forms;
 
 namespace TTTools
 {
@@ -57,7 +54,7 @@ namespace TTTools
             //判断gameDir不为空
             if (gameDir == "")
             {
-                Instance.AppendGlobalLog("游戏目录为空");
+                LogService.Log("游戏目录为空");
                 return;
             }
 
@@ -78,7 +75,16 @@ namespace TTTools
 
             // 通过PID获取窗口句柄
             IntPtr gameWindowHandle = FindWindowByProcessId(processId);
-            Instance.AppendGlobalLog("游戏窗口:"+gameWindowHandle);
+            LogService.Log("游戏窗口:" + gameWindowHandle);
+
+
+            // 使用 WindowApi 设置窗口位置到屏幕左上角 (0, 0)
+            if (!WindowApi.SetWindowPosition(gameWindowHandle, 0, 0))
+            {
+                LogService.Log("无法设置窗口位置。");
+                return;
+            }
+
             var api = new Method(gameWindowHandle, Instance);
             api.InitWindows();
 
@@ -86,14 +92,16 @@ namespace TTTools
             string dllPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "dll", "Dll1.dll");
             if (gameWindowHandle == IntPtr.Zero)
             {
-                Instance.AppendGlobalLog("找不到游戏窗口句柄。");
+                LogService.Log("找不到游戏窗口句柄。");
                 return;
             }
             // Inject the DLL
-         
+
 
             // 现在你有了游戏窗口的句柄，可以继续你的其他操作
-            api.loginAuto(userInedx,username,password);
+            api.loginAuto(userInedx, username, password);
+            //api.PerformLoginAsync(userInedx,username,password);
+          
         }
     }
 }

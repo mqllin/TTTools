@@ -29,10 +29,41 @@ namespace TTTools
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            tabControl2 = new System.Windows.Forms.TabControl();
+            textBox_log = new System.Windows.Forms.TextBox();
+            checkBox1 = new System.Windows.Forms.CheckBox();
+            mainTabPage2 = new System.Windows.Forms.TabPage();
+            button2 = new System.Windows.Forms.Button();
+            label_current = new System.Windows.Forms.Label();
+            dataGridView1 = new System.Windows.Forms.DataGridView();
+            hWndDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            actionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            isLeadDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            isActionRunDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            isActionAutoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            clientBindingSource = new System.Windows.Forms.BindingSource(components);
+            button11 = new System.Windows.Forms.Button();
+            tabControl1 = new System.Windows.Forms.TabControl();
+            tabPage2 = new System.Windows.Forms.TabPage();
+            label14 = new System.Windows.Forms.Label();
+            label13 = new System.Windows.Forms.Label();
+            label12 = new System.Windows.Forms.Label();
+            button10 = new System.Windows.Forms.Button();
+            button9 = new System.Windows.Forms.Button();
+            comboBox1 = new System.Windows.Forms.ComboBox();
+            button7 = new System.Windows.Forms.Button();
+            tabPage3 = new System.Windows.Forms.TabPage();
+            button16 = new System.Windows.Forms.Button();
+            button15 = new System.Windows.Forms.Button();
+            button12 = new System.Windows.Forms.Button();
+            tabPage5 = new System.Windows.Forms.TabPage();
+            button1 = new System.Windows.Forms.Button();
+            button_dev_1 = new System.Windows.Forms.Button();
+            button3 = new System.Windows.Forms.Button();
             mainTabPage1 = new System.Windows.Forms.TabPage();
-            button21 = new System.Windows.Forms.Button();
             button20 = new System.Windows.Forms.Button();
             label11 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
@@ -45,70 +76,337 @@ namespace TTTools
             button18 = new System.Windows.Forms.Button();
             button8 = new System.Windows.Forms.Button();
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            mainTabPage2 = new System.Windows.Forms.TabPage();
-            button17 = new System.Windows.Forms.Button();
-            button13 = new System.Windows.Forms.Button();
-            button14 = new System.Windows.Forms.Button();
-            checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            button11 = new System.Windows.Forms.Button();
-            tabControl1 = new System.Windows.Forms.TabControl();
-            tabPage2 = new System.Windows.Forms.TabPage();
-            label14 = new System.Windows.Forms.Label();
-            label13 = new System.Windows.Forms.Label();
-            label12 = new System.Windows.Forms.Label();
-            button10 = new System.Windows.Forms.Button();
-            button9 = new System.Windows.Forms.Button();
-            comboBox1 = new System.Windows.Forms.ComboBox();
-            button7 = new System.Windows.Forms.Button();
-            tabPage1 = new System.Windows.Forms.TabPage();
-            label1 = new System.Windows.Forms.Label();
-            TextBox_wid = new System.Windows.Forms.TextBox();
-            Button_link = new System.Windows.Forms.Button();
-            label6 = new System.Windows.Forms.Label();
-            textBox4 = new System.Windows.Forms.TextBox();
-            textBox5 = new System.Windows.Forms.TextBox();
-            button5 = new System.Windows.Forms.Button();
-            label5 = new System.Windows.Forms.Label();
-            textBox3 = new System.Windows.Forms.TextBox();
-            label4 = new System.Windows.Forms.Label();
-            textBox1 = new System.Windows.Forms.TextBox();
-            textBox2 = new System.Windows.Forms.TextBox();
-            label2 = new System.Windows.Forms.Label();
-            textBox_popup_y = new System.Windows.Forms.TextBox();
-            textBox_popup_x = new System.Windows.Forms.TextBox();
-            button4 = new System.Windows.Forms.Button();
-            tabPage3 = new System.Windows.Forms.TabPage();
-            button16 = new System.Windows.Forms.Button();
-            button15 = new System.Windows.Forms.Button();
-            button12 = new System.Windows.Forms.Button();
-            button6 = new System.Windows.Forms.Button();
-            button_popup = new System.Windows.Forms.Button();
-            button3 = new System.Windows.Forms.Button();
-            button2 = new System.Windows.Forms.Button();
-            button1 = new System.Windows.Forms.Button();
-            textBox_log = new System.Windows.Forms.TextBox();
-            tabControl2.SuspendLayout();
-            mainTabPage1.SuspendLayout();
+            tabControl2 = new System.Windows.Forms.TabControl();
             mainTabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)clientBindingSource).BeginInit();
             tabControl1.SuspendLayout();
             tabPage2.SuspendLayout();
-            tabPage1.SuspendLayout();
             tabPage3.SuspendLayout();
+            tabPage5.SuspendLayout();
+            mainTabPage1.SuspendLayout();
+            tabControl2.SuspendLayout();
             SuspendLayout();
             // 
-            // tabControl2
+            // textBox_log
             // 
-            tabControl2.Controls.Add(mainTabPage1);
-            tabControl2.Controls.Add(mainTabPage2);
-            tabControl2.Location = new System.Drawing.Point(12, 12);
-            tabControl2.Name = "tabControl2";
-            tabControl2.SelectedIndex = 0;
-            tabControl2.Size = new System.Drawing.Size(676, 412);
-            tabControl2.TabIndex = 29;
+            textBox_log.Location = new System.Drawing.Point(14, 426);
+            textBox_log.Multiline = true;
+            textBox_log.Name = "textBox_log";
+            textBox_log.Size = new System.Drawing.Size(586, 126);
+            textBox_log.TabIndex = 30;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Checked = true;
+            checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            checkBox1.Location = new System.Drawing.Point(606, 430);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new System.Drawing.Size(75, 21);
+            checkBox1.TabIndex = 31;
+            checkBox1.Text = "开启日志";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
+            // mainTabPage2
+            // 
+            mainTabPage2.AllowDrop = true;
+            mainTabPage2.Controls.Add(button2);
+            mainTabPage2.Controls.Add(label_current);
+            mainTabPage2.Controls.Add(dataGridView1);
+            mainTabPage2.Controls.Add(button11);
+            mainTabPage2.Controls.Add(tabControl1);
+            mainTabPage2.Controls.Add(button3);
+            mainTabPage2.Location = new System.Drawing.Point(4, 26);
+            mainTabPage2.Name = "mainTabPage2";
+            mainTabPage2.Padding = new System.Windows.Forms.Padding(3);
+            mainTabPage2.Size = new System.Drawing.Size(668, 382);
+            mainTabPage2.TabIndex = 0;
+            mainTabPage2.Text = "工具";
+            mainTabPage2.UseVisualStyleBackColor = true;
+            mainTabPage2.Click += mainTabPage2_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new System.Drawing.Point(567, 55);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(95, 23);
+            button2.TabIndex = 43;
+            button2.Text = "取消当前任务";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click_1;
+            // 
+            // label_current
+            // 
+            label_current.AutoSize = true;
+            label_current.Location = new System.Drawing.Point(8, 6);
+            label_current.Name = "label_current";
+            label_current.Size = new System.Drawing.Size(104, 17);
+            label_current.TabIndex = 42;
+            label_current.Text = "当前选择的角色：";
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { hWndDataGridViewTextBoxColumn, idDataGridViewTextBoxColumn, titleDataGridViewTextBoxColumn, actionDataGridViewTextBoxColumn, isLeadDataGridViewCheckBoxColumn, isActionRunDataGridViewCheckBoxColumn, isActionAutoDataGridViewCheckBoxColumn });
+            dataGridView1.DataSource = clientBindingSource;
+            dataGridView1.Location = new System.Drawing.Point(8, 26);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new System.Drawing.Size(550, 146);
+            dataGridView1.TabIndex = 41;
+            dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
+            // 
+            // hWndDataGridViewTextBoxColumn
+            // 
+            hWndDataGridViewTextBoxColumn.DataPropertyName = "HWnd";
+            hWndDataGridViewTextBoxColumn.HeaderText = "HWnd";
+            hWndDataGridViewTextBoxColumn.Name = "hWndDataGridViewTextBoxColumn";
+            hWndDataGridViewTextBoxColumn.ReadOnly = true;
+            hWndDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            idDataGridViewTextBoxColumn.HeaderText = "Id";
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.ReadOnly = true;
+            idDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // titleDataGridViewTextBoxColumn
+            // 
+            titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
+            titleDataGridViewTextBoxColumn.HeaderText = "Title";
+            titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
+            titleDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // actionDataGridViewTextBoxColumn
+            // 
+            actionDataGridViewTextBoxColumn.DataPropertyName = "Action";
+            actionDataGridViewTextBoxColumn.HeaderText = "Action";
+            actionDataGridViewTextBoxColumn.Name = "actionDataGridViewTextBoxColumn";
+            actionDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // isLeadDataGridViewCheckBoxColumn
+            // 
+            isLeadDataGridViewCheckBoxColumn.DataPropertyName = "IsLead";
+            isLeadDataGridViewCheckBoxColumn.HeaderText = "IsLead";
+            isLeadDataGridViewCheckBoxColumn.Name = "isLeadDataGridViewCheckBoxColumn";
+            isLeadDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // isActionRunDataGridViewCheckBoxColumn
+            // 
+            isActionRunDataGridViewCheckBoxColumn.DataPropertyName = "IsActionRun";
+            isActionRunDataGridViewCheckBoxColumn.HeaderText = "IsActionRun";
+            isActionRunDataGridViewCheckBoxColumn.Name = "isActionRunDataGridViewCheckBoxColumn";
+            isActionRunDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // isActionAutoDataGridViewCheckBoxColumn
+            // 
+            isActionAutoDataGridViewCheckBoxColumn.DataPropertyName = "IsActionAuto";
+            isActionAutoDataGridViewCheckBoxColumn.HeaderText = "IsActionAuto";
+            isActionAutoDataGridViewCheckBoxColumn.Name = "isActionAutoDataGridViewCheckBoxColumn";
+            isActionAutoDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // clientBindingSource
+            // 
+            clientBindingSource.DataSource = typeof(client.Client);
+            // 
+            // button11
+            // 
+            button11.Location = new System.Drawing.Point(567, 26);
+            button11.Name = "button11";
+            button11.Size = new System.Drawing.Size(95, 23);
+            button11.TabIndex = 36;
+            button11.Text = "获取角色列表";
+            button11.UseVisualStyleBackColor = true;
+            button11.Click += button11_Click;
+            // 
+            // tabControl1
+            // 
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPage3);
+            tabControl1.Controls.Add(tabPage5);
+            tabControl1.Location = new System.Drawing.Point(8, 178);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new System.Drawing.Size(654, 194);
+            tabControl1.TabIndex = 35;
+            // 
+            // tabPage2
+            // 
+            tabPage2.Controls.Add(label14);
+            tabPage2.Controls.Add(label13);
+            tabPage2.Controls.Add(label12);
+            tabPage2.Controls.Add(button10);
+            tabPage2.Controls.Add(button9);
+            tabPage2.Controls.Add(comboBox1);
+            tabPage2.Controls.Add(button7);
+            tabPage2.Location = new System.Drawing.Point(4, 26);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            tabPage2.Size = new System.Drawing.Size(646, 164);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "采集";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new System.Drawing.Point(15, 115);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(243, 17);
+            label14.TabIndex = 33;
+            label14.Text = "问2：找不到？答：被遮挡了换一个地方吧。";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new System.Drawing.Point(15, 89);
+            label13.Name = "label13";
+            label13.Size = new System.Drawing.Size(266, 17);
+            label13.TabIndex = 32;
+            label13.Text = "问1：点击有偏差？答;关闭显示设置125%倍放大";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new System.Drawing.Point(15, 61);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(238, 17);
+            label12.TabIndex = 31;
+            label12.Text = "用法：1.获取 2.选择要采集的号 3.开始采集";
+            // 
+            // button10
+            // 
+            button10.Location = new System.Drawing.Point(152, 16);
+            button10.Name = "button10";
+            button10.Size = new System.Drawing.Size(105, 23);
+            button10.TabIndex = 30;
+            button10.Text = "开始采集";
+            button10.UseVisualStyleBackColor = true;
+            button10.Click += button10_Click;
+            // 
+            // button9
+            // 
+            button9.Location = new System.Drawing.Point(96, 175);
+            button9.Name = "button9";
+            button9.Size = new System.Drawing.Size(75, 23);
+            button9.TabIndex = 29;
+            button9.Text = "找矿";
+            button9.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "矿石", "水晶", "皮草" });
+            comboBox1.Location = new System.Drawing.Point(15, 16);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new System.Drawing.Size(121, 25);
+            comboBox1.TabIndex = 2;
+            // 
+            // button7
+            // 
+            button7.Location = new System.Drawing.Point(15, 175);
+            button7.Name = "button7";
+            button7.Size = new System.Drawing.Size(75, 23);
+            button7.TabIndex = 0;
+            button7.Text = "寻路";
+            button7.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            tabPage3.Controls.Add(button16);
+            tabPage3.Controls.Add(button15);
+            tabPage3.Controls.Add(button12);
+            tabPage3.Location = new System.Drawing.Point(4, 26);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Size = new System.Drawing.Size(646, 164);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "挖宝";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button16
+            // 
+            button16.Location = new System.Drawing.Point(181, 15);
+            button16.Name = "button16";
+            button16.Size = new System.Drawing.Size(75, 23);
+            button16.TabIndex = 2;
+            button16.Text = "button16";
+            button16.UseVisualStyleBackColor = true;
+            button16.Click += button16_Click;
+            // 
+            // button15
+            // 
+            button15.Location = new System.Drawing.Point(100, 15);
+            button15.Name = "button15";
+            button15.Size = new System.Drawing.Size(75, 23);
+            button15.TabIndex = 1;
+            button15.Text = "查看任务";
+            button15.UseVisualStyleBackColor = true;
+            button15.Click += button15_Click;
+            // 
+            // button12
+            // 
+            button12.Location = new System.Drawing.Point(19, 15);
+            button12.Name = "button12";
+            button12.Size = new System.Drawing.Size(75, 23);
+            button12.TabIndex = 0;
+            button12.Text = "接任务";
+            button12.UseVisualStyleBackColor = true;
+            button12.Click += button12_Click;
+            // 
+            // tabPage5
+            // 
+            tabPage5.Controls.Add(button1);
+            tabPage5.Controls.Add(button_dev_1);
+            tabPage5.Location = new System.Drawing.Point(4, 26);
+            tabPage5.Name = "tabPage5";
+            tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            tabPage5.Size = new System.Drawing.Size(646, 164);
+            tabPage5.TabIndex = 3;
+            tabPage5.Text = "功能单元测试";
+            tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(87, 6);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(105, 23);
+            button1.TabIndex = 44;
+            button1.Text = "查询子窗口信息";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button_dev_1
+            // 
+            button_dev_1.Location = new System.Drawing.Point(6, 6);
+            button_dev_1.Name = "button_dev_1";
+            button_dev_1.Size = new System.Drawing.Size(75, 23);
+            button_dev_1.TabIndex = 1;
+            button_dev_1.Text = "发送文本";
+            button_dev_1.UseVisualStyleBackColor = true;
+            button_dev_1.Click += button_dev_1_Click;
+            // 
+            // button3
+            // 
+            button3.Location = new System.Drawing.Point(567, 147);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(98, 23);
+            button3.TabIndex = 32;
+            button3.Text = "打开脚本目录";
+            button3.UseVisualStyleBackColor = true;
+            button3.Visible = false;
+            button3.Click += button3_Click;
             // 
             // mainTabPage1
             // 
-            mainTabPage1.Controls.Add(button21);
             mainTabPage1.Controls.Add(button20);
             mainTabPage1.Controls.Add(label11);
             mainTabPage1.Controls.Add(label10);
@@ -129,19 +427,9 @@ namespace TTTools
             mainTabPage1.Text = "登陆器";
             mainTabPage1.UseVisualStyleBackColor = true;
             // 
-            // button21
-            // 
-            button21.Location = new System.Drawing.Point(273, 13);
-            button21.Name = "button21";
-            button21.Size = new System.Drawing.Size(75, 23);
-            button21.TabIndex = 12;
-            button21.Text = "button21";
-            button21.UseVisualStyleBackColor = true;
-            button21.Click += button21_Click;
-            // 
             // button20
             // 
-            button20.Location = new System.Drawing.Point(192, 7);
+            button20.Location = new System.Drawing.Point(181, 6);
             button20.Name = "button20";
             button20.Size = new System.Drawing.Size(75, 23);
             button20.TabIndex = 11;
@@ -250,455 +538,22 @@ namespace TTTools
             flowLayoutPanel1.Size = new System.Drawing.Size(668, 320);
             flowLayoutPanel1.TabIndex = 0;
             // 
-            // mainTabPage2
-            // 
-            mainTabPage2.AllowDrop = true;
-            mainTabPage2.Controls.Add(button17);
-            mainTabPage2.Controls.Add(button13);
-            mainTabPage2.Controls.Add(button14);
-            mainTabPage2.Controls.Add(checkedListBox1);
-            mainTabPage2.Controls.Add(button11);
-            mainTabPage2.Controls.Add(tabControl1);
-            mainTabPage2.Controls.Add(button6);
-            mainTabPage2.Controls.Add(button_popup);
-            mainTabPage2.Controls.Add(button3);
-            mainTabPage2.Controls.Add(button2);
-            mainTabPage2.Controls.Add(button1);
-            mainTabPage2.Location = new System.Drawing.Point(4, 26);
-            mainTabPage2.Name = "mainTabPage2";
-            mainTabPage2.Padding = new System.Windows.Forms.Padding(3);
-            mainTabPage2.Size = new System.Drawing.Size(668, 382);
-            mainTabPage2.TabIndex = 0;
-            mainTabPage2.Text = "工具";
-            mainTabPage2.UseVisualStyleBackColor = true;
-            // 
-            // button17
-            // 
-            button17.Location = new System.Drawing.Point(442, 93);
-            button17.Name = "button17";
-            button17.Size = new System.Drawing.Size(75, 23);
-            button17.TabIndex = 40;
-            button17.Text = "登陆器";
-            button17.UseVisualStyleBackColor = true;
-            button17.Visible = false;
-            button17.Click += button17_Click;
-            // 
-            // button13
-            // 
-            button13.Location = new System.Drawing.Point(442, 64);
-            button13.Name = "button13";
-            button13.Size = new System.Drawing.Size(75, 23);
-            button13.TabIndex = 39;
-            button13.Text = "绑定队长";
-            button13.UseVisualStyleBackColor = true;
-            button13.Click += button13_Click;
-            // 
-            // button14
-            // 
-            button14.Location = new System.Drawing.Point(442, 35);
-            button14.Name = "button14";
-            button14.Size = new System.Drawing.Size(75, 23);
-            button14.TabIndex = 38;
-            button14.Text = "全选";
-            button14.UseVisualStyleBackColor = true;
-            button14.Click += button14_Click;
-            // 
-            // checkedListBox1
-            // 
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new System.Drawing.Point(6, 6);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new System.Drawing.Size(430, 166);
-            checkedListBox1.TabIndex = 37;
-            // 
-            // button11
-            // 
-            button11.Location = new System.Drawing.Point(440, 6);
-            button11.Name = "button11";
-            button11.Size = new System.Drawing.Size(75, 23);
-            button11.TabIndex = 36;
-            button11.Text = "获取";
-            button11.UseVisualStyleBackColor = true;
-            button11.Click += button11_Click;
-            // 
-            // tabControl1
-            // 
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage3);
-            tabControl1.Location = new System.Drawing.Point(8, 178);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new System.Drawing.Size(519, 194);
-            tabControl1.TabIndex = 35;
-            // 
-            // tabPage2
-            // 
-            tabPage2.Controls.Add(label14);
-            tabPage2.Controls.Add(label13);
-            tabPage2.Controls.Add(label12);
-            tabPage2.Controls.Add(button10);
-            tabPage2.Controls.Add(button9);
-            tabPage2.Controls.Add(comboBox1);
-            tabPage2.Controls.Add(button7);
-            tabPage2.Location = new System.Drawing.Point(4, 26);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            tabPage2.Size = new System.Drawing.Size(511, 164);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "采集";
-            tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Location = new System.Drawing.Point(15, 115);
-            label14.Name = "label14";
-            label14.Size = new System.Drawing.Size(243, 17);
-            label14.TabIndex = 33;
-            label14.Text = "问2：找不到？答：被遮挡了换一个地方吧。";
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new System.Drawing.Point(15, 89);
-            label13.Name = "label13";
-            label13.Size = new System.Drawing.Size(266, 17);
-            label13.TabIndex = 32;
-            label13.Text = "问1：点击有偏差？答;关闭显示设置125%倍放大";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new System.Drawing.Point(15, 61);
-            label12.Name = "label12";
-            label12.Size = new System.Drawing.Size(310, 17);
-            label12.TabIndex = 31;
-            label12.Text = "用法：1.获取 2.全选或者选择要采集的号 3.开始原地采集";
-            // 
-            // button10
-            // 
-            button10.Location = new System.Drawing.Point(152, 16);
-            button10.Name = "button10";
-            button10.Size = new System.Drawing.Size(105, 23);
-            button10.TabIndex = 30;
-            button10.Text = "开始原地采集";
-            button10.UseVisualStyleBackColor = true;
-            button10.Click += button10_Click;
-            // 
-            // button9
-            // 
-            button9.Location = new System.Drawing.Point(96, 175);
-            button9.Name = "button9";
-            button9.Size = new System.Drawing.Size(75, 23);
-            button9.TabIndex = 29;
-            button9.Text = "找矿";
-            button9.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "矿石", "水晶", "皮草" });
-            comboBox1.Location = new System.Drawing.Point(15, 16);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new System.Drawing.Size(121, 25);
-            comboBox1.TabIndex = 2;
-            // 
-            // button7
-            // 
-            button7.Location = new System.Drawing.Point(15, 175);
-            button7.Name = "button7";
-            button7.Size = new System.Drawing.Size(75, 23);
-            button7.TabIndex = 0;
-            button7.Text = "寻路";
-            button7.UseVisualStyleBackColor = true;
-            // 
-            // tabPage1
-            // 
-            tabPage1.AllowDrop = true;
-            tabPage1.Controls.Add(label1);
-            tabPage1.Controls.Add(TextBox_wid);
-            tabPage1.Controls.Add(Button_link);
-            tabPage1.Controls.Add(label6);
-            tabPage1.Controls.Add(textBox4);
-            tabPage1.Controls.Add(textBox5);
-            tabPage1.Controls.Add(button5);
-            tabPage1.Controls.Add(label5);
-            tabPage1.Controls.Add(textBox3);
-            tabPage1.Controls.Add(label4);
-            tabPage1.Controls.Add(textBox1);
-            tabPage1.Controls.Add(textBox2);
-            tabPage1.Controls.Add(label2);
-            tabPage1.Controls.Add(textBox_popup_y);
-            tabPage1.Controls.Add(textBox_popup_x);
-            tabPage1.Controls.Add(button4);
-            tabPage1.Location = new System.Drawing.Point(4, 26);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            tabPage1.Size = new System.Drawing.Size(511, 164);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "天师";
-            tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(25, 18);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(56, 17);
-            label1.TabIndex = 37;
-            label1.Text = "窗口句柄";
-            // 
-            // TextBox_wid
-            // 
-            TextBox_wid.Location = new System.Drawing.Point(100, 9);
-            TextBox_wid.Name = "TextBox_wid";
-            TextBox_wid.Size = new System.Drawing.Size(166, 23);
-            TextBox_wid.TabIndex = 36;
-            TextBox_wid.Text = "00131896";
-            TextBox_wid.TextChanged += TextBox_wid_TextChanged;
-            // 
-            // Button_link
-            // 
-            Button_link.Location = new System.Drawing.Point(271, 9);
-            Button_link.Name = "Button_link";
-            Button_link.Size = new System.Drawing.Size(75, 23);
-            Button_link.TabIndex = 35;
-            Button_link.Text = "绑定";
-            Button_link.UseVisualStyleBackColor = true;
-            Button_link.Visible = false;
-            Button_link.Click += Button_link_Click;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(25, 73);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(56, 17);
-            label6.TabIndex = 34;
-            label6.Text = "背包位置";
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new System.Drawing.Point(187, 64);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new System.Drawing.Size(79, 23);
-            textBox4.TabIndex = 33;
-            textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            textBox4.TextChanged += textBox4_TextChanged;
-            // 
-            // textBox5
-            // 
-            textBox5.Location = new System.Drawing.Point(100, 64);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new System.Drawing.Size(81, 23);
-            textBox5.TabIndex = 32;
-            textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            textBox5.TextChanged += textBox5_TextChanged;
-            // 
-            // button5
-            // 
-            button5.Location = new System.Drawing.Point(430, 62);
-            button5.Name = "button5";
-            button5.Size = new System.Drawing.Size(75, 23);
-            button5.TabIndex = 31;
-            button5.Text = "退出战斗";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(273, 98);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(76, 17);
-            label5.TabIndex = 30;
-            label5.Text = "战斗时长(秒)";
-            // 
-            // textBox3
-            // 
-            textBox3.Location = new System.Drawing.Point(347, 91);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new System.Drawing.Size(79, 23);
-            textBox3.TabIndex = 29;
-            textBox3.Text = "120";
-            textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            textBox3.TextChanged += textBox3_TextChanged;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(25, 100);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(54, 17);
-            label4.TabIndex = 28;
-            label4.Text = "ts怪位置";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new System.Drawing.Point(187, 91);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(79, 23);
-            textBox1.TabIndex = 27;
-            textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            textBox1.TextChanged += textBox1_TextChanged;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new System.Drawing.Point(100, 91);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new System.Drawing.Size(81, 23);
-            textBox2.TabIndex = 26;
-            textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            textBox2.TextChanged += textBox2_TextChanged;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(25, 47);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(68, 17);
-            label2.TabIndex = 25;
-            label2.Text = "对话框定位";
-            // 
-            // textBox_popup_y
-            // 
-            textBox_popup_y.Location = new System.Drawing.Point(187, 38);
-            textBox_popup_y.Name = "textBox_popup_y";
-            textBox_popup_y.Size = new System.Drawing.Size(79, 23);
-            textBox_popup_y.TabIndex = 24;
-            textBox_popup_y.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            textBox_popup_y.TextChanged += textBox_popup_y_TextChanged;
-            // 
-            // textBox_popup_x
-            // 
-            textBox_popup_x.Location = new System.Drawing.Point(100, 38);
-            textBox_popup_x.Name = "textBox_popup_x";
-            textBox_popup_x.Size = new System.Drawing.Size(81, 23);
-            textBox_popup_x.TabIndex = 23;
-            textBox_popup_x.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            textBox_popup_x.TextChanged += textBox_popup_x_TextChanged;
-            // 
-            // button4
-            // 
-            button4.Location = new System.Drawing.Point(430, 91);
-            button4.Name = "button4";
-            button4.Size = new System.Drawing.Size(75, 23);
-            button4.TabIndex = 22;
-            button4.Text = "开始战斗";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
-            // tabPage3
-            // 
-            tabPage3.Controls.Add(button16);
-            tabPage3.Controls.Add(button15);
-            tabPage3.Controls.Add(button12);
-            tabPage3.Location = new System.Drawing.Point(4, 26);
-            tabPage3.Name = "tabPage3";
-            tabPage3.Size = new System.Drawing.Size(511, 164);
-            tabPage3.TabIndex = 2;
-            tabPage3.Text = "挖宝";
-            tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // button16
-            // 
-            button16.Location = new System.Drawing.Point(257, 26);
-            button16.Name = "button16";
-            button16.Size = new System.Drawing.Size(75, 23);
-            button16.TabIndex = 2;
-            button16.Text = "button16";
-            button16.UseVisualStyleBackColor = true;
-            button16.Click += button16_Click;
-            // 
-            // button15
-            // 
-            button15.Location = new System.Drawing.Point(134, 15);
-            button15.Name = "button15";
-            button15.Size = new System.Drawing.Size(75, 23);
-            button15.TabIndex = 1;
-            button15.Text = "查看任务";
-            button15.UseVisualStyleBackColor = true;
-            button15.Click += button15_Click;
-            // 
-            // button12
-            // 
-            button12.Location = new System.Drawing.Point(19, 15);
-            button12.Name = "button12";
-            button12.Size = new System.Drawing.Size(75, 23);
-            button12.TabIndex = 0;
-            button12.Text = "接任务";
-            button12.UseVisualStyleBackColor = true;
-            button12.Click += button12_Click;
-            // 
-            // button6
-            // 
-            button6.Location = new System.Drawing.Point(545, 117);
-            button6.Name = "button6";
-            button6.Size = new System.Drawing.Size(75, 23);
-            button6.TabIndex = 34;
-            button6.Text = "button6";
-            button6.UseVisualStyleBackColor = true;
-            button6.Visible = false;
-            button6.Click += button6_Click;
-            // 
-            // button_popup
-            // 
-            button_popup.Location = new System.Drawing.Point(545, 146);
-            button_popup.Name = "button_popup";
-            button_popup.Size = new System.Drawing.Size(75, 23);
-            button_popup.TabIndex = 33;
-            button_popup.Text = "保存";
-            button_popup.UseVisualStyleBackColor = true;
-            button_popup.Visible = false;
-            button_popup.Click += button_popup_Click;
-            // 
-            // button3
-            // 
-            button3.Location = new System.Drawing.Point(545, 175);
-            button3.Name = "button3";
-            button3.Size = new System.Drawing.Size(105, 23);
-            button3.TabIndex = 32;
-            button3.Text = "打开运行目录";
-            button3.UseVisualStyleBackColor = true;
-            button3.Visible = false;
-            button3.Click += button3_Click;
-            // 
-            // button2
-            // 
-            button2.Location = new System.Drawing.Point(545, 90);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(75, 23);
-            button2.TabIndex = 31;
-            button2.Text = "测试ts";
-            button2.UseVisualStyleBackColor = true;
-            button2.Visible = false;
-            button2.Click += button2_Click;
-            // 
-            // button1
-            // 
-            button1.Location = new System.Drawing.Point(545, 58);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(75, 23);
-            button1.TabIndex = 30;
-            button1.Text = "TS";
-            button1.UseVisualStyleBackColor = true;
-            button1.Visible = false;
-            button1.Click += button1_Click;
-            // 
-            // textBox_log
-            // 
-            textBox_log.Location = new System.Drawing.Point(14, 423);
-            textBox_log.Multiline = true;
-            textBox_log.Name = "textBox_log";
-            textBox_log.Size = new System.Drawing.Size(670, 99);
-            textBox_log.TabIndex = 30;
+            // tabControl2
+            // 
+            tabControl2.Controls.Add(mainTabPage1);
+            tabControl2.Controls.Add(mainTabPage2);
+            tabControl2.Location = new System.Drawing.Point(12, 12);
+            tabControl2.Name = "tabControl2";
+            tabControl2.SelectedIndex = 0;
+            tabControl2.Size = new System.Drawing.Size(676, 412);
+            tabControl2.TabIndex = 29;
             // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(695, 528);
+            ClientSize = new System.Drawing.Size(695, 555);
+            Controls.Add(checkBox1);
             Controls.Add(textBox_log);
             Controls.Add(tabControl2);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -706,78 +561,69 @@ namespace TTTools
             Text = "TTTools v0.3 -  by 电脑玩家";
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
-            tabControl2.ResumeLayout(false);
-            mainTabPage1.ResumeLayout(false);
-            mainTabPage1.PerformLayout();
             mainTabPage2.ResumeLayout(false);
+            mainTabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)clientBindingSource).EndInit();
             tabControl1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
             tabPage3.ResumeLayout(false);
+            tabPage5.ResumeLayout(false);
+            mainTabPage1.ResumeLayout(false);
+            mainTabPage1.PerformLayout();
+            tabControl2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage mainTabPage1;
+        private System.Windows.Forms.TextBox textBox_log;
+        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TabPage mainTabPage2;
-        private System.Windows.Forms.Button button17;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox TextBox_wid;
-        private System.Windows.Forms.Button Button_link;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox_popup_y;
-        private System.Windows.Forms.TextBox textBox_popup_x;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button_popup;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Button button_dev_1;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button button18;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.Button button19;
+        private System.Windows.Forms.TabPage mainTabPage1;
+        private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button20;
-        private System.Windows.Forms.TextBox textBox_log;
-        private System.Windows.Forms.Button button21;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button button19;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Button button18;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.BindingSource clientBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hWndDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn actionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isLeadDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isActionRunDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isActionAutoDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.Label label_current;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

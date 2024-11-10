@@ -1,25 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+using System.Reflection;
 using System.Runtime.InteropServices;
-using System.IO;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
-using System.Reflection.Metadata;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-using System.Reflection;
+using System.Windows.Forms;
+using TTTools.client;
+using TTTools.windowsTools;
 
 namespace TTTools
 {
     public partial class Form1 : Form
     {
+        private List<Client> clients = new List<Client>();
+
+        /**
+         * 配置文件保存代码
+         * iniFileHelper.IniWriteValue("ts", "time", textBox3.Text);
+         * 配置读取方法
+         * textBox_popup_x.Text = iniFileHelper.IniReadValue("popup", "x", "186");
+         **/
+
+
         // 导入外部方法
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
@@ -47,7 +52,7 @@ namespace TTTools
 
         private Method api;
         private ActionCollectMethod collect;
-        private WindowUtilities windowApi;
+        private WindowApi windowApi;
 
         public static Form1 MainForm;
         IniFileHelper iniFileHelper;
@@ -55,13 +60,7 @@ namespace TTTools
         public int rushBTotal = 0;
         public Boolean isFighting = false;
 
-        public void AppendGlobalLog(string message)
-        {
-            if (MainForm != null)
-            {
-                MainForm.Dbug(message);
-            }
-        }
+
         public Form1()
         {
             InitializeComponent();
@@ -71,20 +70,15 @@ namespace TTTools
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             iniFileHelper = new IniFileHelper("settings.ini");
 
-            textBox_popup_x.Text = iniFileHelper.IniReadValue("popup", "x", "186");
-            textBox_popup_y.Text = iniFileHelper.IniReadValue("popup", "y", "255");
-            textBox1.Text = iniFileHelper.IniReadValue("ts", "y", "0");
-            textBox2.Text = iniFileHelper.IniReadValue("ts", "x", "0");
-            textBox3.Text = iniFileHelper.IniReadValue("ts", "time", "120");
-            textBox4.Text = iniFileHelper.IniReadValue("box", "y", "38");
-            textBox5.Text = iniFileHelper.IniReadValue("box", "x", "329");
-            TextBox_wid.Text = iniFileHelper.IniReadValue("win", "id", "");
             textBox6.Text = iniFileHelper.IniReadValue("gamepath", "path", "");
 
+
+            LogService.IsDebugEnabled = true;
             //tabControl2.TabPages.Remove(mainTabPage1);
 
             comboBox1.SelectedIndex = 0;
@@ -92,7 +86,7 @@ namespace TTTools
             //tabControl1.TabPages.Remove(tabPage3);
 
             InitList();
-
+            QueryGameWindows();
 
         }
 
@@ -109,45 +103,28 @@ namespace TTTools
             }
         }
 
-        private List<WindowInfo> GetCheckedWindows()
-        {
-            List<WindowInfo> checkedWindows = new List<WindowInfo>();
+        //private List<WindowInfo> GetCheckedWindows()
+        //{
+        //    List<WindowInfo> checkedWindows = new List<WindowInfo>();
 
-            foreach (string item in checkedListBox1.CheckedItems)
-            {
-                string[] parts = item.Split(new string[] { " - " }, StringSplitOptions.None);
-                if (parts.Length >= 2)
-                {
-                    IntPtr handle = new IntPtr(int.Parse(parts[0]));  // 假设句柄是十六进制的
-                    string title = parts[1];
+        //    foreach (string item in checkedListBox1.CheckedItems)
+        //    {
+        //        string[] parts = item.Split(new string[] { " - " }, StringSplitOptions.None);
+        //        if (parts.Length >= 2)
+        //        {
+        //            IntPtr handle = new IntPtr(int.Parse(parts[0]));  // 假设句柄是十六进制的
+        //            string title = parts[1];
 
-                    checkedWindows.Add(new WindowInfo { Handle = handle, Title = title });
-                }
-            }
+        //            checkedWindows.Add(new WindowInfo { Handle = handle, Title = title });
+        //        }
+        //    }
 
-            return checkedWindows;
-        }
+        //    return checkedWindows;
+        //}
 
         private async void Button_link_Click(object sender, EventArgs e)
         {
-            // 获取文本框中的窗口句柄ID（假设为16进制字符串）
-            string handleStr = TextBox_wid.Text;
 
-            // 将16进制字符串转换为整数
-            int handleInt;
-            if (int.TryParse(handleStr, System.Globalization.NumberStyles.HexNumber, null, out handleInt))
-            {
-                // 得到窗口句柄
-                hWnd = new IntPtr(handleInt);
-                api = new Method(hWnd, this);
-                api.InitWindows();
-                collect = new ActionCollectMethod(hWnd, this);
-
-            }
-            else
-            {
-                Console.WriteLine("无效的窗口句柄ID");
-            }
         }
 
 
@@ -170,18 +147,13 @@ namespace TTTools
 
         private void TextBox_wid_TextChanged(object sender, EventArgs e)
         {
-            iniFileHelper.IniWriteValue("win", "id", TextBox_wid.Text);
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            api.GetTS();
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -192,14 +164,13 @@ namespace TTTools
 
         private void textBox_popup_x_TextChanged(object sender, EventArgs e)
         {
-            // 写入配置项
-            iniFileHelper.IniWriteValue("popup", "x", textBox_popup_x.Text);
+
 
         }
 
         private void textBox_popup_y_TextChanged(object sender, EventArgs e)
         {
-            iniFileHelper.IniWriteValue("popup", "y", textBox_popup_y.Text);
+
         }
 
         private void button_popup_Click(object sender, EventArgs e)
@@ -209,130 +180,49 @@ namespace TTTools
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (button4.Text == "开始战斗")
-            {
-                if (isRunAction)
-                {
-                    MessageBox.Show("当前正在执行其他操作");
-                    return;
-                }
 
-
-                if (textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "")
-                {
-                    return;
-                }
-                rushBTotal = 0;
-                int time = int.Parse(textBox3.Text);
-                //timerStart = new System.Threading.Timer(RushB, null, 2000, 1000 * time + 20);
-                timerEnd = new System.Threading.Timer(CheckTime, null, 2000, 1000 * time);
-                isRunAction = true;
-                button4.Text = "结束战斗";
-            }
-            else
-            {
-                // 停止并释放计时器
-                timerStart?.Dispose();
-                timerEnd?.Dispose();
-
-                // 重置按钮文本和运行状态
-                button4.Text = "开始战斗";
-                isRunAction = false;
-            }
         }
-        private void CheckFightingEnd()
-        {
-            if (isFighting)
-            {
-                PictureMethod pi = new PictureMethod(this.hWnd);
-                var isEnd = pi.CheckIfWindowContentChanged();
-                if (isEnd)
-                {
-                    rushBTotal++;
-                    if (isFighting)
-                    {
-                        var thread = new Thread(() =>
-                        {
-                            Clipboard.SetText("退出战斗");
-                        });
-                        thread.SetApartmentState(ApartmentState.STA);
-                        thread.Start();
-                        thread.Join();
-                        api = new Method(hWnd, this);
-                        api.EndCombatByMsg();
-                        isFighting = false;
-                    }
 
-                }
-            }
-        }
         private void CheckTime(object state)
         {
-            api = new Method(hWnd, this);
 
-            rushBTotal++;
-            if (isFighting)
-            {
-                var thread = new Thread(() =>
-                {
-                    Clipboard.SetText("退出战斗");
-                });
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();
-                thread.Join();
-                api.EndCombatByMsg();
-                isFighting = false;
-            }
-
-            Thread.Sleep(2000);
-            int x = int.Parse(textBox2.Text);
-            int y = int.Parse(textBox1.Text);
-            isFighting = true;
-
-            api.RushB(rushBTotal, x, y);
 
         }
 
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            iniFileHelper.IniWriteValue("ts", "x", textBox2.Text);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            iniFileHelper.IniWriteValue("ts", "y", textBox1.Text);
 
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            iniFileHelper.IniWriteValue("ts", "time", textBox3.Text);
 
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText("退出战斗");
-            api.EndCombatByMsg();
-            isFighting = false;
+
 
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-            iniFileHelper.IniWriteValue("box", "x", textBox5.Text);
 
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
-            iniFileHelper.IniWriteValue("box", "y", textBox4.Text);
+
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            api.EndCombat2();
+
         }
 
         int localIndex = 0;
@@ -380,16 +270,8 @@ namespace TTTools
 
         private void button11_Click(object sender, EventArgs e)
         {
-            windowApi = new WindowUtilities();
-            var windows = windowApi.UpdateWindowTitles("Galaxy2DEngine");  // 以 Galaxy2DEngine 窗口为例
-            checkedListBox1.Items.Clear();  // 首先清除 checkedListBox1 中的所有项
 
-            foreach (var window in windows)
-            {
-                string itemText = $"{window.Handle} - {window.Title}";
-                checkedListBox1.Items.Add(itemText);  // 将窗口信息添加到 checkedListBox1 中
-            }
-
+            QueryGameWindows();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -404,31 +286,62 @@ namespace TTTools
 
         private void button10_Click(object sender, EventArgs e)
         {
-            if (!isCollecting)
+            var currentClient = ClientManager.CurrentSelectedClient;
+            currentClient.Action = "采集" + comboBox1.Text;
+            // 刷新 DataGridView 以更新显示
+
+            dataGridView1.Refresh();
+
+        }
+        public void QueryGameWindows()
+        {
+            //获取客户端列表
+            windowApi = new WindowApi();
+            var windows = windowApi.UpdateWindowTitles("Galaxy2DEngine");  // 以 Galaxy2DEngine 窗口为例
+            dataGridView1.DataSource = null; // 清空已有数据
+
+            dataGridView1.Rows.Clear();// 清空 DataGridView 的行，确保每次刷新时数据是最新的
+            // 初始化 Client.ClientsArray，大小根据窗口数量动态调整
+            ClientManager.InitializeActionMap();
+            ClientManager.ClearAllTasks();
+            ClientManager.Clients.Clear();
+
+            int index = 0;
+            foreach (var window in windows)
             {
-                StartCollecting();
-                button10.Text = "关闭采集";
+                string itemText = $"{window.Handle} - {window.Title}";
+                LogService.Debug(itemText);
+
+                // 创建 Client 实例并设置属性
+                var client = new Client(hWnd: window.Handle, id: index.ToString(), title: window.Title, isLead: false);
+                //client.Action = "hello";
+                client.StartMonitoring();
+                ClientManager.Clients.Add(client);
+                dataGridView1.Rows.Add(client.HWnd, client.Id, client.Title, client.Action, client.IsLead);
+
             }
-            else
+            // 设置第一个 Client 为当前选择的客户端（可选）
+            if (ClientManager.Clients.Count > 0)
             {
-                StopCollecting();
-                button10.Text = "开始原地采集";
+                // 设置当前选中的客户端
+                ClientManager.CurrentSelectedClient = ClientManager.Clients[0];
             }
-            isCollecting = !isCollecting;  // 切换采集状态
+            dataGridView1.DataSource = ClientManager.Clients;
+
         }
         private void StartCollecting()
         {
-            var checkedWindows = GetCheckedWindows();
-            apis.Clear();  // 清除旧的apis列表
+            //var checkedWindows = GetCheckedWindows();
+            //apis.Clear();  // 清除旧的apis列表
 
-            foreach (var window in checkedWindows)
-            {
-                apis.Add(new Method(window.Handle, this));
-            }
-            timerCollect = new System.Windows.Forms.Timer();  // 更改为使用 System.Windows.Forms.Timer
-            timerCollect.Interval = 2000;
-            timerCollect.Tick += OnTimedEvent;
-            timerCollect.Start();
+            //foreach (var window in checkedWindows)
+            //{
+            //    apis.Add(new Method(window.Handle, this));
+            //}
+            //timerCollect = new System.Windows.Forms.Timer();  // 更改为使用 System.Windows.Forms.Timer
+            //timerCollect.Interval = 2000;
+            //timerCollect.Tick += OnTimedEvent;
+            //timerCollect.Start();
         }
 
         private void StopCollecting()
@@ -489,10 +402,7 @@ namespace TTTools
 
         private void button14_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
-            {
-                checkedListBox1.SetItemChecked(i, true);
-            }
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -502,7 +412,7 @@ namespace TTTools
 
         private void button12_Click_1(object sender, EventArgs e)
         {
-            api.pushMsg("退出战斗");
+
         }
 
         private void button12_Click_2(object sender, EventArgs e)
@@ -513,41 +423,7 @@ namespace TTTools
 
         private void button13_Click(object sender, EventArgs e)
         {
-            int selectedCount = checkedListBox1.CheckedItems.Count;
-            if (selectedCount > 1)
-            {
-                MessageBox.Show("只能选择一项");
-                return;
-            }
-            else if (selectedCount == 0)
-            {
-                MessageBox.Show("请至少选择一项");
-                return;
-            }
 
-            string selectedItem = checkedListBox1.CheckedItems[0].ToString();
-            string[] parts = selectedItem.Split('-');
-
-            if (parts.Length >= 2)
-            {
-                string handleIdStr = parts[0].Trim();
-                if (int.TryParse(handleIdStr, out int handleId))
-                {
-                    hWnd = new IntPtr(handleId);  // 注意这里将 int 转换为 IntPtr
-                    api = new Method(hWnd, this);
-                    api.InitWindows();
-                    collect = new ActionCollectMethod(hWnd, this);
-                    TextBox_wid.Text = handleIdStr;
-                }
-                else
-                {
-                    MessageBox.Show("无法解析句柄ID");
-                }
-            }
-            else
-            {
-                MessageBox.Show("选中的项格式不正确");
-            }
         }
 
         private void button15_Click(object sender, EventArgs e)
@@ -790,35 +666,6 @@ namespace TTTools
 
         private void button21_Click(object sender, EventArgs e)
         {
-            // 绝对路径或确保相对路径正确
-            string dllPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "dll", "Dll1.dll");
-
-            // 判断是否有dllPath这个文件
-            if (!File.Exists(dllPath))
-            {
-                MessageBox.Show("文件不存在");
-                return;
-            }
-            else
-            {
-                MessageBox.Show("找到了");
-            }
-
-            // 获取所有Galaxy2DEngine窗口的进程ID
-            List<int> processIds = WindowInfo.GetProcessIdsByClassName("Galaxy2DEngine");
-
-            // 遍历所有进程ID并注入DLL
-            foreach (int targetProcessId in processIds)
-            {
-                if (DLLInjector.InjectDLL(targetProcessId, dllPath))
-                {
-                    DLLInjector.CallExportedFunction(dllPath, "myDLLcall");
-                }
-                else
-                {
-                    MessageBox.Show($"DLL注入失败，进程ID：{targetProcessId}");
-                }
-            }
 
 
         }
@@ -874,6 +721,58 @@ namespace TTTools
         private void button17_Click(object sender, EventArgs e)
         {
 
+        }
+
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                LogService.IsDebugEnabled = true;
+            }
+            else
+            {
+                LogService.IsDebugEnabled = false;
+            }
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            int index = dataGridView1.CurrentRow.Index;
+            var value = dataGridView1.Rows[index].Cells[2].Value.ToString();
+            label_current.Text = $"当前选择的角色：{value}";
+            ClientManager.CurrentSelectedClient = ClientManager.Clients[index];
+        }
+
+        private async void button_dev_1_Click(object sender, EventArgs e)
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var api = new Method(hWnd, this);
+            await api.GameSendMsg("Hello World");
+
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            WindowApi.LogAllWindowHandles(ClientManager.CurrentSelectedClient.HWnd);
+
+        }
+
+        private void mainTabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            ClientManager.CurrentSelectedClient.Action = "";
+            dataGridView1.Refresh();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TTTools.windowsTools;
 
 namespace TTTools
 {
@@ -12,7 +13,7 @@ namespace TTTools
         private int nullCounter = 0;  // 用于跟踪连续返回 null 的次数
         private int lastMapMoveIndex = 0;  //记录上一次点击地图的位置
         private readonly Method api;
-        private readonly WindowOperations wx;
+        private readonly WindowClickTools wx;
         private readonly Form1 Instance;
         private PictureMethod Pic;
         private readonly IntPtr hWnd;
@@ -21,7 +22,7 @@ namespace TTTools
         public ActionCollectMethod(IntPtr hWnd, Form1 Instance)
         {
             this.hWnd = hWnd;
-            this.wx = new WindowOperations(hWnd, Instance);
+            this.wx = new WindowClickTools(hWnd);
             this.api = new Method(hWnd, Instance);
             this.Instance = Instance;
             this.Pic = new PictureMethod(hWnd);

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using System.Threading;
 
 namespace TTTools
@@ -9,7 +7,7 @@ namespace TTTools
     internal class ActionTreasureMethod
     {
         private readonly IntPtr hWnd;
-        private readonly WindowOperations wx;
+        private readonly WindowClickTools wx;
         private readonly Method api;
         private readonly PictureMethod pic;
         private readonly Form1 Instance;
@@ -17,7 +15,7 @@ namespace TTTools
         public ActionTreasureMethod(IntPtr hWnd, Form1 Instance)
         {
             this.hWnd = hWnd;
-            this.wx = new WindowOperations(hWnd, Instance);
+            this.wx = new WindowClickTools(hWnd);
             this.api = new Method(hWnd, Instance);
             this.Instance = Instance;
             this.pic = new PictureMethod(hWnd);
@@ -45,7 +43,7 @@ namespace TTTools
                 if (location != null)
                 {
                     Thread.Sleep(1000);
-                    Instance.AppendGlobalLog("接到盗宝贼任务：" + location.ToString());
+                    LogService.Log("接到盗宝贼任务：" + location.ToString());
                     api.ClosePopupAuto();
                     Thread.Sleep(1000);
                     var toLocation = location.Location;
@@ -61,7 +59,7 @@ namespace TTTools
                 }
                 else
                 {
-                    Instance.AppendGlobalLog("阅读任务内容失败");
+                    LogService.Log("阅读任务内容失败");
 
                 }
                 

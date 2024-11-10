@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Net.Sockets;
-using System.Net;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
-
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
+using TTTools.client;
 
 namespace TTTools
 {
-    class Method
+    class Method : BaseOperation
     {
         private readonly IntPtr hWnd;
-        private readonly WindowOperations wx;
-        private readonly Form1 Instance;
-        private PictureMethod Pic;
+        private readonly WindowClickTools wx;
+        private readonly Form1 form1;
+        private PictureMethod pic;
         private string popupX;
         private string popupY;
         private int rushTotal = 0;
@@ -27,12 +25,12 @@ namespace TTTools
         IniFileHelper iniFileHelper = new IniFileHelper("settings.ini");
         private Dictionary<string, List<Bitmap>> featureImages = new Dictionary<string, List<Bitmap>>();
 
-        public Method(IntPtr hWnd, Form1 Instance)
+        public Method(IntPtr hWnd, Form1 Instance = null) : base(hWnd, Instance)
         {
             this.hWnd = hWnd;
-            this.wx = new WindowOperations(hWnd, Instance);
-            this.Instance = Instance;
-            this.Pic = new PictureMethod(hWnd);
+            this.wx = new WindowClickTools(hWnd);
+            this.form1 = Instance;
+            this.pic = new PictureMethod(hWnd);
             LoadFeatureImages();
 
         }
@@ -43,10 +41,7 @@ namespace TTTools
 
 
         }
-        public void pushMsg(string txt)
-        {
-            wx.SendChineseText(txt);
-        }
+       
         private void LoadFeatureImages()
         {
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -77,7 +72,7 @@ namespace TTTools
                         }
                         catch (Exception ex)
                         {
-                            Instance.AppendGlobalLog($"无法加载图像 {imagePath}: {ex.Message}");
+                            LogService.Log($"无法加载图像 {imagePath}: {ex.Message}");
 
                         }
                     }
@@ -259,7 +254,7 @@ namespace TTTools
             int height = 105;
             CaptureAndOCR ocr = new CaptureAndOCR(hWnd, x, y, width, height);
             MapPoint point = ocr.CaptureAndRecognize();
-            Instance.AppendGlobalLog("天师说：" + point.ToString());
+            LogService.Log("天师说：" + point.ToString());
         }
 
         public void RushB(int index, int x, int y)
@@ -289,93 +284,8 @@ namespace TTTools
             Thread.Sleep(1000);
             wx.SendEnterKey();
         }
-        public void EndCombat2()
-        {
+      
 
-            // 创建一个TcpClientWrapper对象并连接到服务器
-            TcpClientWrapper tcpClient = new TcpClientWrapper("121.41.112.13", 9874);
-
-            // 发送数据
-            tcpClient.SendData("1D 00 80 CB 92 CD 13 89 82 A4 C6 B5 B5 C0 A4 B5 B1 C7 B0 A4 C4 DA C8 DD A8 CD CB B3 F6 D5 BD B6 B7");
-
-            // 接收数据
-            string receivedData = tcpClient.ReceiveData();
-            Console.WriteLine("Received: " + receivedData);
-            Instance.AppendGlobalLog("receivedData" + receivedData);
-            // 关闭连接
-            tcpClient.Close();
-
-        }
-
-        private static byte[] HexStringToBytes(string hexString)
-        {
-            byte[] bytes = new byte[hexString.Length / 2];
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                bytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
-            }
-            return bytes;
-        }
-
-        public void EndCombat()
-        {
-            try
-            {
-                // 将十六进制字符串转换为字节数组
-                string hexString = "1D 00 80 CB 92 CD 13 89 82 A4 C6 B5 B5 C0 A4 B5 B1 C7 B0 A4 C4 DA C8 DD A8 CD CB B3 F6 D5 BD B6 B7";
-                byte[] data = new byte[]
-                {
-                    0x1D, 0x00, 0x80, 0xCB, 0x92, 0xCD, 0x13, 0x89,
-                    0x82, 0xA4, 0xC6, 0xB5, 0xB5, 0xC0, 0xA4, 0xB5,
-                    0xB1, 0xC7, 0xB0, 0xA4, 0xC4, 0xDA, 0xC8, 0xDD,
-                    0xA8, 0xCD, 0xCB, 0xB3, 0xF6, 0xD5, 0xBD, 0xB6, 0xB7
-                };
-
-                TcpClient client = new TcpClient();
-
-                // 绑定到本地端口2584
-                IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 2584);
-                client.Client.Bind(localEndPoint);
-
-                // 连接到远程服务器
-                client.Connect("121.41.112.13", 9874);
-
-
-                // 获取用于数据传输的流对象
-                NetworkStream stream = client.GetStream();
-
-                // 发送数据
-                stream.Write(data, 0, data.Length);
-
-                Console.WriteLine("Data sent.");
-                Instance.AppendGlobalLog("结束战斗");
-                // 关闭连接
-                stream.Close();
-                client.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"An error occurred: {e.Message}");
-                Instance.AppendGlobalLog("结束战斗：" + e.Message);
-
-            }
-        }
-        public static byte[] ConvertHexStringToByteArray(string hexString)
-        {
-            if (hexString.Length % 2 != 0)
-            {
-                throw new ArgumentException("Invalid length of hex string.");
-            }
-
-            byte[] byteArray = new byte[hexString.Length / 2];
-            for (int i = 0; i < hexString.Length; i += 2)
-            {
-                string byteValue = hexString.Substring(i, 2);
-                byteArray[i / 2] = Convert.ToByte(byteValue, 16);
-            }
-
-            return byteArray;
-        }
 
         public Point? FindAndClickSomeThingInMap(string name, bool isRightClick = false)
         {
@@ -419,7 +329,7 @@ namespace TTTools
                         }
 
                         //Instance.AppendGlobalLog($"screenCenter：{screenCenter.X}, {screenCenter.Y}");
-                        Instance.AppendGlobalLog($"找到目标：{minDistance}  - {closestPoint.X}, {closestPoint.Y}");
+                        LogService.Log($"找到目标：{minDistance}  - {closestPoint.X}, {closestPoint.Y}");
 
                         wx.PushClick(closestPoint.X + offsetX, closestPoint.Y + offsetY, isRightClick);
                         wx.MoveMouse(747, 114);
@@ -461,7 +371,7 @@ namespace TTTools
                     foreach (Point point in locations)
                     {
                         double distance = Distance(screenCenter, point);
-                        Instance.AppendGlobalLog($"distance：" + distance + "x=" + point.X + ",y=" + point.Y);
+                        LogService.Log($"distance：" + distance + "x=" + point.X + ",y=" + point.Y);
 
                         if (distance < minDistance)
                         {
@@ -471,14 +381,14 @@ namespace TTTools
                     }
                     // 最近的点是closestPoint
                     minDistance = Distance(screenCenter, closestPoint);
-                    Instance.AppendGlobalLog($"screenCenter：{screenCenter.X}, {screenCenter.Y}");
-                    Instance.AppendGlobalLog($"找到目标：{minDistance}  - {closestPoint.X}, {closestPoint.Y}");
+                    LogService.Log($"screenCenter：{screenCenter.X}, {screenCenter.Y}");
+                    LogService.Log($"找到目标：{minDistance}  - {closestPoint.X}, {closestPoint.Y}");
                     return closestPoint;
                 }
                 else
                 {
                     // 没有找到图片，进行其他处理
-                    Instance.AppendGlobalLog("没有找到");
+                    LogService.Log("没有找到");
                     return null;
                 }
             }
@@ -599,7 +509,7 @@ namespace TTTools
                 foreach (Point point in points)
                 {
                     string text = $"地图坐标点：({point.X}, {point.Y})";
-                    Instance.AppendGlobalLog(text);
+                    LogService.Debug(text);
                 }
                 if (points.Count > 0)
                 {
@@ -608,7 +518,7 @@ namespace TTTools
                     int x = mapX + offsetX + point.X;
                     int y = mapY + offsetY + point.Y;
                     ClickMapPoint(new Point(x, y));
-                    Instance.AppendGlobalLog($"点击坐标点=：({mapX}+{offsetX}+{point.X}={x})");
+                    LogService.Debug($"点击坐标点=：({mapX}+{offsetX}+{point.X}={x})");
 
                 }
 
@@ -665,8 +575,8 @@ namespace TTTools
         }
         public void loginAuto(int index,string username,string password)
         {
-            WindowUtilities.ChangeInputEn();
-            //SwitchToEnglishInput();
+            //WindowUtilities.ChangeInputEn();
+            SwitchToEnglishInput();
             wx.PushClick(574,132);
             wx.PushClick(543,445);
             wx.PushClick(612, 454);
@@ -675,23 +585,68 @@ namespace TTTools
 
             wx.PushClick(459, 265);
             for (var i = 0; i < 30; i++) {
-                wx.SendKey(0x08);
+                wx.SendBackspaceKey();
             }
-            wx.SendString(username);
+            Thread.Sleep(100);
+
+            wx.SendText(username);
 
             wx.PushClick(459, 290);
             for (var i = 0; i < 30; i++)
             {
-                wx.SendKey(0x08);
+                wx.SendBackspaceKey();
             }
-            wx.SendString(password);
+            Thread.Sleep(100);
+
+            wx.SendText(password);
 
             wx.PushClick(470, 352);
             int userX = 286 + (index * 62);
             int userY = 370;
             wx.PushClick(userX, userY);
-            wx.PushClick(userX, userY);
-            Instance.AppendGlobalLog($"角色{index},登录完成");
+            wx.PushClick(515, 417);
+            LogService.Log($"角色{index},登录完成");
+           
         }
+
+        // 测试-执行操作的模板方法
+        public async Task PerformLoginAsync(int index, string username, string password)
+        {
+            await ExecuteAsync(async () =>
+            {
+                await ClickAsync(574, 132);  // 进入登录界面
+                await ClickAsync(543, 445);  // 点击账号输入框
+                await ClickAsync(612, 454);  // 点击账号输入框
+                Thread.Sleep(100);
+                await ClickAsync(459, 265);
+
+                await EnterTextAsync(username);
+                await ClickAsync(459, 290);  // 点击密码输入框
+                await EnterTextAsync(password);
+                await ClickAsync(515, 417);  // 点击登录按钮
+
+               
+                await ClickAsync(286 + (index * 62), 370);
+                await ClickAsync(515, 417);
+                LogService.Log($"角色 {index} 登录完成");
+
+            });
+        }
+
+        // 测试
+        
+
+        // 测试-执行操作的模板方法
+        public async Task GameSendMsg(string text)
+        {
+            await ExecuteAsync(async () =>
+            {
+                var win = new WindowClickTools(hWnd);
+                win.PushClick(187, 619);
+                win.SendText(text);
+                win.SendEnterKey();
+            });
+        }
+
     }
 }
