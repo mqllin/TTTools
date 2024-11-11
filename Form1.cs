@@ -122,10 +122,6 @@ namespace TTTools
         //    return checkedWindows;
         //}
 
-        private async void Button_link_Click(object sender, EventArgs e)
-        {
-
-        }
 
 
         public void Dbug(string message)
@@ -145,16 +141,9 @@ namespace TTTools
             textBox_log.ScrollToCaret();
         }
 
-        private void TextBox_wid_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
 
-        private void button2_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -162,68 +151,9 @@ namespace TTTools
             Process.Start("explorer.exe", currentDirectory);
         }
 
-        private void textBox_popup_x_TextChanged(object sender, EventArgs e)
-        {
 
 
-        }
 
-        private void textBox_popup_y_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button_popup_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CheckTime(object state)
-        {
-
-
-        }
-
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-
-        }
 
         int localIndex = 0;
         private void button7_Click(object sender, EventArgs e)
@@ -231,40 +161,6 @@ namespace TTTools
             //api.handleCollection(hWnd, "矿石");
             api.MoveCollectionLocation("矿石", localIndex++);
 
-
-        }
-        private void clearAction()
-        {
-
-        }
-
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            //if (button8.Text == "开始采集")
-            //{
-            //    if (isRunAction)
-            //    {
-            //        MessageBox.Show("当前正在执行其他操作");
-            //        return;
-            //    }
-            //    button8.Text = "结束采集";
-
-            //    // 开始采集
-            //    //timerEnd = new System.Threading.Timer(startActionCollet, null, 2000, 2000);
-            //    collect.StartActionCollet();
-            //    isRunAction = true;
-            //}
-            //else
-            //{
-            //    button8.Text = "开始采集";
-            //    collect.clear();
-            //}
-        }
-
-
-        private void button9_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -400,30 +296,11 @@ namespace TTTools
 
 
 
-        private void button14_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button12_Click_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void button12_Click_2(object sender, EventArgs e)
         {
             var wabao = new ActionTreasureMethod(hWnd, this);
             wabao.Run();
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void button15_Click(object sender, EventArgs e)
@@ -462,10 +339,6 @@ namespace TTTools
             //Dbug(p2.ToString());
         }
 
-        private void textBox_log_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void button8_Click_1(object sender, EventArgs e)
         {
@@ -664,11 +537,7 @@ namespace TTTools
 
         }
 
-        private void button21_Click(object sender, EventArgs e)
-        {
 
-
-        }
 
         private async void button19_Click(object sender, EventArgs e)
         {
@@ -716,11 +585,6 @@ namespace TTTools
                     }
                 }
             }
-        }
-
-        private void button17_Click(object sender, EventArgs e)
-        {
-
         }
 
 
@@ -773,6 +637,51 @@ namespace TTTools
         {
             ClientManager.CurrentSelectedClient.Action = "";
             dataGridView1.Refresh();
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var api = new Method(hWnd, this);
+            if (!api.IsBackpackOpen())
+            {
+                api.ClickBackpack();
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var api = new Method(hWnd, this);
+            if (api.IsBackpackOpen())
+            {
+                api.ClickBackpack();
+            }
+        }
+        // 使用物品
+        public void UseBagItem(string name)
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var api = new Method(hWnd, this);
+            if (api.IsBackpackOpen())
+            {
+                api.UseBagItem(name);
+            }
+        }
+        private void button6_Click(object sender, EventArgs e)
+        {
+            UseBagItem("回程符");
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            UseBagItem("驱魔香");
+
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

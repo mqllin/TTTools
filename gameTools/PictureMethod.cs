@@ -193,5 +193,75 @@ namespace TTTools
                 }
             }
         }
+
+        //判断背包是否打开，如果打开了，返回第一个物品的位置
+        public Point? IsBackpackOpen()
+        {
+            // 定义背包特征图片路径
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string imagePath = Path.Combine(currentDirectory, "data", "ui", "beibao.png");
+
+            // 检查特征图片文件是否存在
+            if (!File.Exists(imagePath))
+            {
+                LogService.Log("背包特征图片不存在: " + imagePath);
+                return null;
+            }
+
+            // 加载背包特征图片
+            using (Bitmap backpackBitmap = new Bitmap(imagePath))
+            {
+                // 在当前窗口截图中寻找特征图片的位置
+                List<Point> foundPoints = FindBitmapInWindow(backpackBitmap);
+
+                // 如果找到匹配点，则返回第一个匹配点的坐标
+                if (foundPoints.Count > 0)
+                {
+                    return new Point
+                    {
+                        X = foundPoints[0].X-160,
+                        Y = foundPoints[0].Y+60
+                    };
+                }
+            }
+
+            // 没有找到匹配项，返回 null
+            return null;
+        }
+        //寻找背包内的物品
+        public Point? FindSomeInBackpack(string name)
+        {
+            // 定义背包特征图片路径
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string imagePath = Path.Combine(currentDirectory, "data", "ui", $"{name}.png");
+
+            // 检查特征图片文件是否存在
+            if (!File.Exists(imagePath))
+            {
+                LogService.Log($"{name}特征图片不存在: " + imagePath);
+                return null;
+            }
+
+            // 加载背包特征图片
+            using (Bitmap someThingImage = new Bitmap(imagePath))
+            {
+                // 在当前窗口截图中寻找特征图片的位置
+                List<Point> foundPoints = FindBitmapInWindow(someThingImage);
+
+                // 如果找到匹配点，则返回第一个匹配点的坐标
+                if (foundPoints.Count > 0)
+                {
+                    return new Point
+                    {
+                        X = foundPoints[0].X + 20,
+                        Y = foundPoints[0].Y + 20
+                    };
+
+                }
+            }
+
+            // 没有找到匹配项，返回 null
+            return null;
+        }
     }
 }

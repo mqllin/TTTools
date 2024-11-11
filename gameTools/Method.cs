@@ -16,12 +16,8 @@ namespace TTTools
         private readonly WindowClickTools wx;
         private readonly Form1 form1;
         private PictureMethod pic;
-        private string popupX;
-        private string popupY;
-        private int rushTotal = 0;
-        private bool isMoving = false; // 是否正在移动
-        private bool isRunAction = false; //是否正在运行程序
-        private System.Threading.Timer actionTimer; // 时钟
+ 
+     
         IniFileHelper iniFileHelper = new IniFileHelper("settings.ini");
         private Dictionary<string, List<Bitmap>> featureImages = new Dictionary<string, List<Bitmap>>();
 
@@ -92,11 +88,44 @@ namespace TTTools
             var y = height / 2 - 50;
             wx.PushClick(x, y, false, false);
         }
-        public void ClickBagBox()
+        //点击背包
+        public void ClickBackpack()
         {
             wx.PushClick(446, 605);
         }
+        //背包是否打开
+        public bool IsBackpackOpen()
+        {
+          var point =   pic.IsBackpackOpen();
+            if (point != null)
+            {
+                LogService.Log($"背包已打开{point.ToString()}");
+                return true;
+            }
+            return false;
+        }
+        public bool UseBagItem(string name)
+        {
+            string nameCode = "";
+            switch (name)
+            {
+                case "回程符":nameCode = "huiChengFu";break;
+                case "驱魔香": nameCode = "quMoXiang"; break;
+            }
+            Point? p = pic.FindSomeInBackpack(nameCode);
+            if (p != null)
+            {
+                wx.PushClick(p.Value.X, p.Value.Y,true);
+                LogService.Log($"使用道具{name}");
 
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //使用背包物品-索引
         public void UseBagItem(int index = 1)
         {
             if (index < 1 || index > 20)  // 检查index的有效性
@@ -104,7 +133,7 @@ namespace TTTools
                 Console.WriteLine("无效的物品索引");
                 return;
             }
-            ClickBagBox();
+            ClickBackpack();
             Thread.Sleep(2000);
             // 计算行数和列数（从0开始）
             // 正确的行数和列数计算
@@ -126,7 +155,7 @@ namespace TTTools
             wx.PushClick(x, y, true);
             Thread.Sleep(2000);
 
-            ClickBagBox();
+            ClickBackpack();
         }
 
         public Point ClickPopupItemAuto(Point point)

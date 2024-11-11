@@ -60,6 +60,12 @@ namespace TTTools
             button15 = new System.Windows.Forms.Button();
             button12 = new System.Windows.Forms.Button();
             tabPage5 = new System.Windows.Forms.TabPage();
+            button17 = new System.Windows.Forms.Button();
+            button14 = new System.Windows.Forms.Button();
+            button13 = new System.Windows.Forms.Button();
+            button6 = new System.Windows.Forms.Button();
+            button5 = new System.Windows.Forms.Button();
+            button4 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             button_dev_1 = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
@@ -77,6 +83,16 @@ namespace TTTools
             button8 = new System.Windows.Forms.Button();
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             tabControl2 = new System.Windows.Forms.TabControl();
+            button21 = new System.Windows.Forms.Button();
+            button22 = new System.Windows.Forms.Button();
+            button23 = new System.Windows.Forms.Button();
+            button24 = new System.Windows.Forms.Button();
+            button25 = new System.Windows.Forms.Button();
+            button26 = new System.Windows.Forms.Button();
+            button27 = new System.Windows.Forms.Button();
+            button28 = new System.Windows.Forms.Button();
+            button29 = new System.Windows.Forms.Button();
+            button30 = new System.Windows.Forms.Button();
             mainTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)clientBindingSource).BeginInit();
@@ -158,7 +174,6 @@ namespace TTTools
             dataGridView1.DataSource = clientBindingSource;
             dataGridView1.Location = new System.Drawing.Point(8, 26);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new System.Drawing.Size(550, 146);
             dataGridView1.TabIndex = 41;
             dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
@@ -364,6 +379,22 @@ namespace TTTools
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(button30);
+            tabPage5.Controls.Add(button29);
+            tabPage5.Controls.Add(button28);
+            tabPage5.Controls.Add(button27);
+            tabPage5.Controls.Add(button26);
+            tabPage5.Controls.Add(button25);
+            tabPage5.Controls.Add(button24);
+            tabPage5.Controls.Add(button23);
+            tabPage5.Controls.Add(button22);
+            tabPage5.Controls.Add(button21);
+            tabPage5.Controls.Add(button17);
+            tabPage5.Controls.Add(button14);
+            tabPage5.Controls.Add(button13);
+            tabPage5.Controls.Add(button6);
+            tabPage5.Controls.Add(button5);
+            tabPage5.Controls.Add(button4);
             tabPage5.Controls.Add(button1);
             tabPage5.Controls.Add(button_dev_1);
             tabPage5.Location = new System.Drawing.Point(4, 26);
@@ -373,6 +404,65 @@ namespace TTTools
             tabPage5.TabIndex = 3;
             tabPage5.Text = "功能单元测试";
             tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // button17
+            // 
+            button17.Location = new System.Drawing.Point(87, 35);
+            button17.Name = "button17";
+            button17.Size = new System.Drawing.Size(75, 23);
+            button17.TabIndex = 50;
+            button17.Text = "去应天府";
+            button17.UseVisualStyleBackColor = true;
+            // 
+            // button14
+            // 
+            button14.Location = new System.Drawing.Point(6, 35);
+            button14.Name = "button14";
+            button14.Size = new System.Drawing.Size(75, 23);
+            button14.TabIndex = 49;
+            button14.Text = "去星秀村";
+            button14.UseVisualStyleBackColor = true;
+            button14.Click += button14_Click;
+            // 
+            // button13
+            // 
+            button13.Location = new System.Drawing.Point(441, 6);
+            button13.Name = "button13";
+            button13.Size = new System.Drawing.Size(75, 23);
+            button13.TabIndex = 48;
+            button13.Text = "使用驱魔香";
+            button13.UseVisualStyleBackColor = true;
+            button13.Click += button13_Click;
+            // 
+            // button6
+            // 
+            button6.Location = new System.Drawing.Point(360, 6);
+            button6.Name = "button6";
+            button6.Size = new System.Drawing.Size(75, 23);
+            button6.TabIndex = 47;
+            button6.Text = "使用回程符";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
+            // button5
+            // 
+            button5.Location = new System.Drawing.Point(279, 6);
+            button5.Name = "button5";
+            button5.Size = new System.Drawing.Size(75, 23);
+            button5.TabIndex = 46;
+            button5.Text = "关闭背包";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // button4
+            // 
+            button4.Location = new System.Drawing.Point(198, 6);
+            button4.Name = "button4";
+            button4.Size = new System.Drawing.Size(75, 23);
+            button4.TabIndex = 45;
+            button4.Text = "打开背包";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click_1;
             // 
             // button1
             // 
@@ -548,6 +638,96 @@ namespace TTTools
             tabControl2.Size = new System.Drawing.Size(676, 412);
             tabControl2.TabIndex = 29;
             // 
+            // button21
+            // 
+            button21.Location = new System.Drawing.Point(168, 35);
+            button21.Name = "button21";
+            button21.Size = new System.Drawing.Size(75, 23);
+            button21.TabIndex = 51;
+            button21.Text = "去汴京城";
+            button21.UseVisualStyleBackColor = true;
+            // 
+            // button22
+            // 
+            button22.Location = new System.Drawing.Point(249, 35);
+            button22.Name = "button22";
+            button22.Size = new System.Drawing.Size(75, 23);
+            button22.TabIndex = 52;
+            button22.Text = "去清河县";
+            button22.UseVisualStyleBackColor = true;
+            // 
+            // button23
+            // 
+            button23.Location = new System.Drawing.Point(330, 35);
+            button23.Name = "button23";
+            button23.Size = new System.Drawing.Size(75, 23);
+            button23.TabIndex = 53;
+            button23.Text = "去阳谷县";
+            button23.UseVisualStyleBackColor = true;
+            // 
+            // button24
+            // 
+            button24.Location = new System.Drawing.Point(6, 64);
+            button24.Name = "button24";
+            button24.Size = new System.Drawing.Size(75, 23);
+            button24.TabIndex = 54;
+            button24.Text = "星宿村东";
+            button24.UseVisualStyleBackColor = true;
+            // 
+            // button25
+            // 
+            button25.Location = new System.Drawing.Point(87, 64);
+            button25.Name = "button25";
+            button25.Size = new System.Drawing.Size(75, 23);
+            button25.TabIndex = 55;
+            button25.Text = "黄泥岗";
+            button25.UseVisualStyleBackColor = true;
+            // 
+            // button26
+            // 
+            button26.Location = new System.Drawing.Point(168, 64);
+            button26.Name = "button26";
+            button26.Size = new System.Drawing.Size(75, 23);
+            button26.TabIndex = 56;
+            button26.Text = "应天府东";
+            button26.UseVisualStyleBackColor = true;
+            // 
+            // button27
+            // 
+            button27.Location = new System.Drawing.Point(249, 64);
+            button27.Name = "button27";
+            button27.Size = new System.Drawing.Size(75, 23);
+            button27.TabIndex = 57;
+            button27.Text = "应天府西";
+            button27.UseVisualStyleBackColor = true;
+            // 
+            // button28
+            // 
+            button28.Location = new System.Drawing.Point(330, 64);
+            button28.Name = "button28";
+            button28.Size = new System.Drawing.Size(75, 23);
+            button28.TabIndex = 58;
+            button28.Text = "阳谷县南";
+            button28.UseVisualStyleBackColor = true;
+            // 
+            // button29
+            // 
+            button29.Location = new System.Drawing.Point(411, 64);
+            button29.Name = "button29";
+            button29.Size = new System.Drawing.Size(75, 23);
+            button29.TabIndex = 59;
+            button29.Text = "景阳冈";
+            button29.UseVisualStyleBackColor = true;
+            // 
+            // button30
+            // 
+            button30.Location = new System.Drawing.Point(492, 64);
+            button30.Name = "button30";
+            button30.Size = new System.Drawing.Size(75, 23);
+            button30.TabIndex = 60;
+            button30.Text = "林中小居";
+            button30.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -624,6 +804,22 @@ namespace TTTools
         private System.Windows.Forms.Label label_current;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.Button button22;
+        private System.Windows.Forms.Button button21;
+        private System.Windows.Forms.Button button30;
+        private System.Windows.Forms.Button button29;
+        private System.Windows.Forms.Button button28;
+        private System.Windows.Forms.Button button27;
+        private System.Windows.Forms.Button button26;
+        private System.Windows.Forms.Button button25;
+        private System.Windows.Forms.Button button24;
     }
 }
 
