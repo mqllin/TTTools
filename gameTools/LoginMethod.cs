@@ -85,7 +85,7 @@ namespace TTTools
                 return;
             }
 
-            var api = new Method(gameWindowHandle, Instance);
+            var api = new Method(gameWindowHandle);
             api.InitWindows();
 
             // 绝对路径或确保相对路径正确

@@ -9,15 +9,13 @@ namespace TTTools.windowsTools
     class WindowOperationsAsync
     {
         private readonly nint hWnd;
-        private readonly Form1 Instance;
 
         // 假设当前鼠标的位置为 (currentX, currentY)
         private int currentX = 747, currentY = 114; // 默认初始位置
 
-        public WindowOperationsAsync(nint hWnd, Form1 Instance)
+        public WindowOperationsAsync(nint hWnd)
         {
             this.hWnd = hWnd;
-            this.Instance = Instance;
         }
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]

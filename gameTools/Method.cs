@@ -14,18 +14,16 @@ namespace TTTools
     {
         private readonly IntPtr hWnd;
         private readonly WindowClickTools wx;
-        private readonly Form1 form1;
         private PictureMethod pic;
  
      
         IniFileHelper iniFileHelper = new IniFileHelper("settings.ini");
         private Dictionary<string, List<Bitmap>> featureImages = new Dictionary<string, List<Bitmap>>();
 
-        public Method(IntPtr hWnd, Form1 Instance = null) : base(hWnd, Instance)
+        public Method(IntPtr hWnd) : base(hWnd)
         {
             this.hWnd = hWnd;
             this.wx = new WindowClickTools(hWnd);
-            this.form1 = Instance;
             this.pic = new PictureMethod(hWnd);
             LoadFeatureImages();
 
@@ -74,7 +72,8 @@ namespace TTTools
                     }
                     else
                     {
-                        //Instance.AppendGlobalLog($"图像文件不存在: {imagePath}");
+                        LogService.Log($"图像文件不存在 {imagePath}");
+
 
                     }
                 }
@@ -104,6 +103,9 @@ namespace TTTools
             }
             return false;
         }
+        /**
+         * name 回程符 驱魔香 
+         **/
         public bool UseBagItem(string name)
         {
             string nameCode = "";
@@ -147,10 +149,7 @@ namespace TTTools
 
             int x = rx + offsetX;
             int y = ry + offsetY;
-            //Instance.AppendGlobalLog("col" + col + "," + row);
-
-            //Instance.AppendGlobalLog("offset" + offsetX + ","+ offsetY);
-            //Instance.AppendGlobalLog("click" + x+","+y);
+           
 
             wx.PushClick(x, y, true);
             Thread.Sleep(2000);
@@ -300,7 +299,7 @@ namespace TTTools
             wx.PushClick(x, y);
             Thread.Sleep(2000);
             ClickPopupItem(64, 36);
-            //Instance.AppendGlobalLog("第：" + RushTotal.ToString()+"次开始战斗");
+           
 
         }
         public void EndCombatByMsg()
@@ -357,7 +356,6 @@ namespace TTTools
                             }
                         }
 
-                        //Instance.AppendGlobalLog($"screenCenter：{screenCenter.X}, {screenCenter.Y}");
                         LogService.Log($"找到目标：{minDistance}  - {closestPoint.X}, {closestPoint.Y}");
 
                         wx.PushClick(closestPoint.X + offsetX, closestPoint.Y + offsetY, isRightClick);
@@ -379,6 +377,7 @@ namespace TTTools
             }
         }
 
+        // 在窗口中寻找素材目标
         public Point? FindSomeThingInMapByFileName(string type, string fileName)
         {
             Bitmap targetImage = null;

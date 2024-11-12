@@ -10,17 +10,15 @@ namespace TTTools
     public abstract class BaseOperation
     {
         protected readonly IntPtr hWnd;
-        protected readonly Form1 Instance;
         protected readonly CancellationTokenSource cancellationTokenSource;
         protected readonly CancellationToken cancellationToken;
         WindowOperationsAsync windowOperationsAsync;
-        public BaseOperation(IntPtr hWnd, Form1 instance)
+        public BaseOperation(IntPtr hWnd)
         {
             this.hWnd = hWnd;
-            this.Instance = instance;
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
-            windowOperationsAsync = new WindowOperationsAsync(hWnd, instance);
+            windowOperationsAsync = new WindowOperationsAsync(hWnd);
         }
 
         // 定义一个模板方法
@@ -28,14 +26,7 @@ namespace TTTools
         {
             try
             {
-                // 检查窗口是否关闭
-                if (Instance.IsDisposed)
-                {
-                    cancellationTokenSource.Cancel();
-                    LogService.Debug("操作被中断，窗口已关闭。");
-                    
-                    return;
-                }
+              
                 await operationTask();  // 执行操作
             }
             catch (OperationCanceledException)

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TTTools.client;
+using TTTools.gameTools;
 using TTTools.windowsTools;
 
 namespace TTTools
@@ -616,7 +617,7 @@ namespace TTTools
         private async void button_dev_1_Click(object sender, EventArgs e)
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
-            var api = new Method(hWnd, this);
+            var api = new Method(hWnd);
             await api.GameSendMsg("Hello World");
 
         }
@@ -641,46 +642,54 @@ namespace TTTools
 
         private void button4_Click_1(object sender, EventArgs e)
         {
-            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
-            var api = new Method(hWnd, this);
-            if (!api.IsBackpackOpen())
-            {
-                api.ClickBackpack();
-            }
+            ToolsFunction.OpenBackPack();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
-            var api = new Method(hWnd, this);
-            if (api.IsBackpackOpen())
-            {
-                api.ClickBackpack();
-            }
+            ToolsFunction.CloseBackPack();
+
         }
-        // 使用物品
-        public void UseBagItem(string name)
-        {
-            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
-            var api = new Method(hWnd, this);
-            if (api.IsBackpackOpen())
-            {
-                api.UseBagItem(name);
-            }
-        }
+
         private void button6_Click(object sender, EventArgs e)
         {
-            UseBagItem("回程符");
+            ToolsFunction.UseBagItem("回程符");
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
-            UseBagItem("驱魔香");
+            ToolsFunction.UseBagItem("驱魔香");
 
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
+            ToolsFunction.MoveToMap("星秀村");
+        }
+
+        private void tabPage5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.MoveToMap("应天府");
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.MoveToMap("汴京城");
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.MoveToMap("清河县");
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.MoveToMap("阳谷县");
 
         }
     }

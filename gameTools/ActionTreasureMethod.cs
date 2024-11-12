@@ -16,7 +16,7 @@ namespace TTTools
         {
             this.hWnd = hWnd;
             this.wx = new WindowClickTools(hWnd);
-            this.api = new Method(hWnd, Instance);
+            this.api = new Method(hWnd);
             this.Instance = Instance;
             this.pic = new PictureMethod(hWnd);
 

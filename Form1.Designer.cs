@@ -60,6 +60,25 @@ namespace TTTools
             button15 = new System.Windows.Forms.Button();
             button12 = new System.Windows.Forms.Button();
             tabPage5 = new System.Windows.Forms.TabPage();
+            button39 = new System.Windows.Forms.Button();
+            button38 = new System.Windows.Forms.Button();
+            button37 = new System.Windows.Forms.Button();
+            button36 = new System.Windows.Forms.Button();
+            button35 = new System.Windows.Forms.Button();
+            button34 = new System.Windows.Forms.Button();
+            button33 = new System.Windows.Forms.Button();
+            button32 = new System.Windows.Forms.Button();
+            button31 = new System.Windows.Forms.Button();
+            button30 = new System.Windows.Forms.Button();
+            button29 = new System.Windows.Forms.Button();
+            button28 = new System.Windows.Forms.Button();
+            button27 = new System.Windows.Forms.Button();
+            button26 = new System.Windows.Forms.Button();
+            button25 = new System.Windows.Forms.Button();
+            button24 = new System.Windows.Forms.Button();
+            button23 = new System.Windows.Forms.Button();
+            button22 = new System.Windows.Forms.Button();
+            button21 = new System.Windows.Forms.Button();
             button17 = new System.Windows.Forms.Button();
             button14 = new System.Windows.Forms.Button();
             button13 = new System.Windows.Forms.Button();
@@ -83,16 +102,6 @@ namespace TTTools
             button8 = new System.Windows.Forms.Button();
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             tabControl2 = new System.Windows.Forms.TabControl();
-            button21 = new System.Windows.Forms.Button();
-            button22 = new System.Windows.Forms.Button();
-            button23 = new System.Windows.Forms.Button();
-            button24 = new System.Windows.Forms.Button();
-            button25 = new System.Windows.Forms.Button();
-            button26 = new System.Windows.Forms.Button();
-            button27 = new System.Windows.Forms.Button();
-            button28 = new System.Windows.Forms.Button();
-            button29 = new System.Windows.Forms.Button();
-            button30 = new System.Windows.Forms.Button();
             mainTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)clientBindingSource).BeginInit();
@@ -379,6 +388,15 @@ namespace TTTools
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(button39);
+            tabPage5.Controls.Add(button38);
+            tabPage5.Controls.Add(button37);
+            tabPage5.Controls.Add(button36);
+            tabPage5.Controls.Add(button35);
+            tabPage5.Controls.Add(button34);
+            tabPage5.Controls.Add(button33);
+            tabPage5.Controls.Add(button32);
+            tabPage5.Controls.Add(button31);
             tabPage5.Controls.Add(button30);
             tabPage5.Controls.Add(button29);
             tabPage5.Controls.Add(button28);
@@ -404,6 +422,181 @@ namespace TTTools
             tabPage5.TabIndex = 3;
             tabPage5.Text = "功能单元测试";
             tabPage5.UseVisualStyleBackColor = true;
+            tabPage5.Click += tabPage5_Click;
+            // 
+            // button39
+            // 
+            button39.Location = new System.Drawing.Point(479, 122);
+            button39.Name = "button39";
+            button39.Size = new System.Drawing.Size(75, 23);
+            button39.TabIndex = 69;
+            button39.Text = "购买商品1";
+            button39.UseVisualStyleBackColor = true;
+            // 
+            // button38
+            // 
+            button38.Location = new System.Drawing.Point(389, 122);
+            button38.Name = "button38";
+            button38.Size = new System.Drawing.Size(84, 23);
+            button38.TabIndex = 68;
+            button38.Text = "打开杂货店";
+            button38.UseVisualStyleBackColor = true;
+            // 
+            // button37
+            // 
+            button37.Location = new System.Drawing.Point(308, 122);
+            button37.Name = "button37";
+            button37.Size = new System.Drawing.Size(75, 23);
+            button37.TabIndex = 67;
+            button37.Text = "关闭对话";
+            button37.UseVisualStyleBackColor = true;
+            // 
+            // button36
+            // 
+            button36.Location = new System.Drawing.Point(207, 122);
+            button36.Name = "button36";
+            button36.Size = new System.Drawing.Size(95, 23);
+            button36.TabIndex = 66;
+            button36.Text = "采集寻路-皮草";
+            button36.UseVisualStyleBackColor = true;
+            // 
+            // button35
+            // 
+            button35.Location = new System.Drawing.Point(106, 122);
+            button35.Name = "button35";
+            button35.Size = new System.Drawing.Size(95, 23);
+            button35.TabIndex = 65;
+            button35.Text = "采集寻路-水晶";
+            button35.UseVisualStyleBackColor = true;
+            // 
+            // button34
+            // 
+            button34.Location = new System.Drawing.Point(6, 122);
+            button34.Name = "button34";
+            button34.Size = new System.Drawing.Size(94, 23);
+            button34.TabIndex = 64;
+            button34.Text = "采集寻路-矿石";
+            button34.UseVisualStyleBackColor = true;
+            // 
+            // button33
+            // 
+            button33.Location = new System.Drawing.Point(87, 93);
+            button33.Name = "button33";
+            button33.Size = new System.Drawing.Size(75, 23);
+            button33.TabIndex = 63;
+            button33.Text = "放弃任务";
+            button33.UseVisualStyleBackColor = true;
+            // 
+            // button32
+            // 
+            button32.Location = new System.Drawing.Point(168, 93);
+            button32.Name = "button32";
+            button32.Size = new System.Drawing.Size(105, 23);
+            button32.TabIndex = 62;
+            button32.Text = "查看任务-驱魔香";
+            button32.UseVisualStyleBackColor = true;
+            // 
+            // button31
+            // 
+            button31.Location = new System.Drawing.Point(6, 93);
+            button31.Name = "button31";
+            button31.Size = new System.Drawing.Size(75, 23);
+            button31.TabIndex = 61;
+            button31.Text = "打开任务栏";
+            button31.UseVisualStyleBackColor = true;
+            // 
+            // button30
+            // 
+            button30.Location = new System.Drawing.Point(492, 64);
+            button30.Name = "button30";
+            button30.Size = new System.Drawing.Size(75, 23);
+            button30.TabIndex = 60;
+            button30.Text = "林中小居";
+            button30.UseVisualStyleBackColor = true;
+            // 
+            // button29
+            // 
+            button29.Location = new System.Drawing.Point(411, 64);
+            button29.Name = "button29";
+            button29.Size = new System.Drawing.Size(75, 23);
+            button29.TabIndex = 59;
+            button29.Text = "景阳冈";
+            button29.UseVisualStyleBackColor = true;
+            // 
+            // button28
+            // 
+            button28.Location = new System.Drawing.Point(330, 64);
+            button28.Name = "button28";
+            button28.Size = new System.Drawing.Size(75, 23);
+            button28.TabIndex = 58;
+            button28.Text = "阳谷县南";
+            button28.UseVisualStyleBackColor = true;
+            // 
+            // button27
+            // 
+            button27.Location = new System.Drawing.Point(249, 64);
+            button27.Name = "button27";
+            button27.Size = new System.Drawing.Size(75, 23);
+            button27.TabIndex = 57;
+            button27.Text = "应天府西";
+            button27.UseVisualStyleBackColor = true;
+            // 
+            // button26
+            // 
+            button26.Location = new System.Drawing.Point(168, 64);
+            button26.Name = "button26";
+            button26.Size = new System.Drawing.Size(75, 23);
+            button26.TabIndex = 56;
+            button26.Text = "应天府东";
+            button26.UseVisualStyleBackColor = true;
+            // 
+            // button25
+            // 
+            button25.Location = new System.Drawing.Point(87, 64);
+            button25.Name = "button25";
+            button25.Size = new System.Drawing.Size(75, 23);
+            button25.TabIndex = 55;
+            button25.Text = "黄泥岗";
+            button25.UseVisualStyleBackColor = true;
+            // 
+            // button24
+            // 
+            button24.Location = new System.Drawing.Point(6, 64);
+            button24.Name = "button24";
+            button24.Size = new System.Drawing.Size(75, 23);
+            button24.TabIndex = 54;
+            button24.Text = "星宿村东";
+            button24.UseVisualStyleBackColor = true;
+            // 
+            // button23
+            // 
+            button23.Location = new System.Drawing.Point(330, 35);
+            button23.Name = "button23";
+            button23.Size = new System.Drawing.Size(75, 23);
+            button23.TabIndex = 53;
+            button23.Text = "去阳谷县";
+            button23.UseVisualStyleBackColor = true;
+            button23.Click += button23_Click;
+            // 
+            // button22
+            // 
+            button22.Location = new System.Drawing.Point(249, 35);
+            button22.Name = "button22";
+            button22.Size = new System.Drawing.Size(75, 23);
+            button22.TabIndex = 52;
+            button22.Text = "去清河县";
+            button22.UseVisualStyleBackColor = true;
+            button22.Click += button22_Click;
+            // 
+            // button21
+            // 
+            button21.Location = new System.Drawing.Point(168, 35);
+            button21.Name = "button21";
+            button21.Size = new System.Drawing.Size(75, 23);
+            button21.TabIndex = 51;
+            button21.Text = "去汴京城";
+            button21.UseVisualStyleBackColor = true;
+            button21.Click += button21_Click;
             // 
             // button17
             // 
@@ -413,6 +606,7 @@ namespace TTTools
             button17.TabIndex = 50;
             button17.Text = "去应天府";
             button17.UseVisualStyleBackColor = true;
+            button17.Click += button17_Click;
             // 
             // button14
             // 
@@ -638,96 +832,6 @@ namespace TTTools
             tabControl2.Size = new System.Drawing.Size(676, 412);
             tabControl2.TabIndex = 29;
             // 
-            // button21
-            // 
-            button21.Location = new System.Drawing.Point(168, 35);
-            button21.Name = "button21";
-            button21.Size = new System.Drawing.Size(75, 23);
-            button21.TabIndex = 51;
-            button21.Text = "去汴京城";
-            button21.UseVisualStyleBackColor = true;
-            // 
-            // button22
-            // 
-            button22.Location = new System.Drawing.Point(249, 35);
-            button22.Name = "button22";
-            button22.Size = new System.Drawing.Size(75, 23);
-            button22.TabIndex = 52;
-            button22.Text = "去清河县";
-            button22.UseVisualStyleBackColor = true;
-            // 
-            // button23
-            // 
-            button23.Location = new System.Drawing.Point(330, 35);
-            button23.Name = "button23";
-            button23.Size = new System.Drawing.Size(75, 23);
-            button23.TabIndex = 53;
-            button23.Text = "去阳谷县";
-            button23.UseVisualStyleBackColor = true;
-            // 
-            // button24
-            // 
-            button24.Location = new System.Drawing.Point(6, 64);
-            button24.Name = "button24";
-            button24.Size = new System.Drawing.Size(75, 23);
-            button24.TabIndex = 54;
-            button24.Text = "星宿村东";
-            button24.UseVisualStyleBackColor = true;
-            // 
-            // button25
-            // 
-            button25.Location = new System.Drawing.Point(87, 64);
-            button25.Name = "button25";
-            button25.Size = new System.Drawing.Size(75, 23);
-            button25.TabIndex = 55;
-            button25.Text = "黄泥岗";
-            button25.UseVisualStyleBackColor = true;
-            // 
-            // button26
-            // 
-            button26.Location = new System.Drawing.Point(168, 64);
-            button26.Name = "button26";
-            button26.Size = new System.Drawing.Size(75, 23);
-            button26.TabIndex = 56;
-            button26.Text = "应天府东";
-            button26.UseVisualStyleBackColor = true;
-            // 
-            // button27
-            // 
-            button27.Location = new System.Drawing.Point(249, 64);
-            button27.Name = "button27";
-            button27.Size = new System.Drawing.Size(75, 23);
-            button27.TabIndex = 57;
-            button27.Text = "应天府西";
-            button27.UseVisualStyleBackColor = true;
-            // 
-            // button28
-            // 
-            button28.Location = new System.Drawing.Point(330, 64);
-            button28.Name = "button28";
-            button28.Size = new System.Drawing.Size(75, 23);
-            button28.TabIndex = 58;
-            button28.Text = "阳谷县南";
-            button28.UseVisualStyleBackColor = true;
-            // 
-            // button29
-            // 
-            button29.Location = new System.Drawing.Point(411, 64);
-            button29.Name = "button29";
-            button29.Size = new System.Drawing.Size(75, 23);
-            button29.TabIndex = 59;
-            button29.Text = "景阳冈";
-            button29.UseVisualStyleBackColor = true;
-            // 
-            // button30
-            // 
-            button30.Location = new System.Drawing.Point(492, 64);
-            button30.Name = "button30";
-            button30.Size = new System.Drawing.Size(75, 23);
-            button30.TabIndex = 60;
-            button30.Text = "林中小居";
-            button30.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -820,6 +924,15 @@ namespace TTTools
         private System.Windows.Forms.Button button26;
         private System.Windows.Forms.Button button25;
         private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.Button button36;
+        private System.Windows.Forms.Button button35;
+        private System.Windows.Forms.Button button34;
+        private System.Windows.Forms.Button button33;
+        private System.Windows.Forms.Button button32;
+        private System.Windows.Forms.Button button31;
+        private System.Windows.Forms.Button button39;
+        private System.Windows.Forms.Button button38;
+        private System.Windows.Forms.Button button37;
     }
 }
 
