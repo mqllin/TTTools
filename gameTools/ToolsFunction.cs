@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TTTools.client;
 
@@ -66,12 +67,16 @@ namespace TTTools.gameTools
                 return false;
             }
             UseBagItem("回程符");
+            win.MoveMouse(800, 0);
             Point? point = api.FindSomeThingInMapByFileName("ui", targetCode);
             if (point == null)
             {
                 return false;
             }
-            win.PushClick(point.Value.X, point.Value.Y);
+            win.PushClick(point.Value.X+15, point.Value.Y + 35);
+            Thread.Sleep(500);
+            //CloseBackPack();
+            api.ClosePopupAuto();
             return true;
         }
 

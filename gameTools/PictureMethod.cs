@@ -199,7 +199,7 @@ namespace TTTools
         {
             // 定义背包特征图片路径
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string imagePath = Path.Combine(currentDirectory, "data", "ui", "beibao.png");
+            string imagePath = Path.Combine(currentDirectory, "data", "ui", "zhuangbeidaoju.png");
 
             // 检查特征图片文件是否存在
             if (!File.Exists(imagePath))
@@ -219,8 +219,8 @@ namespace TTTools
                 {
                     return new Point
                     {
-                        X = foundPoints[0].X-160,
-                        Y = foundPoints[0].Y+60
+                        X = foundPoints[0].X-106,
+                        Y = foundPoints[0].Y+260
                     };
                 }
             }
