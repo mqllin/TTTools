@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -200,6 +201,36 @@ namespace TTTools
             currentY = y;
         }
 
+        public void MoveMouse(Point? point, bool hasOffset = true)
+        {
+            if (point == null)
+            {
+                return;
+            }
+            var x = point.Value.X;
+            var y = point.Value.Y;
+            if (hasOffset)
+            {
+                x -= 2;
+                y -= 26;
+            }
+
+            int steps = 30;
+            int sleepTime = 100 / steps;
+
+            float stepX = (float)(x - currentX) / steps;
+            float stepY = (float)(y - currentY) / steps;
+
+            for (int i = 1; i <= steps; i++)
+            {
+                int nextX = currentX + (int)(stepX * i);
+                int nextY = currentY + (int)(stepY * i);
+                SendMessage(hWnd, WM_MOUSEMOVE, IntPtr.Zero, MakeLParam(nextX, nextY));
+                Thread.Sleep(sleepTime);
+            }
+            currentX = x;
+            currentY = y;
+        }
         public void MouseHover(int x, int y, bool hasOffset = true)
         {
             if (hasOffset)

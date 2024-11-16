@@ -16,6 +16,7 @@
     <PackageReference Include="Baidu.AI" Version="4.15.13" />
     <PackageReference Include="LeptonicaSharp" Version="1.77.0.1" />
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Tesseract" Version="5.2.0" />
   </ItemGroup>
 
@@ -35,16 +36,16 @@
     <None Update="data\ui\beibao.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\caopi1.png">
+    <None Update="data\caiji\caopi1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\caopi2.png">
+    <None Update="data\caiji\caopi2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\caopi3.png">
+    <None Update="data\caiji\caopi3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\caopi4.png">
+    <None Update="data\caiji\caopi4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="data\chi_sim.traineddata">
@@ -53,13 +54,13 @@
     <None Update="data\kuangshi.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\kuangshi1.png">
+    <None Update="data\caiji\kuangshi1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\kuangshi2.png">
+    <None Update="data\caiji\kuangshi2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\kuangshi3.png">
+    <None Update="data\caiji\kuangshi3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="data\ui\bianJingCheng.png">
@@ -74,37 +75,43 @@
     <None Update="data\ui\huiChengFu.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="data\ui\mapIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="data\ui\mapPoint.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing1.png">
+    <None Update="data\caiji\shuijing1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing10.png">
+    <None Update="data\caiji\shuijing10.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing2.png">
+    <None Update="data\caiji\shuijing2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing3.png">
+    <None Update="data\caiji\shuijing3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing4.png">
+    <None Update="data\caiji\shuijing4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing5.png">
+    <None Update="data\caiji\shuijing5.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing6.png">
+    <None Update="data\caiji\shuijing6.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing7.png">
+    <None Update="data\caiji\shuijing7.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing8.png">
+    <None Update="data\caiji\shuijing8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\shuijing9.png">
+    <None Update="data\caiji\shuijing9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="data\ui\mapPoint2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="data\ui\popup.png">

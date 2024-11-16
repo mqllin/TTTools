@@ -27,6 +27,8 @@ namespace TTTools
         public PictureMethod(IntPtr hWnd)
         {
             this.hWnd = hWnd;
+           
+
         }
 
         public Bitmap CaptureWindow(int x, int y, int width, int height)
@@ -110,9 +112,13 @@ namespace TTTools
         {
             int width = 806;  // 定义窗口截图的宽度
             int height = 692; // 定义窗口截图的高度
+            Bitmap fullCapture2 = CaptureWindow(0, 0, width, height);
+            SaveImage(fullCapture2);
+            LogService.Debug(fullCapture2.ToString());
 
             using (Bitmap fullCapture = CaptureWindow(0, 0, width, height))
             {
+                SaveImage(toFind);
                 List<Point> foundPoints = new List<Point>();
 
                 var dataFullCapture = fullCapture.LockBits(new Rectangle(0, 0, fullCapture.Width, fullCapture.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);

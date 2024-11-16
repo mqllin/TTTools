@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -21,7 +23,7 @@ namespace TTTools.gameTools
                 api.UseBagItem(name);
             }
         }
-      
+
         // 关闭背包
         public static void CloseBackPack()
         {
@@ -73,12 +75,63 @@ namespace TTTools.gameTools
             {
                 return false;
             }
-            win.PushClick(point.Value.X+15, point.Value.Y + 35);
+            win.PushClick(point.Value.X + 15, point.Value.Y + 35);
             Thread.Sleep(500);
             //CloseBackPack();
             api.ClosePopupAuto();
             return true;
         }
 
+
+        // 打开地图
+        public static bool OpenMap()
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var win = new WindowClickTools(hWnd);
+            var api = new Method(hWnd);
+            var pic = new PictureMethod(hWnd);
+            win.MoveMouse(0, 0);
+            Point? point = api.FindSomeThingInMapByFileName("ui", "mapPoint");
+            if (point != null)
+            {
+                
+                win.MoveMouse(point.Value.X+1,point.Value.Y+15,false);
+                //win.PushClick(point.Value.X, point.Value.Y + 10);
+                return true;
+            }
+            else
+            {
+                api.OpenMap();
+                Thread.Sleep(500);
+                win.PushClick(point.Value.X, point.Value.Y + 10);
+                return true;
+            }
+        }
+
+        public static bool OpenMapAndMoveToPoint(int x,int y)
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var win = new WindowClickTools(hWnd);
+            var api = new Method(hWnd);
+            var pic = new PictureMethod(hWnd);
+
+            new ActionTreasureMethod(hWnd).Run() ;
+
+            return false;
+            win.MoveMouse(0, 0);
+            Point? point = api.FindSomeThingInMapByFileName("ui", "mapPoint");
+            if (point != null)
+            {
+                win.MoveMouse(point.Value.X + 0, point.Value.Y + 12+200,false);
+                return true;
+            }
+            else
+            {
+                api.OpenMap();
+                Thread.Sleep(500);
+                win.MoveMouse(point.Value.X + x, point.Value.Y + y, false);
+                return true;
+            }
+        }
     }
 }

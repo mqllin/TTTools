@@ -15,8 +15,8 @@ namespace TTTools
         private readonly IntPtr hWnd;
         private readonly WindowClickTools wx;
         private PictureMethod pic;
- 
-     
+
+
         IniFileHelper iniFileHelper = new IniFileHelper("settings.ini");
         private Dictionary<string, List<Bitmap>> featureImages = new Dictionary<string, List<Bitmap>>();
 
@@ -35,11 +35,11 @@ namespace TTTools
 
 
         }
-       
+
         private void LoadFeatureImages()
         {
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string dataDirectory = Path.Combine(currentDirectory, "data");
+
 
             // 定义需要加载的材料和对应的文件前缀
             Dictionary<string, string> materials = new Dictionary<string, string>
@@ -55,7 +55,7 @@ namespace TTTools
 
                 for (int i = 1; i <= 10; i++)  // 假设每种材料有两张图像
                 {
-                    string imagePath = Path.Combine(dataDirectory, $"{material.Value}{i}.png");
+                    string imagePath = Path.Combine(currentDirectory, "data", "caiji", $"{material.Value}{i}.png");
 
                     if (File.Exists(imagePath))
                     {
@@ -69,12 +69,6 @@ namespace TTTools
                             LogService.Log($"无法加载图像 {imagePath}: {ex.Message}");
 
                         }
-                    }
-                    else
-                    {
-                        LogService.Log($"图像文件不存在 {imagePath}");
-
-
                     }
                 }
             }
@@ -92,10 +86,15 @@ namespace TTTools
         {
             wx.PushClick(446, 605);
         }
+        //打开背包
+        public void OpenMap()
+        {
+            wx.SendTabKey();
+        }
         //背包是否打开
         public bool IsBackpackOpen()
         {
-          var point =   pic.IsBackpackOpen();
+            var point = pic.IsBackpackOpen();
             if (point != null)
             {
                 LogService.Log($"背包已打开{point.ToString()}");
@@ -111,13 +110,13 @@ namespace TTTools
             string nameCode = "";
             switch (name)
             {
-                case "回程符":nameCode = "huiChengFu";break;
+                case "回程符": nameCode = "huiChengFu"; break;
                 case "驱魔香": nameCode = "quMoXiang"; break;
             }
             Point? p = pic.FindSomeInBackpack(nameCode);
             if (p != null)
             {
-                wx.PushClick(p.Value.X, p.Value.Y,true);
+                wx.PushClick(p.Value.X, p.Value.Y, true);
                 LogService.Log($"使用道具{name}");
 
                 return true;
@@ -149,7 +148,7 @@ namespace TTTools
 
             int x = rx + offsetX;
             int y = ry + offsetY;
-           
+
 
             wx.PushClick(x, y, true);
             Thread.Sleep(2000);
@@ -226,7 +225,7 @@ namespace TTTools
             }
 
         }
-        public Point? GetMapExportPoin(string currentName, string nextName)
+        public Point? GetMapExportPoint(string currentName, string nextName)
         {
             if (currentName == "应天府")
             {
@@ -299,7 +298,7 @@ namespace TTTools
             wx.PushClick(x, y);
             Thread.Sleep(2000);
             ClickPopupItem(64, 36);
-           
+
 
         }
         public void EndCombatByMsg()
@@ -312,7 +311,7 @@ namespace TTTools
             Thread.Sleep(1000);
             wx.SendEnterKey();
         }
-      
+
 
 
         public Point? FindAndClickSomeThingInMap(string name, bool isRightClick = false)
@@ -383,6 +382,7 @@ namespace TTTools
             Bitmap targetImage = null;
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string imagePath = Path.Combine(currentDirectory, $"data/{type}", $"{fileName}.png");
+            LogService.Debug($"寻找图片{imagePath}");
             targetImage = new Bitmap(imagePath);
 
             if (targetImage != null)
@@ -390,6 +390,9 @@ namespace TTTools
                 PictureMethod pic = new PictureMethod(hWnd);
 
                 List<Point> locations = pic.FindBitmapInWindow(targetImage);
+                LogService.Debug($"寻找图片locations{locations.Count}");
+
+
                 if (locations.Count > 0)
                 {
                     Point screenCenter = new Point(806 / 2, 692 / 2);
@@ -599,23 +602,24 @@ namespace TTTools
             // 按下 Shift 键
             wx.SendKey(0x10);
 
-         
+
         }
-        public void loginAuto(int index,string username,string password)
+        public void loginAuto(int index, string username, string password)
         {
             //WindowUtilities.ChangeInputEn();
             SwitchToEnglishInput();
-            wx.PushClick(574,132);
-            wx.PushClick(543,445);
+            wx.PushClick(574, 132);
+            wx.PushClick(543, 445);
             wx.PushClick(612, 454);
             // 删除账号
             Thread.Sleep(100);
 
             wx.PushClick(459, 265);
-            for (var i = 0; i < 30; i++) {
+            for (var i = 0; i < 30; i++)
+            {
                 wx.SendBackspaceKey();
             }
-            Thread.Sleep(100);
+            Thread.Sleep(50);
 
             wx.SendText(username);
 
@@ -624,7 +628,7 @@ namespace TTTools
             {
                 wx.SendBackspaceKey();
             }
-            Thread.Sleep(100);
+            Thread.Sleep(50);
 
             wx.SendText(password);
 
@@ -634,7 +638,7 @@ namespace TTTools
             wx.PushClick(userX, userY);
             wx.PushClick(515, 417);
             LogService.Log($"角色{index},登录完成");
-           
+
         }
 
         // 测试-执行操作的模板方法
@@ -653,7 +657,7 @@ namespace TTTools
                 await EnterTextAsync(password);
                 await ClickAsync(515, 417);  // 点击登录按钮
 
-               
+
                 await ClickAsync(286 + (index * 62), 370);
                 await ClickAsync(515, 417);
                 LogService.Log($"角色 {index} 登录完成");
@@ -662,7 +666,7 @@ namespace TTTools
         }
 
         // 测试
-        
+
 
         // 测试-执行操作的模板方法
         public async Task GameSendMsg(string text)

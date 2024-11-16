@@ -300,7 +300,7 @@ namespace TTTools
 
         private void button12_Click_2(object sender, EventArgs e)
         {
-            var wabao = new ActionTreasureMethod(hWnd, this);
+            var wabao = new ActionTreasureMethod(hWnd);
             wabao.Run();
         }
 
@@ -609,9 +609,17 @@ namespace TTTools
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             int index = dataGridView1.CurrentRow.Index;
-            var value = dataGridView1.Rows[index].Cells[2].Value.ToString();
-            label_current.Text = $"当前选择的角色：{value}";
-            ClientManager.CurrentSelectedClient = ClientManager.Clients[index];
+            if (index >= 0)
+            {
+                var value = dataGridView1.Rows[index].Cells[2].Value.ToString();
+                label_current.Text = $"当前选择的角色：{value}";
+                ClientManager.CurrentSelectedClient = ClientManager.Clients[index];
+            }
+            else
+            {
+                LogService.Debug($"程序错误没有获取到角色数据,dataGridView1.CurrentRow.Index={dataGridView1.CurrentRow.Index}");
+            }
+
         }
 
         private async void button_dev_1_Click(object sender, EventArgs e)
@@ -691,6 +699,13 @@ namespace TTTools
         {
             ToolsFunction.MoveToMap("阳谷县");
 
+        }
+
+        private void button40_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.OpenMapAndMoveToPoint(100,100);
+
+            
         }
     }
 }

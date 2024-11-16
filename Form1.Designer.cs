@@ -102,6 +102,9 @@ namespace TTTools
             button8 = new System.Windows.Forms.Button();
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             tabControl2 = new System.Windows.Forms.TabControl();
+            tabPage1 = new System.Windows.Forms.TabPage();
+            tabPage4 = new System.Windows.Forms.TabPage();
+            button40 = new System.Windows.Forms.Button();
             mainTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)clientBindingSource).BeginInit();
@@ -257,6 +260,8 @@ namespace TTTools
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage5);
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage4);
             tabControl1.Location = new System.Drawing.Point(8, 178);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -388,6 +393,7 @@ namespace TTTools
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(button40);
             tabPage5.Controls.Add(button39);
             tabPage5.Controls.Add(button38);
             tabPage5.Controls.Add(button37);
@@ -686,7 +692,6 @@ namespace TTTools
             button3.TabIndex = 32;
             button3.Text = "打开脚本目录";
             button3.UseVisualStyleBackColor = true;
-            button3.Visible = false;
             button3.Click += button3_Click;
             // 
             // mainTabPage1
@@ -832,6 +837,36 @@ namespace TTTools
             tabControl2.Size = new System.Drawing.Size(676, 412);
             tabControl2.TabIndex = 29;
             // 
+            // tabPage1
+            // 
+            tabPage1.Location = new System.Drawing.Point(4, 26);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            tabPage1.Size = new System.Drawing.Size(646, 164);
+            tabPage1.TabIndex = 4;
+            tabPage1.Text = "功能单元测试2";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            tabPage4.Location = new System.Drawing.Point(4, 26);
+            tabPage4.Name = "tabPage4";
+            tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            tabPage4.Size = new System.Drawing.Size(646, 164);
+            tabPage4.TabIndex = 5;
+            tabPage4.Text = "功能单元测试3";
+            tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button40
+            // 
+            button40.Location = new System.Drawing.Point(522, 6);
+            button40.Name = "button40";
+            button40.Size = new System.Drawing.Size(75, 23);
+            button40.TabIndex = 70;
+            button40.Text = "打开地图";
+            button40.UseVisualStyleBackColor = true;
+            button40.Click += button40_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -933,6 +968,9 @@ namespace TTTools
         private System.Windows.Forms.Button button39;
         private System.Windows.Forms.Button button38;
         private System.Windows.Forms.Button button37;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button button40;
     }
 }
 
