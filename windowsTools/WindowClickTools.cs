@@ -151,6 +151,27 @@ namespace TTTools
                 y -= 26;
             }
 
+         
+            currentX = x;
+            currentY = y;
+
+            uint downMessage = isRightClick ? WM_RBUTTONDOWN : WM_LBUTTONDOWN;
+            uint upMessage = isRightClick ? WM_RBUTTONUP : WM_LBUTTONUP;
+
+            SendMessage(hWnd, downMessage, IntPtr.Zero, MakeLParam(x, y));
+            Thread.Sleep(100);
+            SendMessage(hWnd, upMessage, IntPtr.Zero, MakeLParam(x, y));
+            Thread.Sleep(200);
+        }
+
+        public void MoveClick(int x, int y, bool isRightClick = false, bool hasOffset = true)
+        {
+            if (hasOffset)
+            {
+                x -= 2;
+                y -= 26;
+            }
+
             int steps = 30;
             int sleepTime = 50 / steps;
 

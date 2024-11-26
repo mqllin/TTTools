@@ -79,12 +79,12 @@ namespace TTTools
             var height = 629;
             var x = width / 2;
             var y = height / 2 - 50;
-            wx.PushClick(x, y, false, false);
+            wx.MoveClick(x, y, false, false);
         }
         //点击背包
         public void ClickBackpack()
         {
-            wx.PushClick(446, 605);
+            wx.MoveClick(446, 605);
         }
         //打开背包
         public void OpenMap()
@@ -116,7 +116,7 @@ namespace TTTools
             Point? p = pic.FindSomeInBackpack(nameCode);
             if (p != null)
             {
-                wx.PushClick(p.Value.X, p.Value.Y, true);
+                wx.MoveClick(p.Value.X, p.Value.Y, true);
                 LogService.Log($"使用道具{name}");
 
                 return true;
@@ -150,7 +150,7 @@ namespace TTTools
             int y = ry + offsetY;
 
 
-            wx.PushClick(x, y, true);
+            wx.MoveClick(x, y, true);
             Thread.Sleep(2000);
 
             ClickBackpack();
@@ -169,7 +169,7 @@ namespace TTTools
             }
 
             Point clickPoint = new Point(point.X + anchorX, point.Y + anchorY);
-            wx.PushClick(clickPoint.X, clickPoint.Y, false, false);
+            wx.MoveClick(clickPoint.X, clickPoint.Y, false, false);
             return clickPoint;
         }
         public Point ClosePopupAuto()
@@ -184,7 +184,7 @@ namespace TTTools
             }
 
             Point clickPoint = new Point(anchorX, anchorY);
-            wx.PushClick(clickPoint.X, clickPoint.Y, false, false);
+            wx.MoveClick(clickPoint.X, clickPoint.Y, false, false);
             return clickPoint;
         }
         public void ClickPopupItem(int x, int y)
@@ -193,7 +193,7 @@ namespace TTTools
             int ry = int.Parse(iniFileHelper.IniReadValue("popup", "y", "255"));
             int ix = rx + x;
             int iy = ry + y;
-            wx.PushClick(ix, iy);
+            wx.MoveClick(ix, iy);
         }
 
 
@@ -268,20 +268,20 @@ namespace TTTools
             Thread.Sleep(2000);
             wx.MouseHover(330, 180);
             Thread.Sleep(2000);
-            wx.PushClick(330, 180);
+            wx.MoveClick(330, 180);
             Thread.Sleep(3000);
             ClickPopupItem(55, 48);
         }
 
         public void GetTS()
         {
-            int x = 194;
-            int y = 282;
-            int width = 430;
-            int height = 105;
-            CaptureAndOCR ocr = new CaptureAndOCR(hWnd, x, y, width, height);
-            MapPoint point = ocr.CaptureAndRecognize();
-            LogService.Log("天师说：" + point.ToString());
+            //int x = 194;
+            //int y = 282;
+            //int width = 430;
+            //int height = 105;
+            //CaptureAndOCR ocr = new CaptureAndOCR(hWnd, x, y, width, height);
+            //MapPoint point = ocr.CaptureAndRecognize();
+            //LogService.Log("天师说：" + point.ToString());
         }
 
         public void RushB(int index, int x, int y)
@@ -295,7 +295,7 @@ namespace TTTools
 
 
             Thread.Sleep(2000);
-            wx.PushClick(x, y);
+            wx.MoveClick(x, y);
             Thread.Sleep(2000);
             ClickPopupItem(64, 36);
 
@@ -305,7 +305,7 @@ namespace TTTools
         {
 
             Thread.Sleep(1000);
-            wx.PushClick(64, 620);
+            wx.MoveClick(64, 620);
             Thread.Sleep(1000);
             wx.PushCopy();
             Thread.Sleep(1000);
@@ -357,7 +357,7 @@ namespace TTTools
 
                         LogService.Log($"找到目标：{minDistance}  - {closestPoint.X}, {closestPoint.Y}");
 
-                        wx.PushClick(closestPoint.X + offsetX, closestPoint.Y + offsetY, isRightClick);
+                        wx.MoveClick(closestPoint.X + offsetX, closestPoint.Y + offsetY, isRightClick);
                         wx.MoveMouse(747, 114);
 
                         return closestPoint;
@@ -504,7 +504,7 @@ namespace TTTools
             }
             Point clickPoint = new Point(point.X + offsetX, point.Y + offsetY + 26);
 
-            wx.PushClick(clickPoint.X, clickPoint.Y);
+            wx.MoveClick(clickPoint.X, clickPoint.Y);
             Thread.Sleep(1000);
             wx.SendTabKey();
             Thread.Sleep(1000);
@@ -515,7 +515,7 @@ namespace TTTools
         {
             wx.SendTabKey();
             Thread.Sleep(1000);
-            wx.PushClick(point.X, point.Y);
+            wx.MoveClick(point.X, point.Y);
             Thread.Sleep(1000);
             wx.SendTabKey();
             Thread.Sleep(1000);
@@ -607,14 +607,14 @@ namespace TTTools
         public void loginAuto(int index, string username, string password)
         {
             //WindowUtilities.ChangeInputEn();
-            SwitchToEnglishInput();
-            wx.PushClick(574, 132);
-            wx.PushClick(543, 445);
-            wx.PushClick(612, 454);
+            //SwitchToEnglishInput();
+            wx.MoveClick(574, 132);
+            wx.MoveClick(543, 445);
+            wx.MoveClick(612, 454);
             // 删除账号
             Thread.Sleep(100);
 
-            wx.PushClick(459, 265);
+            wx.MoveClick(459, 265);
             for (var i = 0; i < 30; i++)
             {
                 wx.SendBackspaceKey();
@@ -623,7 +623,7 @@ namespace TTTools
 
             wx.SendText(username);
 
-            wx.PushClick(459, 290);
+            wx.MoveClick(459, 290);
             for (var i = 0; i < 30; i++)
             {
                 wx.SendBackspaceKey();
@@ -632,11 +632,11 @@ namespace TTTools
 
             wx.SendText(password);
 
-            wx.PushClick(470, 352);
+            wx.MoveClick(470, 352);
             int userX = 286 + (index * 62);
             int userY = 370;
-            wx.PushClick(userX, userY);
-            wx.PushClick(515, 417);
+            wx.MoveClick(userX, userY);
+            wx.MoveClick(515, 417);
             LogService.Log($"角色{index},登录完成");
 
         }
@@ -674,7 +674,7 @@ namespace TTTools
             await ExecuteAsync(async () =>
             {
                 var win = new WindowClickTools(hWnd);
-                win.PushClick(187, 619);
+                win.MoveClick(187, 619);
                 win.SendText(text);
                 win.SendEnterKey();
             });

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -700,12 +701,131 @@ namespace TTTools
             ToolsFunction.MoveToMap("阳谷县");
 
         }
-
-        private void button40_Click(object sender, EventArgs e)
+        private async void button40_Click(object sender, EventArgs e)
         {
-            ToolsFunction.OpenMapAndMoveToPoint(100,100);
+            button40.Enabled = false; // 禁用按钮，防止重复点击
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var name = textBox3.Text;
+                    ToolsFunction.OpenMapAndMoveToPointAuto(name);
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"执行失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                button40.Enabled = true; // 恢复按钮状态
+            }
+        }
 
-            
+        private void button30_Click(object sender, EventArgs e)
+        {
+            string outputFile = Path.Combine("D:\\Project\\TTTools", "data", "digits.dat");
+            string[] files = Directory.GetFiles("D:\\Project\\TTTools\\data\\xy", "*.png");
+            LogService.Debug(files.Length.ToString());
+            // 确保顺序为 0-9 和点号（point.png 对应 .）
+            files = files.OrderBy(f =>
+            {
+                string fileName = Path.GetFileNameWithoutExtension(f);
+                if (fileName == "point") return 10; // 确保点号排在数字后
+                return int.TryParse(fileName, out int result) ? result : int.MaxValue;
+            }).ToArray();
+
+            using (BinaryWriter writer = new BinaryWriter(File.Open(outputFile, FileMode.Create)))
+            {
+                writer.Write(files.Length); // 写入图片数量
+
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(file);
+                    char character = fileName == "point" ? '.' : fileName[0]; // 如果是 point.png，字符为 '.'
+
+                    Bitmap bmp = new Bitmap(file);
+
+                    writer.Write(character); // 写入字符
+                    writer.Write(bmp.Width); // 写入宽度
+                    writer.Write(bmp.Height); // 写入高度
+
+                    // 锁定位图以读取像素数据
+                    var data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
+                        System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                        System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                    byte[] pixelData = new byte[bmp.Width * bmp.Height * 4];
+                    System.Runtime.InteropServices.Marshal.Copy(data.Scan0, pixelData, 0, pixelData.Length);
+
+                    bmp.UnlockBits(data);
+
+                    writer.Write(pixelData); // 写入像素数据
+                }
+            }
+
+            Console.WriteLine($"Binary file generated successfully: {outputFile}");
+
+        }
+
+        private void button39_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mainTabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button41_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.up();
+
+        }
+
+        private void button42_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.lfet();
+
+        }
+
+        private void button45_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.down();
+
+        }
+
+        private void button44_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.center();
+
+        }
+
+        private void button43_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.right();
+
+        }
+
+        private void button46_Click(object sender, EventArgs e)
+        {
+            int x = int.Parse(textBox1.Text);
+            int y = int.Parse(textBox2.Text);
+            string mapName = textBox3.Text;
+
+            ToolsFunction.MapGotoClick(mapName, x, y);
+        }
+
+        private void button47_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.ExportCoordinateDataToText("HuangNiGang");
+
+        }
+
+        private void button48_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.GetCurrentMapName();
         }
     }
 }

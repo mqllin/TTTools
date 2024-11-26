@@ -193,45 +193,45 @@ namespace TTTools
 
             return completeSentence;
         }
-        public static MapPoint ExtractLocationInfo(string input)
-        {
-            MapPoint locationInfo = null;
+        //public static MapPoint ExtractLocationInfo(string input)
+        //{
+            //MapPoint locationInfo = null;
 
-            // 定义正则表达式，用于查找地点和坐标
-            Regex regex = new Regex(@"在(.*?)\((\d+,\d+)\)");
+            //// 定义正则表达式，用于查找地点和坐标
+            //Regex regex = new Regex(@"在(.*?)\((\d+,\d+)\)");
 
-            // 执行匹配
-            Match match = regex.Match(input);
+            //// 执行匹配
+            //Match match = regex.Match(input);
 
-            if (match.Success)
-            {
-                // 提取地点和坐标
-                var name = match.Groups[1].Value.Replace("在", ""); ;
-                string coordinates = match.Groups[2].Value;
+            //if (match.Success)
+            //{
+            //    // 提取地点和坐标
+            //    var name = match.Groups[1].Value.Replace("在", ""); ;
+            //    string coordinates = match.Groups[2].Value;
 
-                // 分割坐标为 x 和 y
-                string[] xy = coordinates.Split(',');
+            //    // 分割坐标为 x 和 y
+            //    string[] xy = coordinates.Split(',');
                
-                locationInfo = new MapPoint(name, int.Parse(xy[0]), int.Parse(xy[1]));
+            //    locationInfo = new MapPoint(name, int.Parse(xy[0]), int.Parse(xy[1]));
 
-            }
+            //}
 
-            return locationInfo;
-        }
+            //return locationInfo;
+        //}
 
     
        
 
-        public MapPoint CaptureAndRecognize()
-        {
-            // 截图
-            Bitmap capturedImage = CaptureWindow(hWnd, x, y, width, height);
-            //saveImage(capturedImage);
+        //public MapPoint CaptureAndRecognize()
+        //{
+        //    // 截图
+        //    Bitmap capturedImage = CaptureWindow(hWnd, x, y, width, height);
+        //    //saveImage(capturedImage);
 
-            // OCR
-            string recognizedText = BaiduOcr(capturedImage);
-            return  ExtractLocationInfo(recognizedText);
-        }
+        //    // OCR
+        //    string recognizedText = BaiduOcr(capturedImage);
+        //    return  ExtractLocationInfo(recognizedText);
+        //}
         
     }
 }

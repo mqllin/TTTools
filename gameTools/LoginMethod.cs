@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace TTTools
 {
@@ -95,8 +96,6 @@ namespace TTTools
                 LogService.Log("找不到游戏窗口句柄。");
                 return;
             }
-            // Inject the DLL
-
 
             // 现在你有了游戏窗口的句柄，可以继续你的其他操作
             api.loginAuto(userInedx, username, password);
