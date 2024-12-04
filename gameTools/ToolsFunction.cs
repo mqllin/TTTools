@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.Logging;
 using TTTools.client;
+using TTTools.windowsTools;
 
 namespace TTTools.gameTools
 {
@@ -37,6 +39,7 @@ namespace TTTools.gameTools
                 api.ClickBackpack();
             }
         }
+
         // 打开背包
         public static void OpenBackPack()
         {
@@ -60,17 +63,18 @@ namespace TTTools.gameTools
             OpenBackPack();
             var cityMap = new Dictionary<string, string>
             {
-                {"星秀村", "xingXiuCun"},
-                {"应天府", "yingTianFu"},
-                {"汴京城", "bianJingCheng"},
-                {"清河县", "qingHeXian"},
-                {"阳谷县", "yangGuXian"}
+                { "星秀村", "xingXiuCun" },
+                { "应天府", "yingTianFu" },
+                { "汴京城", "bianJingCheng" },
+                { "清河县", "qingHeXian" },
+                { "阳谷县", "yangGuXian" }
             };
             // 获取 name 对应的 code
             if (!cityMap.TryGetValue(name, out var targetCode))
             {
                 return false;
             }
+
             UseBagItem("回程符");
             win.MoveMouse(800, 0);
             Point? point = api.FindSomeThingInMapByFileName("ui", targetCode);
@@ -78,6 +82,7 @@ namespace TTTools.gameTools
             {
                 return false;
             }
+
             win.MoveClick(point.Value.X + 15, point.Value.Y + 35);
             Thread.Sleep(500);
             //CloseBackPack();
@@ -97,8 +102,7 @@ namespace TTTools.gameTools
             Point? point = api.FindSomeThingInMapByFileName("ui", "mapPoint");
             if (point != null)
             {
-                
-                win.MoveMouse(point.Value.X+1,point.Value.Y+15,false);
+                win.MoveMouse(point.Value.X + 1, point.Value.Y + 15, false);
                 //win.PushClick(point.Value.X, point.Value.Y + 10);
                 return true;
             }
@@ -111,7 +115,7 @@ namespace TTTools.gameTools
             }
         }
 
-        public static bool OpenMapAndMoveToPoint(int x,int y)
+        public static bool OpenMapAndMoveToPoint(int x, int y)
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var win = new WindowClickTools(hWnd);
@@ -122,23 +126,23 @@ namespace TTTools.gameTools
             Point? point = api.FindSomeThingInMapByFileName("ui", "mapPoint");
             if (point != null)
             {
-                int xx =x;
-                int yy =y;
-                win.MoveMouse(x,y,false);
+                int xx = x;
+                int yy = y;
+                win.MoveMouse(x, y, false);
                 Thread.Sleep(500);
-                var img =  pic.CaptureWindow(xx+20, yy-10, 144, 15);
-                pic.SaveImage(img);         
+                var img = pic.CaptureWindow(xx + 20, yy - 10, 144, 15);
+                pic.SaveImage(img);
                 var findxy = pic.FindXyInBitmap(img);
 
-                if (findxy!=null)
+                if (findxy != null)
                 {
                     LogService.Log($"findxy={findxy.ToString()}");
-
                 }
                 else
                 {
                     LogService.Log("list count =0");
                 }
+
                 return true;
             }
             else
@@ -149,13 +153,15 @@ namespace TTTools.gameTools
                 return true;
             }
         }
+
         public static void up()
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var win = new WindowClickTools(hWnd);
             Point screenCenter = new Point(806 / 2, 692 / 2 - 22);
-            win.PushClick(screenCenter.X, screenCenter.Y -15);
+            win.PushClick(screenCenter.X, screenCenter.Y - 15);
         }
+
         public static void down()
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
@@ -163,25 +169,28 @@ namespace TTTools.gameTools
             Point screenCenter = new Point(806 / 2, 692 / 2 - 22);
             win.PushClick(screenCenter.X, screenCenter.Y + 1);
         }
+
         public static void lfet()
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var win = new WindowClickTools(hWnd);
             Point screenCenter = new Point(806 / 2, 692 / 2 - 22);
-            win.PushClick(screenCenter.X-1, screenCenter.Y );
+            win.PushClick(screenCenter.X - 1, screenCenter.Y);
         }
+
         public static void right()
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var win = new WindowClickTools(hWnd);
             Point screenCenter = new Point(806 / 2, 692 / 2 - 22);
-            win.PushClick(screenCenter.X+1, screenCenter.Y);
+            win.PushClick(screenCenter.X + 1, screenCenter.Y);
         }
+
         public static void center()
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var win = new WindowClickTools(hWnd);
-            Point screenCenter = new Point(806 / 2, 692 / 2-22);
+            Point screenCenter = new Point(806 / 2, 692 / 2 - 22);
             win.PushClick(screenCenter.X, screenCenter.Y);
         }
         //public static bool OpenMapAndMoveToPointAuto()
@@ -258,13 +267,13 @@ namespace TTTools.gameTools
             }
 
             // 锚点起始位置
-            int anchorX = point.Value.X+ offset.X;
-            int anchorY = point.Value.Y+ offset.Y;
+            int anchorX = point.Value.X + offset.X;
+            int anchorY = point.Value.Y + offset.Y;
 
-            int startX = anchorX;   // 起点X
-            int startY = anchorY ; // 起点Y
-            int endX = startX + MapPx.X;   // 地图右下角的X坐标
-            int endY = startY + MapPx.Y;   // 地图右下角的Y坐标
+            int startX = anchorX; // 起点X
+            int startY = anchorY; // 起点Y
+            int endX = startX + MapPx.X; // 地图右下角的X坐标
+            int endY = startY + MapPx.Y; // 地图右下角的Y坐标
 
             // 定义存储行和列的增量数据
             var rowPoints = new List<(int DeltaX, int GameX)>();
@@ -348,9 +357,9 @@ namespace TTTools.gameTools
         }
 
 
-
         //查询游戏坐标
-        public static (int DeltaX, int DeltaY, int GameX, int GameY)? FindClosestCoordinate(string mapName, int gameX, int gameY)
+        public static (int DeltaX, int DeltaY, int GameX, int GameY)? FindClosestCoordinate(string mapName, int gameX,
+            int gameY)
         {
             string filePath = Path.Combine(dataDirectory, $"{mapName}.pak");
 
@@ -395,7 +404,8 @@ namespace TTTools.gameTools
 
             if (closest != null)
             {
-                LogService.Log($"找到最接近的坐标: DeltaX={closest.Value.DeltaX}, DeltaY={closest.Value.DeltaY}, GameX={closest.Value.GameX}, GameY={closest.Value.GameY}");
+                LogService.Log(
+                    $"找到最接近的坐标: DeltaX={closest.Value.DeltaX}, DeltaY={closest.Value.DeltaY}, GameX={closest.Value.GameX}, GameY={closest.Value.GameY}");
             }
             else
             {
@@ -436,7 +446,7 @@ namespace TTTools.gameTools
 
             // 按行分组
             var groupedByRow = coordinates.GroupBy(coord => coord.DeltaX)
-                                           .OrderBy(group => group.Key);
+                .OrderBy(group => group.Key);
 
             // 写入文件
             using (var writer = new StreamWriter(outputFilePath))
@@ -451,7 +461,8 @@ namespace TTTools.gameTools
 
             LogService.Log($"坐标数据已成功导出到: {outputFilePath}");
         }
-        public static bool MapGotoClick(string mapName,int x,int y)
+
+        public static bool MapGotoClick(string mapName, int x, int y)
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var win = new WindowClickTools(hWnd);
@@ -471,10 +482,11 @@ namespace TTTools.gameTools
                 }
 
                 // 锚点起始位置
-                int startX = point.Value.X+ offset.X;
-                int startY = point.Value.Y+ offset.Y;
+                int startX = point.Value.X + offset.X;
+                int startY = point.Value.Y + offset.Y;
 
-                win.MoveClick(startX+closestCoordinate.Value.DeltaX + config.MapClickOffset.X, startY+closestCoordinate.Value.DeltaY+config.MapClickOffset.Y);
+                win.MoveClick(startX + closestCoordinate.Value.DeltaX + config.MapClickOffset.X,
+                    startY + closestCoordinate.Value.DeltaY + config.MapClickOffset.Y);
                 LogService.Log($"最接近的行增量: {closestCoordinate.Value.DeltaX}, 列增量: {closestCoordinate.Value.DeltaY}");
                 LogService.Log($"游戏坐标: ({closestCoordinate.Value.GameX}, {closestCoordinate.Value.GameY})");
                 return true;
@@ -485,7 +497,7 @@ namespace TTTools.gameTools
                 return false;
             }
         }
-        
+
         public static string GetCurrentMapName()
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
@@ -496,5 +508,48 @@ namespace TTTools.gameTools
             return name;
         }
 
+        //用来测试宝图的位置
+        public static string WabaoTest()
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var api = new Method(hWnd);
+
+            var pic = new PictureMethod(hWnd);
+            Bitmap cityNameImage = ResourceLoader.LoadBitmap($"data.mapName.星秀村.png");
+            Bitmap targetImage = ResourceLoader.LoadBitmap($"data.素材.wabao_test.png");
+            Bitmap handleImage = pic.ReplaceOtherColor(targetImage, "#f8fc00");
+            handleImage = pic.ReplaceColor(handleImage, "#f8fc00", "#ffff00");
+
+            var point = pic.FindImageInImage(handleImage, cityNameImage);
+            if (point != null)
+            {
+                LogService.Log("找到了");
+                Bitmap img = pic.ReplaceColor(handleImage, "#ffff00", "#ffffff");
+                // 预处理截图，将非白色像素设置为透明
+                var img2 = pic.ReplaceOtherColor(targetImage, "#ffffff","#000000");
+                // pic.SaveImage(img);
+                pic.SaveImage(img2);
+                return "";
+                var a1 = ResourceLoader.LoadBitmap($"data.xy.3.png");
+                a1 = pic.FillTransparentPixelsWithBlack(a1);
+
+                var findxy = pic.FindImageInImage(img,a1);
+                pic.SaveImage(a1);
+                if (findxy != null)
+                {
+                    LogService.Log($"{findxy.Value.X},{findxy.Value.Y}");
+                }
+                else
+                {
+                    LogService.Log("没找到xy");
+                }
+            }
+            else
+            {
+                LogService.Log("没找到");
+            }
+
+            return point.ToString();
+        }
     }
 }

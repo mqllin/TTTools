@@ -13,11 +13,281 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="data\caiji\caopi1.png" />
+    <None Remove="data\caiji\caopi2.png" />
+    <None Remove="data\caiji\caopi3.png" />
+    <None Remove="data\caiji\caopi4.png" />
+    <None Remove="data\caiji\kuangshi1.png" />
+    <None Remove="data\caiji\kuangshi2.png" />
+    <None Remove="data\caiji\kuangshi3.png" />
+    <None Remove="data\caiji\shuijing1.png" />
+    <None Remove="data\caiji\shuijing10.png" />
+    <None Remove="data\caiji\shuijing2.png" />
+    <None Remove="data\caiji\shuijing3.png" />
+    <None Remove="data\caiji\shuijing4.png" />
+    <None Remove="data\caiji\shuijing5.png" />
+    <None Remove="data\caiji\shuijing6.png" />
+    <None Remove="data\caiji\shuijing7.png" />
+    <None Remove="data\caiji\shuijing8.png" />
+    <None Remove="data\caiji\shuijing9.png" />
+    <None Remove="data\mapName\应天府.png" />
+    <None Remove="data\mapName\应天府东.png" />
+    <None Remove="data\mapName\应天府东郊.png" />
+    <None Remove="data\mapName\应天府西.png" />
+    <None Remove="data\mapName\应天府西郊.png" />
+    <None Remove="data\mapName\星秀村.png" />
+    <None Remove="data\mapName\星秀村东.png" />
+    <None Remove="data\mapName\景杨松林.png" />
+    <None Remove="data\mapName\景阳冈.png" />
+    <None Remove="data\mapName\景阳冈东.png" />
+    <None Remove="data\mapName\林中小居.png" />
+    <None Remove="data\mapName\清河县.png" />
+    <None Remove="data\mapName\清河湿地.png" />
+    <None Remove="data\mapName\芒砀山麓.png" />
+    <None Remove="data\mapName\阳谷县.png" />
+    <None Remove="data\mapName\黄泥岗.png" />
+    <None Remove="data\map\HuangNiGang.pak" />
+    <None Remove="data\map\JingYangGang.pak" />
+    <None Remove="data\map\LinZhongXiaoQu.pak" />
+    <None Remove="data\map\MangYangShanLu.pak" />
+    <None Remove="data\map\XingXiuCun.pak" />
+    <None Remove="data\map\XingXiuCunDong.pak" />
+    <None Remove="data\map\YangGuXian.pak" />
+    <None Remove="data\map\YangGuXianNan.pak" />
+    <None Remove="data\map\YingTianFu.pak" />
+    <None Remove="data\map\YingTianFuXi.pak" />
+    <None Remove="data\map\YingTianFuXiJiao.pak" />
+    <None Remove="data\simsun.ttc" />
+    <None Remove="data\ui\beibao.png" />
+    <None Remove="data\ui\bianJingCheng.png" />
+    <None Remove="data\ui\caiji01.png" />
+    <None Remove="data\ui\caiji02.png" />
+    <None Remove="data\ui\close.png" />
+    <None Remove="data\ui\duihuakuang.png" />
+    <None Remove="data\ui\huiChengFu.png" />
+    <None Remove="data\ui\mapPoint.png" />
+    <None Remove="data\ui\popup.png" />
+    <None Remove="data\ui\qingHeXian.png" />
+    <None Remove="data\ui\quMoXiang.png" />
+    <None Remove="data\ui\xingXiuCun.png" />
+    <None Remove="data\ui\yangGuXian.png" />
+    <None Remove="data\ui\yingTianfu.png" />
+    <None Remove="data\ui\zhuangbeidaoju.png" />
+    <None Remove="data\xy\0.png" />
+    <None Remove="data\xy\1.png" />
+    <None Remove="data\xy\2.png" />
+    <None Remove="data\xy\3.png" />
+    <None Remove="data\xy\4.png" />
+    <None Remove="data\xy\5.png" />
+    <None Remove="data\xy\6.png" />
+    <None Remove="data\xy\7.png" />
+    <None Remove="data\xy\8.png" />
+    <None Remove="data\xy\9.png" />
+    <None Remove="data\xy\point.png" />
+    <None Remove="data\素材\wabao_test.png" />
+    <None Remove="data\素材\wabao_test2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Baidu.AI" Version="4.15.13" />
     <PackageReference Include="LeptonicaSharp" Version="1.77.0.1" />
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Tesseract" Version="5.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="data\caiji\caopi1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\caopi2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\caopi3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\caopi4.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\kuangshi1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\kuangshi2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\kuangshi3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing10.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing4.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing5.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing6.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing7.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing8.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\caiji\shuijing9.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\应天府.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\应天府东.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\应天府东郊.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\应天府西.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\应天府西郊.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\星秀村.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\星秀村东.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\景杨松林.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\景阳冈.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\景阳冈东.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\林中小居.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\清河县.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\清河湿地.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\芒砀山麓.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\阳谷县.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\mapName\黄泥岗.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\map\HuangNiGang.pak" />
+    <EmbeddedResource Include="data\map\JingYangGang.pak" />
+    <EmbeddedResource Include="data\map\LinZhongXiaoQu.pak" />
+    <EmbeddedResource Include="data\map\MangYangShanLu.pak" />
+    <EmbeddedResource Include="data\map\XingXiuCun.pak" />
+    <EmbeddedResource Include="data\map\XingXiuCunDong.pak" />
+    <EmbeddedResource Include="data\map\YangGuXian.pak" />
+    <EmbeddedResource Include="data\map\YangGuXianNan.pak" />
+    <EmbeddedResource Include="data\map\YingTianFu.pak" />
+    <EmbeddedResource Include="data\map\YingTianFuXi.pak" />
+    <EmbeddedResource Include="data\map\YingTianFuXiJiao.pak" />
+    <EmbeddedResource Include="data\simsun.ttc" />
+    <EmbeddedResource Include="data\ui\beibao.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\bianJingCheng.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\caiji01.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\caiji02.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\close.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\duihuakuang.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\huiChengFu.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\mapPoint.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\popup.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\qingHeXian.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\quMoXiang.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\xingXiuCun.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\yangGuXian.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\yingTianFu.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\zhuangbeidaoju.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\point.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\素材\wabao_test.png" />
+    <EmbeddedResource Include="data\素材\wabao_test2.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,187 +306,16 @@
     <None Update="data\dll\speedhack-x86_64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\mapName\应天府.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\应天府东.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\应天府东郊.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\应天府西.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\应天府西郊.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\星秀村.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\星秀村东.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\景杨松林.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\景阳冈.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\景阳冈东.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\林中小居.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\清河县.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\清河湿地.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\芒砀山麓.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\阳谷县.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\mapName\黄泥岗.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\beibao.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\caopi1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\caopi2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\caopi3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\caopi4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="data\chi_sim.traineddata">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="data\kuangshi.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="data\caiji\kuangshi1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\kuangshi2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\kuangshi3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\bianJingCheng.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\close.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\duihuakuang.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\huiChengFu.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="data\ui\mapIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="data\ui\mapPoint.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing10.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing5.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing6.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing7.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing8.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\caiji\shuijing9.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="data\ui\mapPoint2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\popup.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\qingHeXian.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\quMoXiang.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\xingXiuCun.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\yangGuXian.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\yingTianfu.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\ui\zhuangbeidaoju.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\0.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\6.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\5.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\7.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\8.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\9.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="data\xy\point.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="x64\Debug\Dll1.dll">

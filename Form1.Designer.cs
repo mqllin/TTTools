@@ -29,7 +29,6 @@ namespace TTTools
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             textBox_log = new System.Windows.Forms.TextBox();
             checkBox1 = new System.Windows.Forms.CheckBox();
@@ -37,14 +36,6 @@ namespace TTTools
             button2 = new System.Windows.Forms.Button();
             label_current = new System.Windows.Forms.Label();
             dataGridView1 = new System.Windows.Forms.DataGridView();
-            hWndDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            actionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            isLeadDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            isActionRunDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            isActionAutoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            clientBindingSource = new System.Windows.Forms.BindingSource(components);
             button11 = new System.Windows.Forms.Button();
             tabControl1 = new System.Windows.Forms.TabControl();
             tabPage2 = new System.Windows.Forms.TabPage();
@@ -60,6 +51,7 @@ namespace TTTools
             button15 = new System.Windows.Forms.Button();
             button12 = new System.Windows.Forms.Button();
             tabPage5 = new System.Windows.Forms.TabPage();
+            button48 = new System.Windows.Forms.Button();
             button40 = new System.Windows.Forms.Button();
             button39 = new System.Windows.Forms.Button();
             button38 = new System.Windows.Forms.Button();
@@ -89,6 +81,8 @@ namespace TTTools
             button1 = new System.Windows.Forms.Button();
             button_dev_1 = new System.Windows.Forms.Button();
             tabPage1 = new System.Windows.Forms.TabPage();
+            label2 = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
             textBox3 = new System.Windows.Forms.TextBox();
             button47 = new System.Windows.Forms.Button();
             textBox2 = new System.Windows.Forms.TextBox();
@@ -115,10 +109,9 @@ namespace TTTools
             button8 = new System.Windows.Forms.Button();
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             tabControl2 = new System.Windows.Forms.TabControl();
-            button48 = new System.Windows.Forms.Button();
+            button49 = new System.Windows.Forms.Button();
             mainTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)clientBindingSource).BeginInit();
             tabControl1.SuspendLayout();
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
@@ -191,71 +184,14 @@ namespace TTTools
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeRows = false;
-            dataGridView1.AutoGenerateColumns = false;
             dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { hWndDataGridViewTextBoxColumn, idDataGridViewTextBoxColumn, titleDataGridViewTextBoxColumn, actionDataGridViewTextBoxColumn, isLeadDataGridViewCheckBoxColumn, isActionRunDataGridViewCheckBoxColumn, isActionAutoDataGridViewCheckBoxColumn });
-            dataGridView1.DataSource = clientBindingSource;
             dataGridView1.Location = new System.Drawing.Point(8, 26);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
             dataGridView1.Size = new System.Drawing.Size(550, 146);
             dataGridView1.TabIndex = 41;
             dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
-            // 
-            // hWndDataGridViewTextBoxColumn
-            // 
-            hWndDataGridViewTextBoxColumn.DataPropertyName = "HWnd";
-            hWndDataGridViewTextBoxColumn.HeaderText = "HWnd";
-            hWndDataGridViewTextBoxColumn.Name = "hWndDataGridViewTextBoxColumn";
-            hWndDataGridViewTextBoxColumn.ReadOnly = true;
-            hWndDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            idDataGridViewTextBoxColumn.HeaderText = "Id";
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.ReadOnly = true;
-            idDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // titleDataGridViewTextBoxColumn
-            // 
-            titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-            titleDataGridViewTextBoxColumn.HeaderText = "Title";
-            titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
-            titleDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // actionDataGridViewTextBoxColumn
-            // 
-            actionDataGridViewTextBoxColumn.DataPropertyName = "Action";
-            actionDataGridViewTextBoxColumn.HeaderText = "Action";
-            actionDataGridViewTextBoxColumn.Name = "actionDataGridViewTextBoxColumn";
-            actionDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // isLeadDataGridViewCheckBoxColumn
-            // 
-            isLeadDataGridViewCheckBoxColumn.DataPropertyName = "IsLead";
-            isLeadDataGridViewCheckBoxColumn.HeaderText = "IsLead";
-            isLeadDataGridViewCheckBoxColumn.Name = "isLeadDataGridViewCheckBoxColumn";
-            isLeadDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // isActionRunDataGridViewCheckBoxColumn
-            // 
-            isActionRunDataGridViewCheckBoxColumn.DataPropertyName = "IsActionRun";
-            isActionRunDataGridViewCheckBoxColumn.HeaderText = "IsActionRun";
-            isActionRunDataGridViewCheckBoxColumn.Name = "isActionRunDataGridViewCheckBoxColumn";
-            isActionRunDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // isActionAutoDataGridViewCheckBoxColumn
-            // 
-            isActionAutoDataGridViewCheckBoxColumn.DataPropertyName = "IsActionAuto";
-            isActionAutoDataGridViewCheckBoxColumn.HeaderText = "IsActionAuto";
-            isActionAutoDataGridViewCheckBoxColumn.Name = "isActionAutoDataGridViewCheckBoxColumn";
-            isActionAutoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // clientBindingSource
-            // 
-            clientBindingSource.DataSource = typeof(client.Client);
             // 
             // button11
             // 
@@ -326,6 +262,7 @@ namespace TTTools
             // 
             // button10
             // 
+            button10.Enabled = false;
             button10.Location = new System.Drawing.Point(152, 16);
             button10.Name = "button10";
             button10.Size = new System.Drawing.Size(105, 23);
@@ -375,6 +312,7 @@ namespace TTTools
             // 
             // button16
             // 
+            button16.Enabled = false;
             button16.Location = new System.Drawing.Point(181, 15);
             button16.Name = "button16";
             button16.Size = new System.Drawing.Size(75, 23);
@@ -385,6 +323,7 @@ namespace TTTools
             // 
             // button15
             // 
+            button15.Enabled = false;
             button15.Location = new System.Drawing.Point(100, 15);
             button15.Name = "button15";
             button15.Size = new System.Drawing.Size(75, 23);
@@ -395,6 +334,7 @@ namespace TTTools
             // 
             // button12
             // 
+            button12.Enabled = false;
             button12.Location = new System.Drawing.Point(19, 15);
             button12.Name = "button12";
             button12.Size = new System.Drawing.Size(75, 23);
@@ -405,6 +345,7 @@ namespace TTTools
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(button49);
             tabPage5.Controls.Add(button48);
             tabPage5.Controls.Add(button40);
             tabPage5.Controls.Add(button39);
@@ -442,6 +383,16 @@ namespace TTTools
             tabPage5.Text = "功能单元测试";
             tabPage5.UseVisualStyleBackColor = true;
             tabPage5.Click += tabPage5_Click;
+            // 
+            // button48
+            // 
+            button48.Location = new System.Drawing.Point(492, 35);
+            button48.Name = "button48";
+            button48.Size = new System.Drawing.Size(105, 23);
+            button48.TabIndex = 71;
+            button48.Text = "输出当前位置";
+            button48.UseVisualStyleBackColor = true;
+            button48.Click += button48_Click;
             // 
             // button40
             // 
@@ -711,6 +662,8 @@ namespace TTTools
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(label2);
+            tabPage1.Controls.Add(label1);
             tabPage1.Controls.Add(textBox3);
             tabPage1.Controls.Add(button47);
             tabPage1.Controls.Add(textBox2);
@@ -729,20 +682,39 @@ namespace TTTools
             tabPage1.Text = "功能单元测试2";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(403, 98);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(14, 17);
+            label2.TabIndex = 83;
+            label2.Text = "y";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(403, 56);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(14, 17);
+            label1.TabIndex = 82;
+            label1.Text = "x";
+            // 
             // textBox3
             // 
             textBox3.Location = new System.Drawing.Point(423, 24);
             textBox3.Name = "textBox3";
             textBox3.Size = new System.Drawing.Size(100, 23);
             textBox3.TabIndex = 81;
+            textBox3.Text = "YingTianFu";
             // 
             // button47
             // 
-            button47.Location = new System.Drawing.Point(550, 118);
+            button47.Location = new System.Drawing.Point(537, 92);
             button47.Name = "button47";
             button47.Size = new System.Drawing.Size(75, 23);
             button47.TabIndex = 80;
-            button47.Text = "button47";
+            button47.Text = "导出";
             button47.UseVisualStyleBackColor = true;
             button47.Click += button47_Click;
             // 
@@ -766,7 +738,7 @@ namespace TTTools
             button46.Name = "button46";
             button46.Size = new System.Drawing.Size(75, 23);
             button46.TabIndex = 77;
-            button46.Text = "button46";
+            button46.Text = "移动";
             button46.UseVisualStyleBackColor = true;
             button46.Click += button46_Click;
             // 
@@ -776,7 +748,7 @@ namespace TTTools
             button45.Name = "button45";
             button45.Size = new System.Drawing.Size(75, 23);
             button45.TabIndex = 76;
-            button45.Text = "button45";
+            button45.Text = "下";
             button45.UseVisualStyleBackColor = true;
             button45.Click += button45_Click;
             // 
@@ -786,7 +758,7 @@ namespace TTTools
             button44.Name = "button44";
             button44.Size = new System.Drawing.Size(75, 23);
             button44.TabIndex = 75;
-            button44.Text = "button44";
+            button44.Text = "中";
             button44.UseVisualStyleBackColor = true;
             button44.Click += button44_Click;
             // 
@@ -796,7 +768,7 @@ namespace TTTools
             button43.Name = "button43";
             button43.Size = new System.Drawing.Size(75, 23);
             button43.TabIndex = 74;
-            button43.Text = "button43";
+            button43.Text = "右";
             button43.UseVisualStyleBackColor = true;
             button43.Click += button43_Click;
             // 
@@ -806,7 +778,7 @@ namespace TTTools
             button42.Name = "button42";
             button42.Size = new System.Drawing.Size(75, 23);
             button42.TabIndex = 73;
-            button42.Text = "button42";
+            button42.Text = "左";
             button42.UseVisualStyleBackColor = true;
             button42.Click += button42_Click;
             // 
@@ -816,7 +788,7 @@ namespace TTTools
             button41.Name = "button41";
             button41.Size = new System.Drawing.Size(75, 23);
             button41.TabIndex = 72;
-            button41.Text = "button41";
+            button41.Text = "上";
             button41.UseVisualStyleBackColor = true;
             button41.Click += button41_Click;
             // 
@@ -865,11 +837,11 @@ namespace TTTools
             // 
             // button20
             // 
-            button20.Location = new System.Drawing.Point(181, 6);
+            button20.Location = new System.Drawing.Point(282, 6);
             button20.Name = "button20";
             button20.Size = new System.Drawing.Size(75, 23);
             button20.TabIndex = 11;
-            button20.Text = "button20";
+            button20.Text = "开发登录";
             button20.UseVisualStyleBackColor = true;
             button20.Click += button20_Click;
             // 
@@ -984,15 +956,15 @@ namespace TTTools
             tabControl2.Size = new System.Drawing.Size(676, 412);
             tabControl2.TabIndex = 29;
             // 
-            // button48
+            // button49
             // 
-            button48.Location = new System.Drawing.Point(492, 35);
-            button48.Name = "button48";
-            button48.Size = new System.Drawing.Size(105, 23);
-            button48.TabIndex = 71;
-            button48.Text = "输出当前位置";
-            button48.UseVisualStyleBackColor = true;
-            button48.Click += button48_Click;
+            button49.Location = new System.Drawing.Point(565, 122);
+            button49.Name = "button49";
+            button49.Size = new System.Drawing.Size(75, 23);
+            button49.TabIndex = 72;
+            button49.Text = "识别宝图";
+            button49.UseVisualStyleBackColor = true;
+            button49.Click += button49_Click;
             // 
             // Form1
             // 
@@ -1010,7 +982,6 @@ namespace TTTools
             mainTabPage2.ResumeLayout(false);
             mainTabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)clientBindingSource).EndInit();
             tabControl1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
@@ -1061,7 +1032,6 @@ namespace TTTools
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.BindingSource clientBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn hWndDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
@@ -1111,6 +1081,9 @@ namespace TTTools
         private System.Windows.Forms.Button button47;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button48;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button49;
     }
 }
 

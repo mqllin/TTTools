@@ -72,6 +72,18 @@ namespace TTTools
 
         private void Form1_Load(object sender, EventArgs e)
         {
+#if DEBUG
+            button20.Visible = true;
+#else
+                    button20.Visible = false;
+                    button3.Visible = false;
+                     button47.Visible = false;
+                     button40.Visible = false;
+            textBox3.Enabled = false;
+#endif
+
+            LogService.Log("说明，现在能用的只有登录功能");
+            LogService.Log("说明，点击偏移的笔记本请修改显示比例为100%,关闭125%缩放");
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
@@ -191,42 +203,114 @@ namespace TTTools
             dataGridView1.Refresh();
 
         }
+
+        int isTableLoad = 0;
+
+        private void InitializeDataGridView()
+        {
+            // 清空现有的列配置
+            dataGridView1.Columns.Clear();
+
+            // 添加列配置
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "HWnd",
+                HeaderText = "窗口句柄",
+                DataPropertyName = "HWnd", // 数据绑定的属性名
+                ReadOnly = true,
+                Width = 150
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Id",
+                HeaderText = "客户端ID",
+                DataPropertyName = "Id", // 数据绑定的属性名
+                ReadOnly = true,
+                Width = 100
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Title",
+                HeaderText = "窗口标题",
+                DataPropertyName = "Title", // 数据绑定的属性名
+                ReadOnly = true,
+                Width = 200
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Action",
+                HeaderText = "当前动作",
+                DataPropertyName = "Action", // 数据绑定的属性名
+                ReadOnly = false,
+                Width = 150
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn
+            {
+                Name = "IsLead",
+                HeaderText = "是否队长",
+                DataPropertyName = "IsLead", // 数据绑定的属性名
+                ReadOnly = false,
+                Width = 120
+            });
+
+            // 设置表格样式（可选）
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            isTableLoad++;
+        }
         public void QueryGameWindows()
         {
-            //获取客户端列表
-            windowApi = new WindowApi();
-            var windows = windowApi.UpdateWindowTitles("Galaxy2DEngine");  // 以 Galaxy2DEngine 窗口为例
-            dataGridView1.DataSource = null; // 清空已有数据
+            // 暂时移除事件绑定
+            dataGridView1.SelectionChanged -= dataGridView1_SelectionChanged;
 
-            dataGridView1.Rows.Clear();// 清空 DataGridView 的行，确保每次刷新时数据是最新的
-            // 初始化 Client.ClientsArray，大小根据窗口数量动态调整
-            ClientManager.InitializeActionMap();
-            ClientManager.ClearAllTasks();
-            ClientManager.Clients.Clear();
-
-            int index = 0;
-            foreach (var window in windows)
+            try
             {
-                string itemText = $"{window.Handle} - {window.Title}";
-                LogService.Debug(itemText);
+                dataGridView1.DataSource = null; // 清空已有数据
+                dataGridView1.Rows.Clear(); // 清空 DataGridView 的行，确保每次刷新时数据是最新的
 
-                // 创建 Client 实例并设置属性
-                var client = new Client(hWnd: window.Handle, id: index.ToString(), title: window.Title, isLead: false);
-                //client.Action = "hello";
-                client.StartMonitoring();
-                ClientManager.Clients.Add(client);
-                dataGridView1.Rows.Add(client.HWnd, client.Id, client.Title, client.Action, client.IsLead);
+                // 初始化 DataGridView 列
+                InitializeDataGridView();
 
+
+                // 获取客户端列表
+                windowApi = new WindowApi();
+                var windows = windowApi.UpdateWindowTitles("Galaxy2DEngine");  // 以 Galaxy2DEngine 窗口为例
+
+
+                ClientManager.InitializeActionMap();
+                ClientManager.ClearAllTasks();
+                ClientManager.Clients.Clear();
+
+                int index = 0;
+                foreach (var window in windows)
+                {
+                    string itemText = $"{window.Handle} - {window.Title}";
+                    LogService.Debug(itemText);
+
+                    var client = new Client(hWnd: window.Handle, id: index.ToString(), title: window.Title, isLead: false);
+                    client.StartMonitoring();
+                    ClientManager.Clients.Add(client);
+                    dataGridView1.Rows.Add(client.HWnd, client.Id, client.Title, client.Action, client.IsLead);
+                }
+
+                if (ClientManager.Clients.Count > 0)
+                {
+                    ClientManager.CurrentSelectedClient = ClientManager.Clients[0];
+                }
+                dataGridView1.DataSource = ClientManager.Clients;
             }
-            // 设置第一个 Client 为当前选择的客户端（可选）
-            if (ClientManager.Clients.Count > 0)
+            finally
             {
-                // 设置当前选中的客户端
-                ClientManager.CurrentSelectedClient = ClientManager.Clients[0];
+                // 恢复事件绑定
+                dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
             }
-            dataGridView1.DataSource = ClientManager.Clients;
-
         }
+
         private void StartCollecting()
         {
             //var checkedWindows = GetCheckedWindows();
@@ -524,10 +608,27 @@ namespace TTTools
             iniFileHelper.IniWriteValue("General", "AccountCount", accountCount.ToString());
         }
 
-        private void button20_Click(object sender, EventArgs e)
+        private async void button20_Click(object sender, EventArgs e)
         {
-            var login = new LoginMethod("584363361", "123321000", 0, this);
-            login.LoginGame();
+            try
+            {
+                await Task.Run(() =>
+                {
+                    //var login = new LoginMethod("584363361", "123321000", 0, this);
+                    var login = new LoginMethod("513727961", "7213939", 0, this);
+                    login.LoginGame();
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"执行失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                button40.Enabled = true; // 恢复按钮状态
+            }
+
+
 
         }
 
@@ -819,13 +920,23 @@ namespace TTTools
 
         private void button47_Click(object sender, EventArgs e)
         {
-            ToolsFunction.ExportCoordinateDataToText("HuangNiGang");
+            ToolsFunction.ExportCoordinateDataToText(textBox3.Text);
 
         }
 
         private void button48_Click(object sender, EventArgs e)
         {
             ToolsFunction.GetCurrentMapName();
+        }
+
+        private void clientBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button49_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.WabaoTest();
         }
     }
 }

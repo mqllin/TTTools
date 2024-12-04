@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using TTTools.client;
+using TTTools.windowsTools;
 
 namespace TTTools
 {
@@ -55,20 +56,14 @@ namespace TTTools
 
                 for (int i = 1; i <= 10; i++)  // 假设每种材料有两张图像
                 {
-                    string imagePath = Path.Combine(currentDirectory, "data", "caiji", $"{material.Value}{i}.png");
-
-                    if (File.Exists(imagePath))
+                    try
                     {
-                        try
-                        {
-                            Bitmap bitmap = new Bitmap(imagePath);
-                            featureImages[material.Key].Add(bitmap);
-                        }
-                        catch (Exception ex)
-                        {
-                            LogService.Log($"无法加载图像 {imagePath}: {ex.Message}");
+                        Bitmap bitmap = ResourceLoader.LoadBitmap($"data.caiji.{material.Value}{i}.png");
+                        featureImages[material.Key].Add(bitmap);
+                    }
+                    catch (Exception ex)
+                    {
 
-                        }
                     }
                 }
             }
@@ -380,10 +375,7 @@ namespace TTTools
         public Point? FindSomeThingInMapByFileName(string type, string fileName)
         {
             Bitmap targetImage = null;
-            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string imagePath = Path.Combine(currentDirectory, $"data/{type}", $"{fileName}.png");
-            LogService.Debug($"寻找图片{imagePath}");
-            targetImage = new Bitmap(imagePath);
+            targetImage = ResourceLoader.LoadBitmap($"data.{type}.{fileName}.png");
 
             if (targetImage != null)
             {
