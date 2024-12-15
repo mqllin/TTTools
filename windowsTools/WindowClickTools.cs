@@ -34,6 +34,10 @@ namespace TTTools
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
+
+
         const uint WM_KEYDOWN = 0x0100;
         const uint WM_KEYUP = 0x0101;
         const uint WM_LBUTTONDOWN = 0x0201;
@@ -47,7 +51,8 @@ namespace TTTools
         const uint WM_SETTEXT = 0x000C;
         const uint WM_IME_CHAR = 0x0286;
         const int VK_BACK = 0x08; // 退格键的虚拟键码
-
+        const uint KEYEVENTF_KEYUP = 0x0002;
+        const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
         static readonly IntPtr HWND_TOP = new IntPtr(0);
 
         public void InitWindows()
@@ -106,6 +111,51 @@ namespace TTTools
             SendMessage(hWnd, WM_KEYUP, (IntPtr)VK_C, IntPtr.Zero);
             // Ctrl up
             SendMessage(hWnd, WM_KEYUP, (IntPtr)VK_CONTROL, IntPtr.Zero);
+        }
+        //快捷键 开关任务栏
+        public void PushAltQ()
+        {
+            const int VK_ALT = 0x12;  // ALT key
+            const int VK_Q = 0x51;    // 'Q' key
+            // Ctrl down
+            SendMessage(hWnd, WM_KEYDOWN, (IntPtr)VK_ALT, IntPtr.Zero);
+            Thread.Sleep(50);
+            // 'C' down
+            SendMessage(hWnd, WM_KEYDOWN, (IntPtr)VK_Q, IntPtr.Zero);
+            Thread.Sleep(50);
+            // 'C' up
+            SendMessage(hWnd, WM_KEYUP, (IntPtr)VK_Q, IntPtr.Zero);
+            // Ctrl up
+            SendMessage(hWnd, WM_KEYUP, (IntPtr)VK_ALT, IntPtr.Zero);
+        }
+
+        public void PushAltKey(string key)
+        {
+            const int VK_ALT = 0x12;  // ALT key
+
+            // 验证输入的字母是否合法
+            if (string.IsNullOrEmpty(key) || key.Length != 1 || !char.IsLetter(key[0]))
+            {
+                throw new ArgumentException("参数必须是一个字母字符");
+            }
+
+            // 转换字母为大写并获取其虚拟键码
+            char upperKey = char.ToUpper(key[0]);
+            int vkKey = upperKey;
+
+            // ALT down
+            SendMessage(hWnd, WM_KEYDOWN, (IntPtr)VK_ALT, IntPtr.Zero);
+            Thread.Sleep(50);
+
+            // Key down
+            SendMessage(hWnd, WM_KEYDOWN, (IntPtr)vkKey, IntPtr.Zero);
+            Thread.Sleep(50);
+
+            // Key up
+            SendMessage(hWnd, WM_KEYUP, (IntPtr)vkKey, IntPtr.Zero);
+
+            // ALT up
+            SendMessage(hWnd, WM_KEYUP, (IntPtr)VK_ALT, IntPtr.Zero);
         }
 
         public void PushMsg(string text)
@@ -196,7 +246,22 @@ namespace TTTools
             SendMessage(hWnd, upMessage, IntPtr.Zero, MakeLParam(x, y));
             Thread.Sleep(200);
         }
-
+        public void Click(int x, int y, bool isRightClick = false, bool hasOffset = true)
+        {
+            if (hasOffset)
+            {
+                x -= 2;
+                y -= 26;
+            }
+            currentX = x;
+            currentY = y;
+            uint downMessage = isRightClick ? WM_RBUTTONDOWN : WM_LBUTTONDOWN;
+            uint upMessage = isRightClick ? WM_RBUTTONUP : WM_LBUTTONUP;
+            SendMessage(hWnd, downMessage, IntPtr.Zero, MakeLParam(x, y));
+            Thread.Sleep(100);
+            SendMessage(hWnd, upMessage, IntPtr.Zero, MakeLParam(x, y));
+            Thread.Sleep(100);
+        }
         public void MoveMouse(int x, int y, bool hasOffset = true)
         {
             if (hasOffset)

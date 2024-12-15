@@ -30,11 +30,11 @@
     <None Remove="data\caiji\shuijing7.png" />
     <None Remove="data\caiji\shuijing8.png" />
     <None Remove="data\caiji\shuijing9.png" />
+    <None Remove="data\mapName\应天东郊.png" />
     <None Remove="data\mapName\应天府.png" />
     <None Remove="data\mapName\应天府东.png" />
-    <None Remove="data\mapName\应天府东郊.png" />
     <None Remove="data\mapName\应天府西.png" />
-    <None Remove="data\mapName\应天府西郊.png" />
+    <None Remove="data\mapName\应天西郊.png" />
     <None Remove="data\mapName\星秀村.png" />
     <None Remove="data\mapName\星秀村东.png" />
     <None Remove="data\mapName\景杨松林.png" />
@@ -45,34 +45,65 @@
     <None Remove="data\mapName\清河湿地.png" />
     <None Remove="data\mapName\芒砀山麓.png" />
     <None Remove="data\mapName\阳谷县.png" />
+    <None Remove="data\mapName\阳谷县南.png" />
     <None Remove="data\mapName\黄泥岗.png" />
-    <None Remove="data\map\HuangNiGang.pak" />
-    <None Remove="data\map\JingYangGang.pak" />
-    <None Remove="data\map\LinZhongXiaoQu.pak" />
-    <None Remove="data\map\MangYangShanLu.pak" />
-    <None Remove="data\map\XingXiuCun.pak" />
-    <None Remove="data\map\XingXiuCunDong.pak" />
-    <None Remove="data\map\YangGuXian.pak" />
-    <None Remove="data\map\YangGuXianNan.pak" />
-    <None Remove="data\map\YingTianFu.pak" />
-    <None Remove="data\map\YingTianFuXi.pak" />
-    <None Remove="data\map\YingTianFuXiJiao.pak" />
+    <None Remove="data\map\应天东郊.pak" />
+    <None Remove="data\map\应天府.pak" />
+    <None Remove="data\map\应天府东.pak" />
+    <None Remove="data\map\应天府西.pak" />
+    <None Remove="data\map\应天府西郊.pak" />
+    <None Remove="data\map\应天西郊.pak" />
+    <None Remove="data\map\星秀村.pak" />
+    <None Remove="data\map\星秀村2.pak" />
+    <None Remove="data\map\星秀村东.pak" />
+    <None Remove="data\map\景阳冈.pak" />
+    <None Remove="data\map\林中小居.pak" />
+    <None Remove="data\map\芒砀山麓.pak" />
+    <None Remove="data\map\阳谷县.pak" />
+    <None Remove="data\map\阳谷县南.pak" />
+    <None Remove="data\map\黄泥岗.pak" />
     <None Remove="data\simsun.ttc" />
     <None Remove="data\ui\beibao.png" />
     <None Remove="data\ui\bianJingCheng.png" />
     <None Remove="data\ui\caiji01.png" />
     <None Remove="data\ui\caiji02.png" />
+    <None Remove="data\ui\cangbaotu.png" />
     <None Remove="data\ui\close.png" />
     <None Remove="data\ui\duihuakuang.png" />
+    <None Remove="data\ui\error.png" />
     <None Remove="data\ui\huiChengFu.png" />
     <None Remove="data\ui\mapPoint.png" />
     <None Remove="data\ui\popup.png" />
     <None Remove="data\ui\qingHeXian.png" />
     <None Remove="data\ui\quMoXiang.png" />
+    <None Remove="data\ui\submit_btn.png" />
+    <None Remove="data\ui\task.png" />
+    <None Remove="data\ui\timeout.png" />
     <None Remove="data\ui\xingXiuCun.png" />
     <None Remove="data\ui\yangGuXian.png" />
     <None Remove="data\ui\yingTianfu.png" />
     <None Remove="data\ui\zhuangbeidaoju.png" />
+    <None Remove="data\ui\回城符.png" />
+    <None Remove="data\ui\宝图任务.png" />
+    <None Remove="data\ui\打宝图对话1.png" />
+    <None Remove="data\ui\打宝图对话2.png" />
+    <None Remove="data\ui\放弃任务.png" />
+    <None Remove="data\ui\杂货店对话1.png" />
+    <None Remove="data\ui\购买.png" />
+    <None Remove="data\ui\驱魔香.png" />
+    <None Remove="data\ui\驱魔香状态.png" />
+    <None Remove="data\wabao\0.png" />
+    <None Remove="data\wabao\1.png" />
+    <None Remove="data\wabao\2.png" />
+    <None Remove="data\wabao\3.png" />
+    <None Remove="data\wabao\4.png" />
+    <None Remove="data\wabao\5.png" />
+    <None Remove="data\wabao\6.png" />
+    <None Remove="data\wabao\7.png" />
+    <None Remove="data\wabao\8.png" />
+    <None Remove="data\wabao\9.png" />
+    <None Remove="data\wabao\point.png" />
+    <None Remove="data\wabao\wabao_xy_start.png" />
     <None Remove="data\xy\0.png" />
     <None Remove="data\xy\1.png" />
     <None Remove="data\xy\2.png" />
@@ -84,8 +115,31 @@
     <None Remove="data\xy\8.png" />
     <None Remove="data\xy\9.png" />
     <None Remove="data\xy\point.png" />
+    <None Remove="data\xy\坐标括号1.png" />
+    <None Remove="data\xy\坐标括号2.png" />
     <None Remove="data\素材\wabao_test.png" />
     <None Remove="data\素材\wabao_test2.png" />
+    <None Remove="data\素材\测试宝图对话.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="data\mapName\阳谷县南.png" />
+    <EmbeddedResource Include="data\ui\回城符.png" />
+    <EmbeddedResource Include="data\ui\宝图任务.png" />
+    <EmbeddedResource Include="data\ui\打宝图对话1.png" />
+    <EmbeddedResource Include="data\ui\打宝图对话2.png" />
+    <EmbeddedResource Include="data\ui\放弃任务.png" />
+    <EmbeddedResource Include="data\ui\杂货店对话1.png" />
+    <EmbeddedResource Include="data\ui\购买.png" />
+    <EmbeddedResource Include="data\ui\驱魔香.png" />
+    <EmbeddedResource Include="data\ui\驱魔香状态.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="data\ui\task.png" />
+    <EmbeddedResource Include="data\xy\坐标括号1.png" />
+    <EmbeddedResource Include="data\xy\坐标括号2.png" />
+    <EmbeddedResource Include="data\素材\测试宝图对话.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -154,13 +208,13 @@
     <EmbeddedResource Include="data\mapName\应天府东.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="data\mapName\应天府东郊.png">
+    <EmbeddedResource Include="data\mapName\应天东郊.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="data\mapName\应天府西.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="data\mapName\应天府西郊.png">
+    <EmbeddedResource Include="data\mapName\应天西郊.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="data\mapName\星秀村.png">
@@ -196,17 +250,18 @@
     <EmbeddedResource Include="data\mapName\黄泥岗.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="data\map\HuangNiGang.pak" />
-    <EmbeddedResource Include="data\map\JingYangGang.pak" />
-    <EmbeddedResource Include="data\map\LinZhongXiaoQu.pak" />
-    <EmbeddedResource Include="data\map\MangYangShanLu.pak" />
-    <EmbeddedResource Include="data\map\XingXiuCun.pak" />
-    <EmbeddedResource Include="data\map\XingXiuCunDong.pak" />
-    <EmbeddedResource Include="data\map\YangGuXian.pak" />
-    <EmbeddedResource Include="data\map\YangGuXianNan.pak" />
-    <EmbeddedResource Include="data\map\YingTianFu.pak" />
-    <EmbeddedResource Include="data\map\YingTianFuXi.pak" />
-    <EmbeddedResource Include="data\map\YingTianFuXiJiao.pak" />
+    <EmbeddedResource Include="data\map\应天府东.pak" />
+    <EmbeddedResource Include="data\map\应天西郊.pak" />
+    <EmbeddedResource Include="data\map\黄泥岗.pak" />
+    <EmbeddedResource Include="data\map\景阳冈.pak" />
+    <EmbeddedResource Include="data\map\林中小居.pak" />
+    <EmbeddedResource Include="data\map\芒砀山麓.pak" />
+    <EmbeddedResource Include="data\map\星秀村.pak" />
+    <EmbeddedResource Include="data\map\星秀村东.pak" />
+    <EmbeddedResource Include="data\map\阳谷县.pak" />
+    <EmbeddedResource Include="data\map\阳谷县南.pak" />
+    <EmbeddedResource Include="data\map\应天府.pak" />
+    <EmbeddedResource Include="data\map\应天府西.pak" />
     <EmbeddedResource Include="data\simsun.ttc" />
     <EmbeddedResource Include="data\ui\beibao.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -220,12 +275,14 @@
     <EmbeddedResource Include="data\ui\caiji02.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\cangBaoTu.png" />
     <EmbeddedResource Include="data\ui\close.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="data\ui\duihuakuang.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\error.png" />
     <EmbeddedResource Include="data\ui\huiChengFu.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -241,6 +298,8 @@
     <EmbeddedResource Include="data\ui\quMoXiang.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="data\ui\submit_btn.png" />
+    <EmbeddedResource Include="data\ui\timeout.png" />
     <EmbeddedResource Include="data\ui\xingXiuCun.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -253,6 +312,18 @@
     <EmbeddedResource Include="data\ui\zhuangbeidaoju.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="data\wabao\0.png" />
+    <EmbeddedResource Include="data\wabao\1.png" />
+    <EmbeddedResource Include="data\wabao\2.png" />
+    <EmbeddedResource Include="data\wabao\3.png" />
+    <EmbeddedResource Include="data\wabao\4.png" />
+    <EmbeddedResource Include="data\wabao\5.png" />
+    <EmbeddedResource Include="data\wabao\6.png" />
+    <EmbeddedResource Include="data\wabao\7.png" />
+    <EmbeddedResource Include="data\wabao\8.png" />
+    <EmbeddedResource Include="data\wabao\9.png" />
+    <EmbeddedResource Include="data\wabao\point.png" />
+    <EmbeddedResource Include="data\wabao\wabao_xy_start.png" />
     <EmbeddedResource Include="data\xy\0.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -288,6 +359,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="data\素材\wabao_test.png" />
     <EmbeddedResource Include="data\素材\wabao_test2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="data\map\应天东郊.pak" />
   </ItemGroup>
 
   <ItemGroup>

@@ -768,13 +768,13 @@ namespace TTTools
 
         private void button13_Click(object sender, EventArgs e)
         {
-            ToolsFunction.UseBagItem("驱魔香");
+            ToolsFunction.IsUseQuMoXiang();
 
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
-            ToolsFunction.MoveToMap("星秀村");
+            ToolsFunction.MoveToMapByFly("星秀村");
         }
 
         private void tabPage5_Click(object sender, EventArgs e)
@@ -784,22 +784,22 @@ namespace TTTools
 
         private void button17_Click(object sender, EventArgs e)
         {
-            ToolsFunction.MoveToMap("应天府");
+            ToolsFunction.MoveToMapByFly("应天府");
         }
 
         private void button21_Click(object sender, EventArgs e)
         {
-            ToolsFunction.MoveToMap("汴京城");
+            ToolsFunction.MoveToMapByFly("汴京城");
         }
 
         private void button22_Click(object sender, EventArgs e)
         {
-            ToolsFunction.MoveToMap("清河县");
+            ToolsFunction.MoveToMapByFly("清河县");
         }
 
         private void button23_Click(object sender, EventArgs e)
         {
-            ToolsFunction.MoveToMap("阳谷县");
+            ToolsFunction.MoveToMapByFly("阳谷县");
 
         }
         private async void button40_Click(object sender, EventArgs e)
@@ -871,6 +871,7 @@ namespace TTTools
 
         private void button39_Click(object sender, EventArgs e)
         {
+            ToolsFunction.BuySomeThing("驱魔香", 20);
 
         }
 
@@ -937,6 +938,51 @@ namespace TTTools
         private void button49_Click(object sender, EventArgs e)
         {
             ToolsFunction.WabaoTest();
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.MoveToMapAsync("星秀村东");
+
+        }
+
+        private void button50_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.MoveToMapAsync("芒砀山麓");
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.OpenTask();
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void button51_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    ToolsFunction.WabaoTaskAsync();
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"执行失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                button51.Enabled = true; // 恢复按钮状态
+            }
+        }
+
+        private void button52_Click(object sender, EventArgs e)
+        {
+            ToolsFunction.OpenTask();
         }
     }
 }

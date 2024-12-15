@@ -51,6 +51,10 @@ namespace TTTools
             button15 = new System.Windows.Forms.Button();
             button12 = new System.Windows.Forms.Button();
             tabPage5 = new System.Windows.Forms.TabPage();
+            button52 = new System.Windows.Forms.Button();
+            button51 = new System.Windows.Forms.Button();
+            button50 = new System.Windows.Forms.Button();
+            button49 = new System.Windows.Forms.Button();
             button48 = new System.Windows.Forms.Button();
             button40 = new System.Windows.Forms.Button();
             button39 = new System.Windows.Forms.Button();
@@ -109,7 +113,7 @@ namespace TTTools
             button8 = new System.Windows.Forms.Button();
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             tabControl2 = new System.Windows.Forms.TabControl();
-            button49 = new System.Windows.Forms.Button();
+            checkBox2 = new System.Windows.Forms.CheckBox();
             mainTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabControl1.SuspendLayout();
@@ -345,6 +349,9 @@ namespace TTTools
             // 
             // tabPage5
             // 
+            tabPage5.Controls.Add(button52);
+            tabPage5.Controls.Add(button51);
+            tabPage5.Controls.Add(button50);
             tabPage5.Controls.Add(button49);
             tabPage5.Controls.Add(button48);
             tabPage5.Controls.Add(button40);
@@ -384,6 +391,46 @@ namespace TTTools
             tabPage5.UseVisualStyleBackColor = true;
             tabPage5.Click += tabPage5_Click;
             // 
+            // button52
+            // 
+            button52.Location = new System.Drawing.Point(360, 93);
+            button52.Name = "button52";
+            button52.Size = new System.Drawing.Size(75, 23);
+            button52.TabIndex = 75;
+            button52.Text = "打开任务";
+            button52.UseVisualStyleBackColor = true;
+            button52.Click += button52_Click;
+            // 
+            // button51
+            // 
+            button51.Location = new System.Drawing.Point(560, 93);
+            button51.Name = "button51";
+            button51.Size = new System.Drawing.Size(75, 23);
+            button51.TabIndex = 74;
+            button51.Text = "打宝图";
+            button51.UseVisualStyleBackColor = true;
+            button51.Click += button51_Click;
+            // 
+            // button50
+            // 
+            button50.Location = new System.Drawing.Point(6, 93);
+            button50.Name = "button50";
+            button50.Size = new System.Drawing.Size(75, 23);
+            button50.TabIndex = 73;
+            button50.Text = "芒砀山麓";
+            button50.UseVisualStyleBackColor = true;
+            button50.Click += button50_Click;
+            // 
+            // button49
+            // 
+            button49.Location = new System.Drawing.Point(560, 122);
+            button49.Name = "button49";
+            button49.Size = new System.Drawing.Size(75, 23);
+            button49.TabIndex = 72;
+            button49.Text = "寻找宝图";
+            button49.UseVisualStyleBackColor = true;
+            button49.Click += button49_Click;
+            // 
             // button48
             // 
             button48.Location = new System.Drawing.Point(492, 35);
@@ -410,7 +457,7 @@ namespace TTTools
             button39.Name = "button39";
             button39.Size = new System.Drawing.Size(75, 23);
             button39.TabIndex = 69;
-            button39.Text = "购买商品1";
+            button39.Text = "购买驱魔香";
             button39.UseVisualStyleBackColor = true;
             button39.Click += button39_Click;
             // 
@@ -461,7 +508,7 @@ namespace TTTools
             // 
             // button33
             // 
-            button33.Location = new System.Drawing.Point(87, 93);
+            button33.Location = new System.Drawing.Point(168, 93);
             button33.Name = "button33";
             button33.Size = new System.Drawing.Size(75, 23);
             button33.TabIndex = 63;
@@ -470,21 +517,23 @@ namespace TTTools
             // 
             // button32
             // 
-            button32.Location = new System.Drawing.Point(168, 93);
+            button32.Location = new System.Drawing.Point(249, 93);
             button32.Name = "button32";
             button32.Size = new System.Drawing.Size(105, 23);
             button32.TabIndex = 62;
             button32.Text = "查看任务-驱魔香";
             button32.UseVisualStyleBackColor = true;
+            button32.Click += button32_Click;
             // 
             // button31
             // 
-            button31.Location = new System.Drawing.Point(6, 93);
+            button31.Location = new System.Drawing.Point(87, 93);
             button31.Name = "button31";
             button31.Size = new System.Drawing.Size(75, 23);
             button31.TabIndex = 61;
             button31.Text = "打开任务栏";
             button31.UseVisualStyleBackColor = true;
+            button31.Click += button31_Click;
             // 
             // button30
             // 
@@ -549,6 +598,7 @@ namespace TTTools
             button24.TabIndex = 54;
             button24.Text = "星宿村东";
             button24.UseVisualStyleBackColor = true;
+            button24.Click += button24_Click;
             // 
             // button23
             // 
@@ -706,7 +756,7 @@ namespace TTTools
             textBox3.Name = "textBox3";
             textBox3.Size = new System.Drawing.Size(100, 23);
             textBox3.TabIndex = 81;
-            textBox3.Text = "YingTianFu";
+            textBox3.Text = "星秀村";
             // 
             // button47
             // 
@@ -716,6 +766,7 @@ namespace TTTools
             button47.TabIndex = 80;
             button47.Text = "导出";
             button47.UseVisualStyleBackColor = true;
+            button47.Visible = false;
             button47.Click += button47_Click;
             // 
             // textBox2
@@ -956,21 +1007,22 @@ namespace TTTools
             tabControl2.Size = new System.Drawing.Size(676, 412);
             tabControl2.TabIndex = 29;
             // 
-            // button49
+            // checkBox2
             // 
-            button49.Location = new System.Drawing.Point(565, 122);
-            button49.Name = "button49";
-            button49.Size = new System.Drawing.Size(75, 23);
-            button49.TabIndex = 72;
-            button49.Text = "识别宝图";
-            button49.UseVisualStyleBackColor = true;
-            button49.Click += button49_Click;
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new System.Drawing.Point(606, 457);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new System.Drawing.Size(111, 21);
+            checkBox2.TabIndex = 12;
+            checkBox2.Text = "登录时重新输入";
+            checkBox2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(695, 555);
+            Controls.Add(checkBox2);
             Controls.Add(checkBox1);
             Controls.Add(textBox_log);
             Controls.Add(tabControl2);
@@ -1084,6 +1136,10 @@ namespace TTTools
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button49;
+        private System.Windows.Forms.Button button50;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Button button51;
+        private System.Windows.Forms.Button button52;
     }
 }
 

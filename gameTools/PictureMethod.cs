@@ -29,6 +29,7 @@ namespace TTTools
 
         // 记录坐标图片数据
         private readonly Dictionary<char, Bitmap> digitBitmaps = new Dictionary<char, Bitmap>();
+        private readonly Dictionary<char, Bitmap> digitDockBitmaps = new Dictionary<char, Bitmap>();
         private readonly Dictionary<String, Bitmap> mapNameBitmaps = new Dictionary<String, Bitmap>();
 
 
@@ -36,6 +37,7 @@ namespace TTTools
         {
             this.hWnd = hWnd;
             LoadDigitBitmaps();
+            LoadDigitDockBitmaps();
             LoadMapNameBitmaps();
 
         }
@@ -76,6 +78,30 @@ namespace TTTools
             return bmp;
         }
 
+        public Bitmap CaptureFromBitmap(Bitmap sourceBitmap, int x, int y, int width, int height)
+        {
+            // Validate the input bitmap and specified range
+            if (sourceBitmap == null)
+            {
+                throw new ArgumentNullException(nameof(sourceBitmap), "Source bitmap cannot be null.");
+            }
+
+            if (x < 0 || y < 0 || x + width > sourceBitmap.Width || y + height > sourceBitmap.Height)
+            {
+                throw new ArgumentOutOfRangeException("Specified range is outside the bounds of the source bitmap.");
+            }
+
+            // Create a new bitmap to store the cropped region
+            Bitmap croppedBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            using (Graphics graphics = Graphics.FromImage(croppedBitmap))
+            {
+                // Draw the specified region from the source bitmap onto the new bitmap
+                graphics.DrawImage(sourceBitmap, new Rectangle(0, 0, width, height), new Rectangle(x, y, width, height), GraphicsUnit.Pixel);
+            }
+
+            return croppedBitmap;
+        }
 
         public bool CompareBitmaps(Bitmap bmp1, Bitmap bmp2)
         {
@@ -97,7 +123,7 @@ namespace TTTools
         }
 
 
-        public string SaveImage(Bitmap image)
+        public string SaveImage(Bitmap image,String fileName = "" )
         {
             // 获取程序运行目录
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -109,11 +135,15 @@ namespace TTTools
                 Directory.CreateDirectory(tempDirectory);
             }
 
-            // 使用当前的Unix时间戳作为文件名
-            string timestamp = DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
-            string tempFilePath = Path.Combine(tempDirectory, $"temp_ocr_{timestamp}.png");
-
-            // 将Bitmap对象保存为临时文件
+            // 使用当前的毫秒时间戳加 4 位随机数作为文件名
+            string timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString();
+            string randomSuffix = new Random().Next(1000, 9999).ToString(); // 生成 4 位随机数
+            if (fileName == "")
+            {
+                fileName = $"temp_ocr_{timestamp}_{randomSuffix}";
+            }
+            string tempFilePath = Path.Combine(tempDirectory, $"{fileName}.png");
+            // 将 Bitmap 对象保存为临时文件
             image.Save(tempFilePath);
             return tempFilePath;
         }
@@ -125,7 +155,6 @@ namespace TTTools
             int height = 692; // 定义窗口截图的高度
             Bitmap fullCapture2 = CaptureWindow(0, 0, width, height);
             //SaveImage(fullCapture2);
-            LogService.Debug(fullCapture2.ToString());
 
             using (Bitmap fullCapture = CaptureWindow(0, 0, width, height))
             {
@@ -192,11 +221,12 @@ namespace TTTools
                 return null;
             }
 
-            //SaveImage(toFind);
             List<Point> foundPoints = new List<Point>();
 
             var dataFullCapture = screenshot.LockBits(new Rectangle(0, 0, screenshot.Width, screenshot.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             var dataToFind = target.LockBits(new Rectangle(0, 0, target.Width, target.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            int tolerance = 10; // 允许的颜色容错值
 
             unsafe
             {
@@ -206,9 +236,9 @@ namespace TTTools
                 int strideFullCapture = dataFullCapture.Stride;
                 int strideToFind = dataToFind.Stride;
 
-                for (int y = 0; y < screenshot.Height - target.Height; y++)
+                for (int y = 0; y <= screenshot.Height - target.Height; y++)
                 {
-                    for (int x = 0; x < screenshot.Width - target.Width; x++)
+                    for (int x = 0; x <= screenshot.Width - target.Width; x++)
                     {
                         bool found = true;
                         for (int y1 = 0; y1 < target.Height; y1++)
@@ -218,7 +248,20 @@ namespace TTTools
                                 int indexFullCapture = (y + y1) * strideFullCapture + (x + x1) * 4;
                                 int indexToFind = y1 * strideToFind + x1 * 4;
 
-                                if (*(int*)(ptrFullCapture + indexFullCapture) != *(int*)(ptrToFind + indexToFind))
+                                byte b1 = ptrFullCapture[indexFullCapture];
+                                byte g1 = ptrFullCapture[indexFullCapture + 1];
+                                byte r1 = ptrFullCapture[indexFullCapture + 2];
+                                byte a1 = ptrFullCapture[indexFullCapture + 3];
+
+                                byte b2 = ptrToFind[indexToFind];
+                                byte g2 = ptrToFind[indexToFind + 1];
+                                byte r2 = ptrToFind[indexToFind + 2];
+                                byte a2 = ptrToFind[indexToFind + 3];
+
+                                if (Math.Abs(b1 - b2) > tolerance ||
+                                    Math.Abs(g1 - g2) > tolerance ||
+                                    Math.Abs(r1 - r2) > tolerance ||
+                                    Math.Abs(a1 - a2) > tolerance)
                                 {
                                     found = false;
                                     break;
@@ -239,6 +282,7 @@ namespace TTTools
 
             return foundPoints;
         }
+
 
         public bool CheckIfWindowContentChanged()
         {
@@ -272,6 +316,72 @@ namespace TTTools
                     return !CompareBitmaps(firstCapture, secondCapture);
                 }
             }
+        }
+        public bool WaitForMovementToStop()
+        {
+            int x = 679;
+            int y = 43;
+            int width = 119;
+            int height = 85;
+
+            Bitmap previousCapture = null;
+            Bitmap currentCapture;
+
+            try
+            {
+                while (true)
+                {
+                    // 捕获当前图像
+                    using (currentCapture = CaptureWindow(x, y, width, height))
+                    {
+                        // 如果前一帧图像为空，保存当前帧并等待下一次比较
+                        if (previousCapture == null)
+                        {
+                            previousCapture = (Bitmap)currentCapture.Clone();
+                            Thread.Sleep(1000);
+                            continue;
+                        }
+
+                        // 比较当前帧和前一帧
+                        if (CompareBitmaps(previousCapture, currentCapture))
+                        {
+                            // 如果两次对比结果一致，移动结束
+                            return true;
+                        }
+
+                        // 如果不一致，等待并更新前一帧
+                        previousCapture.Dispose();
+                        previousCapture = (Bitmap)currentCapture.Clone();
+                    }
+
+                    Thread.Sleep(1000); // 等待 1000 毫秒再检查
+                }
+            }
+            finally
+            {
+                // 确保释放资源
+                previousCapture?.Dispose();
+            }
+        }
+
+        //判断小地图是否打开了
+        public Point? IsMapOpen()
+        {
+            // 加载背包特征图片
+            using (Bitmap backpackBitmap = ResourceLoader.LoadBitmap("data.ui.mapPoint.png"))
+            {
+                // 在当前窗口截图中寻找特征图片的位置
+                List<Point> foundPoints = FindBitmapInWindow(backpackBitmap);
+
+                // 如果找到匹配点，则返回第一个匹配点的坐标
+                if (foundPoints.Count > 0)
+                {
+                    return foundPoints[0];
+                }
+            }
+
+            // 没有找到匹配项，返回 null
+            return null;
         }
 
         //判断背包是否打开，如果打开了，返回第一个物品的位置
@@ -324,7 +434,24 @@ namespace TTTools
             }
         }
 
+        /**
+         * 点击对话框下一步（通用）
+         */
+        public void PopupNext()
+        {
+            string[] files =
+            {
+                "打宝图对话1.png",
+                "打宝图对话2.png",
+                "杂货店对话1.png",
+            };
+            for (int i = 0; i < files.Length; i++)
+            {
 
+            }
+        }
+
+       
 
         // 加载数字图片数据到内存
         private void LoadDigitBitmaps()
@@ -356,6 +483,28 @@ namespace TTTools
                     }
 
                     digitBitmaps[characters[i]] = cachedBitmap;
+                }
+            }
+        }
+        private void LoadDigitDockBitmaps()
+        {
+            string imageDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "wabao");
+            string[] files = { "0.png", "1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "point.png" };
+            char[] characters = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.' };
+
+            for (int i = 0; i < files.Length; i++)
+            {
+              
+                using (Bitmap bmp = ResourceLoader.LoadBitmap($"data.wabao.{files[i]}"))
+                {
+                    // 将Bitmap克隆到缓存中，确保原图片资源被释放
+                    Bitmap cachedBitmap = new Bitmap(bmp.Width, bmp.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                    using (Graphics g = Graphics.FromImage(cachedBitmap))
+                    {
+                        g.DrawImage(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    }
+
+                    digitDockBitmaps[characters[i]] = cachedBitmap;
                 }
             }
         }
@@ -449,6 +598,7 @@ namespace TTTools
 
             // 预处理截图，将非白色像素设置为透明
             Bitmap processedScreenshot = PreprocessScreenshot(screenshot);
+            // SaveImage(processedScreenshot);
             // 遍历所有缓存的数字模板
             foreach (var kvp in digitBitmaps)
             {
@@ -467,7 +617,6 @@ namespace TTTools
                         // 提取截图中的子区域
                         using (Bitmap subRegion = processedScreenshot.Clone(new Rectangle(x, y, digitBitmap.Width, digitBitmap.Height), processedScreenshot.PixelFormat))
                         {
-                            SaveImage(subRegion2);
                             // 判断是否匹配并验证左侧像素为空
                             if (CompareBitmapWithValidation(subRegion, digitBitmap, processedScreenshot, x, y, digit))
                             {
@@ -589,19 +738,19 @@ namespace TTTools
 
             return true; // 所有周围像素均透明
         }
-        public Point? FindXyInBitmap2(Bitmap screenshot)
+        public Point? FindXyInBitmapBlack(Bitmap screenshot)
         {
+
             List<(char, Point)> foundCoordinates = new List<(char, Point)>();
 
             // 遍历所有缓存的数字模板
-            foreach (var kvp in digitBitmaps)
+            foreach (var kvp in digitDockBitmaps)
             {
                 char digit = kvp.Key;
                 Bitmap digitBitmap = kvp.Value;
 
                 // 寻找数字在图片中的所有位置
                 List<Point> digitPositions = FindAllOccurrences(screenshot, digitBitmap);
-
                 // 记录找到的数字及其坐标
                 foreach (var position in digitPositions)
                 {
@@ -692,7 +841,7 @@ namespace TTTools
             return positions;
         }
 
-       
+
         /**
          * 获取当前地图名称
          */
@@ -703,29 +852,67 @@ namespace TTTools
             int y = 19;
             int width = 110;
             int height = 16;
-            Bitmap a = CaptureWindow(x, y, width, height);
-            SaveImage(a);
+
+            // 存储所有匹配成功的地图名称
+            List<string> matchedMapNames = new List<string>();
+
             // 截取指定区域的截图
             using (Bitmap screenshot = CaptureWindow(x, y, width, height))
             {
-
                 // 遍历 mapNameBitmaps 中的所有地图名称图片
                 foreach (var entry in mapNameBitmaps)
                 {
                     string mapName = entry.Key;
                     Bitmap mapBitmap = entry.Value;
-                    var find = FindBitmapInScreenshot( screenshot, mapBitmap);
-                    if (find.Count>0)
+
+                    // 查找截图中是否包含当前地图名称
+                    var find = FindBitmapInScreenshot(screenshot, mapBitmap);
+                    if (find.Count > 0)
                     {
-                        return mapName;
+                        matchedMapNames.Add(mapName); // 添加匹配成功的地图名称
                     }
-                       
                 }
             }
 
-            // 如果没有匹配项，返回 null 或空字符串
-            return null;
+            // 如果有匹配项，返回字数最多的名称；否则返回 null
+            return matchedMapNames.Count > 0
+                ? matchedMapNames.OrderByDescending(name => name.Length).First()
+                : null;
         }
+
+        /**
+        * 在传入的图片中寻找获取当前地图名称，图片需要提前改为黄色字体蓝色背景与右上角地图配色一样
+        */
+        public string GetCurrentMapNameByImage(Bitmap img)
+        {
+            // 定义截图区域
+            int x = 686;
+            int y = 19;
+            int width = 110;
+            int height = 16;
+
+            string longestMapName = null;
+
+            // 遍历 mapNameBitmaps 中的所有地图名称图片
+            foreach (var entry in mapNameBitmaps)
+            {
+                string mapName = entry.Key;
+                Bitmap cityNameImg = entry.Value;
+                var find = FindBitmapInScreenshot(img, cityNameImg);
+                if (find.Count > 0)
+                {
+                    // 如果找到匹配项，更新为字数最多的地图名称
+                    if (longestMapName == null || mapName.Length > longestMapName.Length)
+                    {
+                        longestMapName = mapName;
+                    }
+                }
+            }
+
+            // 返回字数最多的地图名称，如果没有匹配项，返回 null
+            return longestMapName;
+        }
+
         /**
          * 处理图片，把传入的图片中所有的颜色除参数1以外的颜色全部替换为参数2的颜色
          * 返回处理后的图片
@@ -769,35 +956,48 @@ namespace TTTools
             if (string.IsNullOrWhiteSpace(hexColorToReplace) || string.IsNullOrWhiteSpace(hexReplacementColor))
                 throw new ArgumentNullException("颜色参数不能为空。");
 
-            // 将16进制颜色代码转换为Color对象
+            // 确保 sourceBitmap 的尺寸有效
+            if (sourceBitmap.Width <= 0 || sourceBitmap.Height <= 0)
+                throw new ArgumentException("源图片的尺寸无效。");
+
+            // 将16进制颜色代码转换为 Color 对象
             Color colorToReplace = HexToColor(hexColorToReplace);
             Color replacementColor = HexToColor(hexReplacementColor);
 
-            // 创建一个新的Bitmap，避免直接修改源图片
-            Bitmap resultBitmap = new Bitmap(sourceBitmap.Width, sourceBitmap.Height, PixelFormat.Format32bppArgb);
-
-            // 遍历原图片的像素
-            for (int y = 0; y < sourceBitmap.Height; y++)
+            Bitmap resultBitmap = null;
+            try
             {
-                for (int x = 0; x < sourceBitmap.Width; x++)
-                {
-                    // 获取当前像素颜色
-                    Color pixelColor = sourceBitmap.GetPixel(x, y);
+                // 创建一个新的Bitmap，避免直接修改源图片
+                resultBitmap = new Bitmap(sourceBitmap.Width, sourceBitmap.Height, PixelFormat.Format32bppArgb);
 
-                    // 如果颜色匹配，则替换；否则保持原样
-                    if (pixelColor.ToArgb() == colorToReplace.ToArgb())
+                // 遍历原图片的像素
+                for (int y = 0; y < sourceBitmap.Height; y++)
+                {
+                    for (int x = 0; x < sourceBitmap.Width; x++)
                     {
-                        resultBitmap.SetPixel(x, y, replacementColor);
-                    }
-                    else
-                    {
-                        resultBitmap.SetPixel(x, y, pixelColor);
+                        // 获取当前像素颜色
+                        Color pixelColor = sourceBitmap.GetPixel(x, y);
+
+                        // 如果颜色匹配，则替换；否则保持原样
+                        if (pixelColor.ToArgb() == colorToReplace.ToArgb())
+                        {
+                            resultBitmap.SetPixel(x, y, replacementColor);
+                        }
+                        else
+                        {
+                            resultBitmap.SetPixel(x, y, pixelColor);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("处理图片时发生错误。", ex);
             }
 
             return resultBitmap;
         }
+
 
         // 将16进制颜色代码转换为Color对象的方法
         private Color HexToColor(string hexColor)
