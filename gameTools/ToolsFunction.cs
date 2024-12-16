@@ -20,7 +20,7 @@ namespace TTTools.gameTools
         private static string dataDirectory = "./data/map/";
 
         // 是否已经持有打宝图任务
-        public static void IsHasWaBaoTask(bool autoRemove = false )
+        public static void IsHasWaBaoTask(bool autoRemove = false)
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var api = new Method(hWnd);
@@ -32,7 +32,7 @@ namespace TTTools.gameTools
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var api = new Method(hWnd);
-            var use =  api.IsUseQuMoXiang(true);
+            var use = api.IsUseQuMoXiang(true);
         }
 
         // 使用物品
@@ -40,10 +40,7 @@ namespace TTTools.gameTools
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var api = new Method(hWnd);
-            if (api.IsBackpackOpen())
-            {
-                api.UseBagItem(name);
-            }
+            api.UseBagItem(name);
         }
 
         // 关闭背包
@@ -51,11 +48,7 @@ namespace TTTools.gameTools
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var api = new Method(hWnd);
-            if (api.IsBackpackOpen())
-            {
-                api.ClickBackpack();
-                LogService.Log("关闭背包");
-            }
+            api.CloseBackPack();
         }
 
         // 打开背包
@@ -63,11 +56,8 @@ namespace TTTools.gameTools
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
             var api = new Method(hWnd);
-            if (!api.IsBackpackOpen())
-            {
-                api.ClickBackpack();
-            }
-        } // 打开背包
+            api.OpenBackPack();
+        }
 
         public static void OpenTask()
         {
@@ -76,178 +66,42 @@ namespace TTTools.gameTools
             api.OpenTask();
         }
 
-        public static async Task<bool> MoveToMapAsync(string targetMapName)
+        public static void MoveToMapByFly(string name)
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
-            var win = new WindowClickTools(hWnd);
             var api = new Method(hWnd);
-            var pic = new PictureMethod(hWnd);
-            // 可以直接飞行的地图名单
-            var flyableMaps = new HashSet<string> { "星秀村", "应天府", "汴京城", "清河县", "阳谷县" };
-            // 获取当前地图名称
-            var currentMapName = GetCurrentMapName();
-
-            // 如果已经在目标地图，则直接返回成功
-            if (currentMapName == targetMapName)
-            {
-                LogService.Log($"已经在目标地图: {targetMapName}");
-                return true;
-            }
-
-            // 如果目标地图在飞行传送名单中，直接调用飞行方法
-            if (flyableMaps.Contains(targetMapName))
-            {
-                if (MoveToMapByFly(targetMapName))
-                {
-                    LogService.Log($"通过飞行成功到达目标地图: {targetMapName}");
-                    return true;
-                }
-                else
-                {
-                    LogService.Log($"通过飞行传送失败: {targetMapName}");
-                    return false;
-                }
-            }
-
-
-            // 获取完整路径
-            List<string> route;
-            try
-            {
-                route = MapPoint.GetRouteToMap(targetMapName);
-            }
-            catch (Exception ex)
-            {
-                LogService.Log($"获取目标地图路径失败: {ex.Message}");
-                return false;
-            }
-
-            // 如果当前地图已经在路径中，跳过前面的地图
-            int currentIndex = route.IndexOf(currentMapName);
-            if (currentIndex == -1)
-            {
-                LogService.Log($"当前地图 {currentMapName} 不在到 {targetMapName} 的路径中，无法导航！");
-                return false;
-            }
-
-            // 遍历路径，从当前地图的下一个地图开始
-            bool isFirstStep = currentIndex == 0; // 仅当当前地图是路径起点时执行飞行传送
-            for (int i = currentIndex + 1; i < route.Count; i++)
-            {
-                string step = route[i];
-                LogService.Log($"导航至地图: {step}");
-
-                if (isFirstStep)
-                {
-                    // 第一步使用飞行传送
-                    if (currentMapName != step)
-                    {
-                        if (!MoveToMapByFly(step))
-                        {
-                            LogService.Log($"传送到起点地图 {step} 失败！");
-                            return false;
-                        }
-                    }
-
-                    // 更新当前地图
-                    currentMapName = GetCurrentMapName();
-                    if (currentMapName != step)
-                    {
-                        LogService.Log($"传送后预期在 {step}，但实际在 {currentMapName}！");
-                        return false;
-                    }
-
-                    isFirstStep = false; // 标记飞行传送完成
-                    continue; // 跳过后续逻辑，进入下一个循环
-                }
-
-                // 后续地图传送逻辑
-                if (!MapPoint.mapOutPoint.ContainsKey(currentMapName))
-                {
-                    LogService.Log($"当前地图 {currentMapName} 无传送配置！");
-                    return false;
-                }
-
-                // 获取当前地图的传送节点
-                var outPoints = MapPoint.mapOutPoint[currentMapName];
-                var nextRoute = outPoints.FirstOrDefault(r => r.NextMap == step);
-                if (nextRoute == null)
-                {
-                    LogService.Log($"在地图 {currentMapName} 无法找到到达 {step} 的传送点！");
-                    return false;
-                }
-
-                // 点击传送点
-                LogService.Log($"点击传送点前往 {step}, 坐标: ({nextRoute.ExitPoint.X}, {nextRoute.ExitPoint.Y})");
-                ToolsFunction.MapGotoClick(currentMapName, nextRoute.ExitPoint.X, nextRoute.ExitPoint.Y);
-
-                // 等待移动完成
-                if (!pic.WaitForMovementToStop())
-                {
-                    LogService.Log($"移动到 {step} 的过程失败！");
-                    return false;
-                }
-
-                // 等待额外的 5 秒
-                await Task.Delay(6000);
-
-                // 更新当前地图
-                currentMapName = GetCurrentMapName();
-                if (currentMapName != step)
-                {
-                    LogService.Log($"期望在 {step}，但实际在 {currentMapName}！");
-                    return false;
-                }
-            }
-
-            LogService.Log($"成功到达目标地图: {targetMapName}");
-            return true;
+            api.MoveToMapByFly(name);
         }
 
 
-        // 移动到地图
-        public static bool MoveToMapByFly(string name)
+        public static void BuySomeThing(string name, int num)
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
-            var win = new WindowClickTools(hWnd);
             var api = new Method(hWnd);
-            var pic = new PictureMethod(hWnd);
-            var currentMapName = GetCurrentMapName();
-            if (currentMapName == name)
-            {
-                return true;
-            }
-
-            // 打开背包
-            OpenBackPack();
-            var cityMap = new Dictionary<string, string>
-            {
-                { "星秀村", "xingXiuCun" },
-                { "应天府", "yingTianFu" },
-                { "汴京城", "bianJingCheng" },
-                { "清河县", "qingHeXian" },
-                { "阳谷县", "yangGuXian" }
-            };
-            // 获取 name 对应的 code
-            if (!cityMap.TryGetValue(name, out var targetCode))
-            {
-                return false;
-            }
-
-            UseBagItem("回程符");
-            win.MoveMouse(800, 0);
-            Point? point = api.FindSomeThingInMapByFileName("ui", targetCode);
-            if (point == null)
-            {
-                return false;
-            }
-
-            win.MoveClick(point.Value.X + 15, point.Value.Y + 35);
-            Thread.Sleep(500);
-            //CloseBackPack();
-            api.ClosePopupAuto();
-            return true;
+            api.BuySomeThing(name, num);
         }
+
+        public static void MapGotoClick(string mapName, int x, int y)
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var api = new Method(hWnd);
+            api.MapGotoClick(mapName, x, y);
+        }
+
+        
+        public static void GetCurrentMapName()
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var api = new Method(hWnd);
+            api.GetCurrentMapName();
+        }
+        public static async Task MoveToMapAsync(string name)
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var api = new Method(hWnd);
+            await api.MoveToMapAsync(name);
+        }
+
 
 
         // 打开地图
@@ -744,59 +598,8 @@ namespace TTTools.gameTools
             LogService.Log($"坐标数据已成功导出到: {outputFilePath}");
         }
 
-        public static bool MapGotoClick(string mapName, int x, int y)
-        {
-            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
-            var win = new WindowClickTools(hWnd);
-            var api = new Method(hWnd);
-            var pic = new PictureMethod(hWnd);
-            var config = MapPoint.GetMapConfig(mapName);
-            var offset = config.Offset;
-            if (!api.IsMapOpen())
-            {
-                api.OpenMap();
-            }
 
-            var closestCoordinate = ToolsFunction.FindClosestCoordinate(mapName, x, y);
-            if (closestCoordinate != null)
-            {
-                Point? point = api.FindSomeThingInMapByFileName("ui", "mapPoint");
-                if (point == null)
-                {
-                    LogService.Log("地图起点未找到");
-                    return false;
-                }
 
-                // 锚点起始位置
-                int startX = point.Value.X + offset.X;
-                int startY = point.Value.Y + offset.Y;
-
-                win.MoveClick(startX + closestCoordinate.Value.DeltaX + config.MapClickOffset.X,
-                    startY + closestCoordinate.Value.DeltaY + config.MapClickOffset.Y);
-                // LogService.Log($"最接近的行增量: {closestCoordinate.Value.DeltaX}, 列增量: {closestCoordinate.Value.DeltaY}");
-                LogService.Log($"游戏坐标: ({closestCoordinate.Value.GameX}, {closestCoordinate.Value.GameY})");
-                api.CloseMap();
-                return true;
-            }
-            else
-            {
-                LogService.Log("没有找到接近的坐标！");
-                return false;
-            }
-        }
-
-        public static string GetCurrentMapName()
-        {
-            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
-            var win = new WindowClickTools(hWnd);
-
-            var pic = new PictureMethod(hWnd);
-            var name = pic.GetCurrentMapName();
-            LogService.Log($"当前在：{name}");
-            return name;
-        }
-
-        
         public static async Task WabaoTaskAsync()
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
@@ -806,7 +609,7 @@ namespace TTTools.gameTools
             win.MoveMouse(800, 0);
             IsUseQuMoXiang();
             IsHasWaBaoTask(true);
-            await MoveToMapAsync("应天府");
+            MoveToMapAsync("应天府");
             Thread.Sleep(2000);
             MapGotoClick("应天府", 280, 152);
             // 等待移动完成

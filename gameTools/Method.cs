@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using TTTools.client;
+using TTTools.gameTools;
 using TTTools.windowsTools;
 
 namespace TTTools
@@ -14,7 +16,7 @@ namespace TTTools
     class Method : BaseOperation
     {
         private readonly IntPtr hWnd;
-        private readonly WindowClickTools wx;
+        private readonly WindowClickTools win;
         private PictureMethod pic;
 
 
@@ -24,14 +26,14 @@ namespace TTTools
         public Method(IntPtr hWnd) : base(hWnd)
         {
             this.hWnd = hWnd;
-            this.wx = new WindowClickTools(hWnd);
+            this.win = new WindowClickTools(hWnd);
             this.pic = new PictureMethod(hWnd);
             LoadFeatureImages();
         }
 
         public void InitWindows()
         {
-            wx.InitWindows();
+            win.InitWindows();
         }
 
         private void LoadFeatureImages()
@@ -58,7 +60,7 @@ namespace TTTools
                         Bitmap bitmap = ResourceLoader.LoadBitmap($"data.caiji.{material.Value}{i}.png");
                         featureImages[material.Key].Add(bitmap);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                     }
                 }
@@ -71,56 +73,73 @@ namespace TTTools
             var height = 629;
             var x = width / 2;
             var y = height / 2 - 50;
-            wx.MoveClick(x, y, false, false);
+            win.MoveClick(x, y, false, false);
         }
 
         //点击背包
         public void OpenBackpack()
         {
-            wx.MoveClick(446, 605);
+            win.MoveClick(446, 605);
         }
 
         public void CloseBackpack()
         {
-            wx.MoveClick(446, 605);
+            win.MoveClick(446, 605);
         }
 
         public void ClickBackpack()
         {
-            wx.MoveClick(446, 605);
+            win.MoveClick(446, 605);
         }
 
         //打开背包
         public void OpenMap()
         {
-            wx.MoveMouse(0, 0);
+            win.MoveMouse(0, 0);
             Point? point = FindSomeThingInMapByFileName("ui", "mapPoint");
             if (point == null)
             {
-                wx.SendTabKey();
+                win.SendTabKey();
             }
         }
 
         //打开任务栏
         public void OpenTask()
         {
-            wx.MoveMouse(0, 0);
+            win.MoveMouse(0, 0);
             Point? point = FindSomeThingInMapByFileName("ui", "task");
             if (point == null)
             {
-                wx.MoveClick(605, 605);
+                win.MoveClick(605, 605);
+            }
+        }
+        // 打开背包
+        public void OpenBackPack()
+        {
+            if (!IsBackpackOpen())
+            {
+                ClickBackpack();
+            }
+        }
+        // 关闭背包
+        public void CloseBackPack()
+        {
+            if (IsBackpackOpen())
+            {
+                ClickBackpack();
+                LogService.Log("关闭背包");
             }
         }
         //关闭任务栏
         public void CloseTask()
         {
-            wx.MoveClick(605, 605);
+            win.MoveClick(605, 605);
         }
         //是否领取了打宝图任务
         public bool IsHasWaBaoTask(bool autoRmove = false)
         {
             OpenTask();
-            wx.MoveMouse(0, 0);
+            win.MoveMouse(0, 0);
             Point? point = FindSomeThingInMapByFileName("ui", "宝图任务");
             if (point == null)
             {
@@ -133,7 +152,7 @@ namespace TTTools
                 point = FindSomeThingInMapByFileName("ui", "放弃任务");
                 if (point != null)
                 {
-                    wx.MoveClick(point.Value.X,point.Value.Y);
+                    win.MoveClick(point.Value.X, point.Value.Y);
                     LogService.Log("放弃了之前的挖宝任务");
                     CloseTask();
                     return false;
@@ -149,7 +168,7 @@ namespace TTTools
         //是否使用了驱魔香
         public bool IsUseQuMoXiang(bool use = false)
         {
-            wx.MoveMouse(0, 0);
+            win.MoveMouse(0, 0);
             Point? point = FindSomeThingInMapByFileName("ui", "驱魔香状态");
             if (point == null)
             {
@@ -168,19 +187,16 @@ namespace TTTools
         /**
          * 购买驱魔香
          */
-        public static async Task BuySomeThing(string goodName, int buyNum = 1)
+        public async Task BuySomeThing(string goodName, int buyNum = 1)
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
-            var api = new Method(hWnd);
-            var win = new WindowClickTools(hWnd);
-            var pic = new PictureMethod(hWnd);
             win.MoveMouse(800, 0);
             await MoveToMapAsync("应天府");
             Thread.Sleep(2000);
             MapGotoClick("应天府", 123, 140);
             win.MoveClick(570, 297);
             Thread.Sleep(500);
-            Point? p = api.FindSomeThingInMapByFileName("ui", "杂货店对话1");
+            Point? p = FindSomeThingInMapByFileName("ui", "杂货店对话1");
             if (p == null)
             {
                 LogService.Log("没有找到杂货店对话1");
@@ -188,37 +204,243 @@ namespace TTTools
             }
             win.MoveClick(p.Value.X, p.Value.Y, false, false);
             Thread.Sleep(500);
-            Point? goods = api.FindSomeThingInMapByFileName("ui", goodName);
+            Point? goods = FindSomeThingInMapByFileName("ui", goodName);
             if (goods == null)
             {
                 LogService.Log("没有找到要买的物品");
-                api.ClosePopupAuto();
+                ClosePopupAuto();
                 return;
             }
             else
             {
                 win.MoveClick(goods.Value.X, goods.Value.Y, false, false);
-                Point? buyBtn = api.FindSomeThingInMapByFileName("ui", "购买");
+                Point? buyBtn = FindSomeThingInMapByFileName("ui", "购买");
                 if (buyBtn != null)
                 {
                     for (int i = 0; i < buyNum; i++)
                     {
                         win.Click(buyBtn.Value.X, buyBtn.Value.Y, false, false);
                     }
-                    api.ClosePopupAuto();
+                    ClosePopupAuto();
                     LogService.Log($"购买{goodName}x{buyNum}完成");
                     return;
                 }
             }
 
         }
+        public string GetCurrentMapName()
+        {
+            var name = pic.GetCurrentMapName();
+            LogService.Log($"当前在：{name}");
+            return name;
+        }
+
+        public async Task<bool> MoveToMapAsync(string targetMapName)
+        {
+            // 可以直接飞行的地图名单
+            var flyableMaps = new HashSet<string> { "星秀村", "应天府", "汴京城", "清河县", "阳谷县" };
+            // 获取当前地图名称
+            var currentMapName = GetCurrentMapName();
+
+            // 如果已经在目标地图，则直接返回成功
+            if (currentMapName == targetMapName)
+            {
+                LogService.Log($"已经在目标地图: {targetMapName}");
+                return true;
+            }
+
+            // 如果目标地图在飞行传送名单中，直接调用飞行方法
+            if (flyableMaps.Contains(targetMapName))
+            {
+                if (MoveToMapByFly(targetMapName))
+                {
+                    LogService.Log($"通过飞行成功到达目标地图: {targetMapName}");
+                    return true;
+                }
+                else
+                {
+                    LogService.Log($"通过飞行传送失败: {targetMapName}");
+                    return false;
+                }
+            }
+            // 获取完整路径
+            List<string> route;
+            try
+            {
+                route = MapPoint.GetRouteToMap(targetMapName);
+            }
+            catch (Exception ex)
+            {
+                LogService.Log($"获取目标地图路径失败: {ex.Message}");
+                return false;
+            }
+            // 如果当前地图已经在路径中，跳过前面的地图
+            int currentIndex = route.IndexOf(currentMapName);
+            if (currentIndex == -1)
+            {
+                LogService.Log($"当前地图 {currentMapName} 不在到 {targetMapName} 的路径中，无法导航！");
+                return false;
+            }
+
+            // 遍历路径，从当前地图的下一个地图开始
+            bool isFirstStep = currentIndex == 0; // 仅当当前地图是路径起点时执行飞行传送
+            for (int i = currentIndex + 1; i < route.Count; i++)
+            {
+                string step = route[i];
+                LogService.Log($"导航至地图: {step}");
+
+                if (isFirstStep)
+                {
+                    // 第一步使用飞行传送
+                    if (currentMapName != step)
+                    {
+                        if (!MoveToMapByFly(step))
+                        {
+                            LogService.Log($"传送到起点地图 {step} 失败！");
+                            return false;
+                        }
+                    }
+
+                    // 更新当前地图
+                    currentMapName = GetCurrentMapName();
+                    if (currentMapName != step)
+                    {
+                        LogService.Log($"传送后预期在 {step}，但实际在 {currentMapName}！");
+                        return false;
+                    }
+
+                    isFirstStep = false; // 标记飞行传送完成
+                    continue; // 跳过后续逻辑，进入下一个循环
+                }
+
+                // 后续地图传送逻辑
+                if (!MapPoint.mapOutPoint.ContainsKey(currentMapName))
+                {
+                    LogService.Log($"当前地图 {currentMapName} 无传送配置！");
+                    return false;
+                }
+
+                // 获取当前地图的传送节点
+                var outPoints = MapPoint.mapOutPoint[currentMapName];
+                var nextRoute = outPoints.FirstOrDefault(r => r.NextMap == step);
+                if (nextRoute == null)
+                {
+                    LogService.Log($"在地图 {currentMapName} 无法找到到达 {step} 的传送点！");
+                    return false;
+                }
+
+                // 点击传送点
+                LogService.Log($"点击传送点前往 {step}, 坐标: ({nextRoute.ExitPoint.X}, {nextRoute.ExitPoint.Y})");
+                MapGotoClick(currentMapName, nextRoute.ExitPoint.X, nextRoute.ExitPoint.Y);
+
+                // 等待移动完成
+                if (!pic.WaitForMovementToStop())
+                {
+                    LogService.Log($"移动到 {step} 的过程失败！");
+                    return false;
+                }
+
+                // 等待额外的 5 秒
+                await Task.Delay(6000);
+
+                // 更新当前地图
+                currentMapName = GetCurrentMapName();
+                if (currentMapName != step)
+                {
+                    LogService.Log($"期望在 {step}，但实际在 {currentMapName}！");
+                    return false;
+                }
+            }
+
+            LogService.Log($"成功到达目标地图: {targetMapName}");
+            return true;
+        }
+        public bool MapGotoClick(string mapName, int x, int y)
+        {
+            var config = MapPoint.GetMapConfig(mapName);
+            var offset = config.Offset;
+            if (!IsMapOpen())
+            {
+                OpenMap();
+            }
+
+            var closestCoordinate = ToolsFunction.FindClosestCoordinate(mapName, x, y);
+            if (closestCoordinate != null)
+            {
+                Point? point = FindSomeThingInMapByFileName("ui", "mapPoint");
+                if (point == null)
+                {
+                    LogService.Log("地图起点未找到");
+                    return false;
+                }
+
+                // 锚点起始位置
+                int startX = point.Value.X + offset.X;
+                int startY = point.Value.Y + offset.Y;
+
+                win.MoveClick(startX + closestCoordinate.Value.DeltaX + config.MapClickOffset.X,
+                    startY + closestCoordinate.Value.DeltaY + config.MapClickOffset.Y);
+                // LogService.Log($"最接近的行增量: {closestCoordinate.Value.DeltaX}, 列增量: {closestCoordinate.Value.DeltaY}");
+                LogService.Log($"游戏坐标: ({closestCoordinate.Value.GameX}, {closestCoordinate.Value.GameY})");
+                CloseMap();
+                return true;
+            }
+            else
+            {
+                LogService.Log("没有找到接近的坐标！");
+                return false;
+            }
+        }
+
+
+
+        // 移动到地图
+        public bool MoveToMapByFly(string name)
+        {
+            var currentMapName = GetCurrentMapName();
+            if (currentMapName == name)
+            {
+                return true;
+            }
+
+            // 打开背包
+            OpenBackPack();
+            var cityMap = new Dictionary<string, string>
+            {
+                { "星秀村", "xingXiuCun" },
+                { "应天府", "yingTianFu" },
+                { "汴京城", "bianJingCheng" },
+                { "清河县", "qingHeXian" },
+                { "阳谷县", "yangGuXian" }
+            };
+            // 获取 name 对应的 code
+            if (!cityMap.TryGetValue(name, out var targetCode))
+            {
+                return false;
+            }
+
+            UseBagItem("回程符");
+            win.MoveMouse(800, 0);
+            Point? point = FindSomeThingInMapByFileName("ui", targetCode);
+            if (point == null)
+            {
+                return false;
+            }
+
+            win.MoveClick(point.Value.X + 15, point.Value.Y + 35);
+            Thread.Sleep(500);
+            //CloseBackPack();
+            ClosePopupAuto();
+            return true;
+        }
+
         public void CloseMap()
         {
-            wx.MoveMouse(0, 0);
+            win.MoveMouse(0, 0);
             Point? point = FindSomeThingInMapByFileName("ui", "mapPoint");
             if (point != null)
             {
-                wx.SendTabKey();
+                win.SendTabKey();
             }
         }
 
@@ -253,6 +475,10 @@ namespace TTTools
          **/
         public bool UseBagItem(string name)
         {
+            if (!IsBackpackOpen())
+            {
+                OpenBackpack();
+            }
             string nameCode = "";
             switch (name)
             {
@@ -263,7 +489,7 @@ namespace TTTools
             Point? p = pic.FindSomeInBackpack(nameCode);
             if (p != null)
             {
-                wx.MoveClick(p.Value.X, p.Value.Y, true);
+                win.MoveClick(p.Value.X, p.Value.Y, true);
                 LogService.Log($"使用道具{name}");
                 CloseBackpack();
 
@@ -300,7 +526,7 @@ namespace TTTools
             int y = ry + offsetY;
 
 
-            wx.MoveClick(x, y, true);
+            win.MoveClick(x, y, true);
             Thread.Sleep(2000);
 
             ClickBackpack();
@@ -319,7 +545,7 @@ namespace TTTools
             }
 
             Point clickPoint = new Point(point.X + anchorX, point.Y + anchorY);
-            wx.MoveClick(clickPoint.X, clickPoint.Y, false, false);
+            win.MoveClick(clickPoint.X, clickPoint.Y, false, false);
             return clickPoint;
         }
         public Bitmap? GetPopupImage()
@@ -327,7 +553,7 @@ namespace TTTools
             Point? point1 = FindSomeThingInMapByFileName("ui", "duihuakuang");
             if (point1 != null)
             {
-               return pic.CaptureWindow(point1.Value.X, point1.Value.Y, 439, 100);
+                return pic.CaptureWindow(point1.Value.X, point1.Value.Y, 439, 100);
             }
 
             return null;
@@ -344,7 +570,7 @@ namespace TTTools
             }
 
             Point clickPoint = new Point(anchorX, anchorY);
-            wx.MoveClick(clickPoint.X, clickPoint.Y, false, false);
+            win.MoveClick(clickPoint.X, clickPoint.Y, false, false);
             return clickPoint;
         }
 
@@ -354,39 +580,13 @@ namespace TTTools
             int ry = int.Parse(iniFileHelper.IniReadValue("popup", "y", "255"));
             int ix = rx + x;
             int iy = ry + y;
-            wx.MoveClick(ix, iy);
+            win.MoveClick(ix, iy);
         }
 
 
-        public void ReadPopupContent()
-        {
-            int width = 463;
-            int height = 116;
-        }
+       
 
-        public void Teleport(int type = 0)
-        {
-            //WindowOperations.PushClick(hWnd, x, y);
-            int x = 60;
-            int y = 350;
-            // 星秀村
-            if (type == 0)
-            {
-                UseBagItem(1);
-            }
-
-            //应天府
-            if (type == 1)
-            {
-                UseBagItem(2);
-            }
-
-            // 汴京城
-            if (type == 3)
-            {
-                UseBagItem(3);
-            }
-        }
+      
 
         public Point? GetMapExportPoint(string currentName, string nextName)
         {
@@ -432,27 +632,7 @@ namespace TTTools
             return null;
         }
 
-        public void GetNpcTaskByTs()
-        {
-            Teleport(1);
-            Thread.Sleep(2000);
-            wx.MouseHover(330, 180);
-            Thread.Sleep(2000);
-            wx.MoveClick(330, 180);
-            Thread.Sleep(3000);
-            ClickPopupItem(55, 48);
-        }
-
-        public void GetTS()
-        {
-            //int x = 194;
-            //int y = 282;
-            //int width = 430;
-            //int height = 105;
-            //CaptureAndOCR ocr = new CaptureAndOCR(hWnd, x, y, width, height);
-            //MapPoint point = ocr.CaptureAndRecognize();
-            //LogService.Log("天师说：" + point.ToString());
-        }
+     
 
         public void RushB(int index, int x, int y)
         {
@@ -464,7 +644,7 @@ namespace TTTools
 
 
             Thread.Sleep(2000);
-            wx.MoveClick(x, y);
+            win.MoveClick(x, y);
             Thread.Sleep(2000);
             ClickPopupItem(64, 36);
         }
@@ -472,11 +652,11 @@ namespace TTTools
         public void EndCombatByMsg()
         {
             Thread.Sleep(1000);
-            wx.MoveClick(64, 620);
+            win.MoveClick(64, 620);
             Thread.Sleep(1000);
-            wx.PushCopy();
+            win.PushCopy();
             Thread.Sleep(1000);
-            wx.SendEnterKey();
+            win.SendEnterKey();
         }
 
 
@@ -526,8 +706,8 @@ namespace TTTools
 
                         LogService.Log($"找到目标：{minDistance}  - {closestPoint.X}, {closestPoint.Y}");
 
-                        wx.MoveClick(closestPoint.X + offsetX, closestPoint.Y + offsetY, isRightClick);
-                        wx.MoveMouse(747, 114);
+                        win.MoveClick(closestPoint.X + offsetX, closestPoint.Y + offsetY, isRightClick);
+                        win.MoveMouse(747, 114);
 
                         return closestPoint;
                     }
@@ -656,7 +836,7 @@ namespace TTTools
 
         public Point ClickTabMapPoint(Point point)
         {
-            wx.SendTabKey();
+            win.SendTabKey();
             Thread.Sleep(1000);
             var mapAnchorPoint = FindSomeThingInMapByFileName("ui", "close");
             var offsetX = 231;
@@ -670,20 +850,20 @@ namespace TTTools
 
             Point clickPoint = new Point(point.X + offsetX, point.Y + offsetY + 26);
 
-            wx.MoveClick(clickPoint.X, clickPoint.Y);
+            win.MoveClick(clickPoint.X, clickPoint.Y);
             Thread.Sleep(1000);
-            wx.SendTabKey();
+            win.SendTabKey();
             Thread.Sleep(1000);
             return clickPoint;
         }
 
         public void ClickMapPoint(Point point)
         {
-            wx.SendTabKey();
+            win.SendTabKey();
             Thread.Sleep(1000);
-            wx.MoveClick(point.X, point.Y);
+            win.MoveClick(point.X, point.Y);
             Thread.Sleep(1000);
-            wx.SendTabKey();
+            win.SendTabKey();
             Thread.Sleep(1000);
         }
 
@@ -764,18 +944,18 @@ namespace TTTools
         public void SwitchToEnglishInput()
         {
             // 按下 Alt 键（虚拟键码 0xA4）
-            wx.SendKey(0xA4);
+            win.SendKey(0xA4);
             // 按下 Shift 键
-            wx.SendKey(0x10);
+            win.SendKey(0x10);
         }
 
         public void loginAuto(int index, string username, string password)
         {
             //WindowUtilities.ChangeInputEn();
             //SwitchToEnglishInput();
-            wx.MoveClick(574, 132);
-            wx.MoveClick(543, 445);
-            wx.MoveClick(612, 454);
+            win.MoveClick(574, 132);
+            win.MoveClick(543, 445);
+            win.MoveClick(612, 454);
             // 删除账号
             // Thread.Sleep(100);
             //
@@ -799,11 +979,11 @@ namespace TTTools
             //
             // wx.SendText(password);
 
-            wx.MoveClick(470, 352);
+            win.MoveClick(470, 352);
             int userX = 286 + (index * 62);
             int userY = 370;
-            wx.MoveClick(userX, userY);
-            wx.MoveClick(515, 417);
+            win.MoveClick(userX, userY);
+            win.MoveClick(515, 417);
             LogService.Log($"角色{index},登录完成");
         }
 
