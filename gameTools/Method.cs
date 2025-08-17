@@ -107,19 +107,58 @@ namespace TTTools
         public void OpenTask()
         {
             win.MoveMouse(0, 0);
-            Point? point = FindSomeThingInMapByFileName("ui", "task");
-            if (point == null)
+
+            // 如果已经打开则直接返回
+            if (IsTaskOpen())
             {
-                win.MoveClick(605, 605);
+                return;
+            }
+
+            // 触发打开
+            win.MoveClick(605, 605);
+
+            // 持续检测是否打开，超时10秒
+            const int timeout = 10000; // 毫秒
+            const int checkInterval = 100; // 毫秒
+            int elapsed = 0;
+            while (!IsTaskOpen())
+            {
+                Thread.Sleep(checkInterval);
+                elapsed += checkInterval;
+                if (elapsed >= timeout)
+                {
+                    LogService.Log("打开任务栏超时");
+                    break;
+                }
             }
         }
         // 打开背包
-        public void OpenBackPack()
+        public bool OpenBackPack()
         {
+            const int timeout = 10000; // 超时时间 10 秒
+            const int checkInterval = 100; // 检查间隔 100 毫秒
+            int elapsedTime = 0;
+
             if (!IsBackpackOpen())
             {
                 ClickBackpack();
+
+                // 持续检查背包是否打开
+                while (!IsBackpackOpen())
+                {
+                    Thread.Sleep(checkInterval);
+                    elapsedTime += checkInterval;
+
+                    if (elapsedTime >= timeout)
+                    {
+                        LogService.Log("打开背包超时");
+                        return false; // 超时未打开
+                    }
+                }
             }
+
+            LogService.Log("背包已成功打开");
+            return true; // 背包已打开
         }
         // 关闭背包
         public void CloseBackPack()
@@ -237,6 +276,8 @@ namespace TTTools
 
         public async Task<bool> MoveToMapAsync(string targetMapName)
         {
+            LogService.Log($"准备移动地图: {targetMapName}");
+
             // 可以直接飞行的地图名单
             var flyableMaps = new HashSet<string> { "星秀村", "应天府", "汴京城", "清河县", "阳谷县" };
             // 获取当前地图名称
@@ -263,11 +304,13 @@ namespace TTTools
                     return false;
                 }
             }
+      
             // 获取完整路径
             List<string> route;
             try
             {
                 route = MapPoint.GetRouteToMap(targetMapName);
+                LogService.Log($"路由：{(route != null && route.Count > 0 ? string.Join(" -> ", route) : "<空>")}");
             }
             catch (Exception ex)
             {
@@ -278,12 +321,11 @@ namespace TTTools
             int currentIndex = route.IndexOf(currentMapName);
             if (currentIndex == -1)
             {
-                LogService.Log($"当前地图 {currentMapName} 不在到 {targetMapName} 的路径中，无法导航！");
-                return false;
+                LogService.Log($"当前地图 {currentMapName} 不在到 {targetMapName} 的路径中，从头开始跑！");
             }
 
             // 遍历路径，从当前地图的下一个地图开始
-            bool isFirstStep = currentIndex == 0; // 仅当当前地图是路径起点时执行飞行传送
+            bool isFirstStep = currentIndex == -1; // 仅当当前地图是路径起点时执行飞行传送
             for (int i = currentIndex + 1; i < route.Count; i++)
             {
                 string step = route[i];
@@ -430,7 +472,7 @@ namespace TTTools
             win.MoveClick(point.Value.X + 15, point.Value.Y + 35);
             Thread.Sleep(500);
             //CloseBackPack();
-            ClosePopupAuto();
+            //ClosePopupAuto();
             return true;
         }
 
@@ -456,6 +498,18 @@ namespace TTTools
 
             return false;
         }
+        //对话框是否打开
+        public bool IsPopupOpen()
+        {
+            var point = pic.IsPopupOpen();
+            if (point != null)
+            {
+                LogService.Log($"对话框已打开{point.ToString()}");
+                return true;
+            }
+
+            return false;
+        }
 
         //背包是否打开
         public bool IsBackpackOpen()
@@ -467,6 +521,18 @@ namespace TTTools
                 return true;
             }
 
+            return false;
+        }
+
+        // 任务栏是否打开
+        public bool IsTaskOpen()
+        {
+            var point = pic.IsTaskOpen();
+            if (point != null)
+            {
+                LogService.Log($"任务栏已打开{point.ToString()}");
+                return true;
+            }
             return false;
         }
 
@@ -574,19 +640,20 @@ namespace TTTools
             return clickPoint;
         }
 
-        public void ClickPopupItem(int x, int y)
+        public bool ClickPopupItem(int x, int y)
         {
-            int rx = int.Parse(iniFileHelper.IniReadValue("popup", "x", "186"));
-            int ry = int.Parse(iniFileHelper.IniReadValue("popup", "y", "255"));
-            int ix = rx + x;
-            int iy = ry + y;
-            win.MoveClick(ix, iy);
+            Point? point1 = FindSomeThingInMapByFileName("ui", "duihuakuang");
+            if (point1 != null)
+            {
+                int ix = point1.Value.X + x;
+                int iy = point1.Value.Y + y;
+                win.MoveClick(ix, iy,false, false);
+                LogService.Log($"对话框位置：{point1.Value.X}, {point1.Value.Y}");
+                LogService.Log($"点击位置：{ix}, {iy}");
+                return true;
+            }
+            return false;
         }
-
-
-       
-
-      
 
         public Point? GetMapExportPoint(string currentName, string nextName)
         {

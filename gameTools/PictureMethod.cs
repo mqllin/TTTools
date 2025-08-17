@@ -383,12 +383,55 @@ namespace TTTools
             // 没有找到匹配项，返回 null
             return null;
         }
+        
+        //判断对话框是否打开
+        public Point? IsPopupOpen()
+        {
+            // 加载背包特征图片
+            using (Bitmap backpackBitmap = ResourceLoader.LoadBitmap("data.ui.duihuakuang.png"))
+            {
+                // 在当前窗口截图中寻找特征图片的位置
+                List<Point> foundPoints = FindBitmapInWindow(backpackBitmap);
 
+                // 如果找到匹配点，则返回第一个匹配点的坐标
+                if (foundPoints.Count > 0)
+                {
+                    return foundPoints[0];
+                }
+
+                // 没有找到匹配项，返回 null
+                return null;
+            }
+        }
         //判断背包是否打开，如果打开了，返回第一个物品的位置
         public Point? IsBackpackOpen()
         {
             // 加载背包特征图片
             using (Bitmap backpackBitmap = ResourceLoader.LoadBitmap("data.ui.zhuangbeidaoju.png"))
+            {
+                // 在当前窗口截图中寻找特征图片的位置
+                List<Point> foundPoints = FindBitmapInWindow(backpackBitmap);
+
+                // 如果找到匹配点，则返回第一个匹配点的坐标
+                if (foundPoints.Count > 0)
+                {
+                    return new Point
+                    {
+                        X = foundPoints[0].X - 106,
+                        Y = foundPoints[0].Y + 260
+                    };
+                }
+            }
+
+            // 没有找到匹配项，返回 null
+            return null;
+        }
+
+        //判断背包是否打开，如果打开了，返回第一个物品的位置
+        public Point? IsTaskOpen()
+        {
+            // 加载背包特征图片
+            using (Bitmap backpackBitmap = ResourceLoader.LoadBitmap("data.ui.task.png"))
             {
                 // 在当前窗口截图中寻找特征图片的位置
                 List<Point> foundPoints = FindBitmapInWindow(backpackBitmap);

@@ -19,6 +19,26 @@ namespace TTTools.gameTools
     {
         private static string dataDirectory = "./data/map/";
 
+        // 领取一个任务
+        public static void GetOneTask(String TaskName)
+        {
+            var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+
+            if (TaskName == "商会")
+            {
+                 var api = new Method(hWnd);
+                MoveToMapByFly("星秀村");
+                Thread.Sleep(1000);
+                MapGotoClick("星秀村", 140, 90);
+                Thread.Sleep(2000);
+
+                api.ClickSelf();
+                //api.GetPopupImage();
+                api.IsPopupOpen();
+                api.ClickPopupItem(30,50);
+            }
+
+        }
         // 是否已经持有打宝图任务
         public static void IsHasWaBaoTask(bool autoRemove = false)
         {

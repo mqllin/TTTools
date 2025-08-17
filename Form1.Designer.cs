@@ -114,6 +114,8 @@ namespace TTTools
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             tabControl2 = new System.Windows.Forms.TabControl();
             checkBox2 = new System.Windows.Forms.CheckBox();
+            tabPage6 = new System.Windows.Forms.TabPage();
+            button53 = new System.Windows.Forms.Button();
             mainTabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabControl1.SuspendLayout();
@@ -123,6 +125,7 @@ namespace TTTools
             tabPage1.SuspendLayout();
             mainTabPage1.SuspendLayout();
             tabControl2.SuspendLayout();
+            tabPage6.SuspendLayout();
             SuspendLayout();
             // 
             // textBox_log
@@ -211,6 +214,7 @@ namespace TTTools
             // 
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
+            tabControl1.Controls.Add(tabPage6);
             tabControl1.Controls.Add(tabPage5);
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage4);
@@ -1017,6 +1021,27 @@ namespace TTTools
             checkBox2.Text = "登录时重新输入";
             checkBox2.UseVisualStyleBackColor = true;
             // 
+            // tabPage6
+            // 
+            tabPage6.Controls.Add(button53);
+            tabPage6.Location = new System.Drawing.Point(4, 26);
+            tabPage6.Name = "tabPage6";
+            tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            tabPage6.Size = new System.Drawing.Size(646, 164);
+            tabPage6.TabIndex = 6;
+            tabPage6.Text = "商会";
+            tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // button53
+            // 
+            button53.Location = new System.Drawing.Point(25, 18);
+            button53.Name = "button53";
+            button53.Size = new System.Drawing.Size(75, 23);
+            button53.TabIndex = 4;
+            button53.Text = "领取任务";
+            button53.UseVisualStyleBackColor = true;
+            button53.Click += button53_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -1044,6 +1069,7 @@ namespace TTTools
             mainTabPage1.ResumeLayout(false);
             mainTabPage1.PerformLayout();
             tabControl2.ResumeLayout(false);
+            tabPage6.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1140,6 +1166,8 @@ namespace TTTools
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Button button51;
         private System.Windows.Forms.Button button52;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Button button53;
     }
 }
 
