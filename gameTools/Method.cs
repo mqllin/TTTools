@@ -637,14 +637,14 @@ namespace TTTools
 
                 // 1) 将对话内容处理为右上角地图同配色：黄字蓝底，便于匹配地图名
                 using var imgYellow = pic.ReplaceColor(taskImg, "#f8fcf8", "#ffff00");
-                using var imgYellowBlue = pic.ReplaceColor(imgYellow, "#29548b", "#3978ac");
-
+                pic.SaveImage(imgYellow);
                 // 2) 提取地图名（返回字数最多的匹配结果）
-                string? mapName = pic.GetCurrentMapNameByImage(imgYellowBlue);
-
+                string? mapName = pic.GetCurrentMapNameByImage(imgYellow);
                 // 3) 为坐标识别准备黑白图（白字黑底），便于数字模板匹配
-                using var imgWhite = pic.ReplaceColor(imgYellowBlue, "#ffff00", "#ffffff");
+                using var imgWhite = pic.ReplaceColor(imgYellow, "#ffff00", "#ffffff");
                 using var imgBlack = pic.ReplaceOtherColor(imgWhite, "#ffffff", "#000000");
+                pic.SaveImage(imgWhite);
+                pic.SaveImage(imgBlack);
 
                 // 4) 在黑白图中定位坐标括号，裁剪中间区段后识别坐标
                 using var kuohao1 = ResourceLoader.LoadBitmap("data.xy.坐标括号1.png");
