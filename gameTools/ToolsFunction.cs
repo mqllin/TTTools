@@ -23,20 +23,39 @@ namespace TTTools.gameTools
         public static void GetOneTask(String TaskName)
         {
             var hWnd = ClientManager.CurrentSelectedClient.HWnd;
+            var api = new Method(hWnd);
 
-            if (TaskName == "商会")
-            {
-                 var api = new Method(hWnd);
-                MoveToMapByFly("星秀村");
-                Thread.Sleep(1000);
-                MapGotoClick("星秀村", 140, 90);
-                Thread.Sleep(2000);
+            //if (TaskName == "商会")
+            //{
+            //    MoveToMapByFly("星秀村");
+            //    Thread.Sleep(1000);
+            //    MapGotoClick("星秀村", 140, 90);
+            //    Thread.Sleep(2000);
 
-                api.ClickSelf();
-                //api.GetPopupImage();
-                api.IsPopupOpen();
-                api.ClickPopupItem(30,50);
-            }
+            //    api.ClickSelf();
+
+            //    // 循环等待弹窗打开（最多等待5秒）
+            //    int waited = 0;
+            //    const int interval = 100;   // 轮询间隔(ms)
+            //    const int maxWait = 5000;   // 最大等待(ms)
+            //    while (!api.IsPopupOpen() && waited < maxWait)
+            //    {
+            //        Thread.Sleep(interval);
+            //        waited += interval;
+            //    }
+
+            //    if (api.IsPopupOpen())
+            //    {
+            //        api.ClickPopupItem(30, 50);
+            //    }
+            //    else
+            //    {
+            //        LogService.Log("等待弹窗超时，未执行 ClickPopupItem。");
+            //    }
+            //}
+
+            api.GetPopupTaskContent();
+
 
         }
         // 是否已经持有打宝图任务

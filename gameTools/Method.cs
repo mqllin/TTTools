@@ -624,6 +624,75 @@ namespace TTTools
 
             return null;
         }
+        public (string? MapName, Point? Coordinate)? GetPopupTaskContent()
+        {
+            try
+            {
+                var taskImg = GetPopupImage();
+                if (taskImg == null)
+                {
+                    LogService.Log("未获取到对话框截图(GetPopupImage 返回 null)");
+                    return null;
+                }
+
+                // 1) 将对话内容处理为右上角地图同配色：黄字蓝底，便于匹配地图名
+                using var imgYellow = pic.ReplaceColor(taskImg, "#f8fcf8", "#ffff00");
+                using var imgYellowBlue = pic.ReplaceColor(imgYellow, "#29548b", "#3978ac");
+
+                // 2) 提取地图名（返回字数最多的匹配结果）
+                string? mapName = pic.GetCurrentMapNameByImage(imgYellowBlue);
+
+                // 3) 为坐标识别准备黑白图（白字黑底），便于数字模板匹配
+                using var imgWhite = pic.ReplaceColor(imgYellowBlue, "#ffff00", "#ffffff");
+                using var imgBlack = pic.ReplaceOtherColor(imgWhite, "#ffffff", "#000000");
+
+                // 4) 在黑白图中定位坐标括号，裁剪中间区段后识别坐标
+                using var kuohao1 = ResourceLoader.LoadBitmap("data.xy.坐标括号1.png");
+                using var kuohao2 = ResourceLoader.LoadBitmap("data.xy.坐标括号2.png");
+
+                var p1 = pic.FindImageInImage(imgBlack, kuohao1);
+                var p2 = pic.FindImageInImage(imgBlack, kuohao2);
+
+                Point? xy = null;
+
+                if (p1 != null && p2 != null && p2.Value.X > p1.Value.X + 3)
+                {
+                    int cropX = p1.Value.X + 3;
+                    int cropY = p1.Value.Y;
+                    int cropW = Math.Max(1, p2.Value.X - cropX);      // 至少为1
+                    int cropH = Math.Min(20, imgBlack.Height - cropY); // 限制高度，防越界
+
+                    // 仅在边界允许时裁剪
+                    if (cropX >= 0 && cropY >= 0 &&
+                        cropX + cropW <= imgBlack.Width &&
+                        cropY + cropH <= imgBlack.Height)
+                    {
+                        using var center = pic.CaptureFromBitmap(imgBlack, cropX, cropY, cropW, cropH);
+                        xy = pic.FindXyInBitmapBlack(center);
+                    }
+                }
+
+                // 5) 如果括号未定位成功，尝试直接在整张黑白图中识别坐标（回退方案）
+                if (xy == null)
+                {
+                    xy = pic.FindXyInBitmapBlack(imgBlack);
+                }
+
+                if (mapName == null && xy == null)
+                {
+                    LogService.Log("未能从对话框中解析出地图名或坐标。");
+                    return null;
+                }
+
+                LogService.Log($"对话框任务提取：地图={mapName ?? "<null>"}, 坐标={(xy.HasValue ? $"{xy.Value.X},{xy.Value.Y}" : "<null>")}");
+                return (mapName, xy);
+            }
+            catch (Exception ex)
+            {
+                LogService.Log($"GetPopupTaskContent 解析失败: {ex.Message}");
+                return null;
+            }
+        }
         public Point ClosePopupAuto()
         {
             int anchorX = 0;
