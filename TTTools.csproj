@@ -115,6 +115,9 @@
     <None Remove="data\xy\8.png" />
     <None Remove="data\xy\9.png" />
     <None Remove="data\xy\point.png" />
+    <None Remove="data\xy\popup_point.png" />
+    <None Remove="data\xy\popup_坐标括号1.png" />
+    <None Remove="data\xy\popup_坐标括号2.png" />
     <None Remove="data\xy\坐标括号1.png" />
     <None Remove="data\xy\坐标括号2.png" />
     <None Remove="data\素材\wabao_test.png" />
@@ -363,6 +366,18 @@
 
   <ItemGroup>
     <EmbeddedResource Include="data\map\应天东郊.pak" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="data\xy\popup_point.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\popup_坐标括号1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="data\xy\popup_坐标括号2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

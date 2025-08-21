@@ -29,6 +29,7 @@ namespace TTTools
 
         // 记录坐标图片数据
         private readonly Dictionary<char, Bitmap> digitBitmaps = new Dictionary<char, Bitmap>();
+        private readonly Dictionary<char, Bitmap> digitPopupBitmaps = new Dictionary<char, Bitmap>();
         private readonly Dictionary<char, Bitmap> digitDockBitmaps = new Dictionary<char, Bitmap>();
         private readonly Dictionary<String, Bitmap> mapNameBitmaps = new Dictionary<String, Bitmap>();
 
@@ -36,6 +37,7 @@ namespace TTTools
         public PictureMethod(IntPtr hWnd)
         {
             this.hWnd = hWnd;
+            LoadDigitPopupBitmaps();
             LoadDigitBitmaps();
             LoadDigitDockBitmaps();
             LoadMapNameBitmaps();
@@ -529,6 +531,39 @@ namespace TTTools
                 }
             }
         }
+        // popup用坐标数据
+        private void LoadDigitPopupBitmaps()
+        {
+            string imageDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "xy");
+            string[] files = { "0.png", "1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "popup_point.png" };
+            char[] characters = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.' };
+
+            if (!Directory.Exists(imageDirectory))
+            {
+                throw new DirectoryNotFoundException("图片资源目录未找到: " + imageDirectory);
+            }
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                string filePath = Path.Combine(imageDirectory, files[i]);
+                if (!File.Exists(filePath))
+                {
+                    throw new FileNotFoundException("数字图片未找到: " + filePath);
+                }
+
+                using (Bitmap bmp = new Bitmap(filePath))
+                {
+                    // 将Bitmap克隆到缓存中，确保原图片资源被释放
+                    Bitmap cachedBitmap = new Bitmap(bmp.Width, bmp.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                    using (Graphics g = Graphics.FromImage(cachedBitmap))
+                    {
+                        g.DrawImage(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                    }
+
+                    digitPopupBitmaps[characters[i]] = cachedBitmap;
+                }
+            }
+        }
         private void LoadDigitDockBitmaps()
         {
             string imageDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "wabao");
@@ -551,6 +586,7 @@ namespace TTTools
                 }
             }
         }
+
         private void LoadMapNameBitmaps()
         {
             // 获取当前程序集
@@ -666,6 +702,74 @@ namespace TTTools
                                 if (digit == '3')
                                 {
                                     var img8 = digitBitmaps.ElementAt(8).Value;
+                                    if (!CompareBitmapWithValidation(subRegion, img8, processedScreenshot, x, y, '8'))
+                                    {
+                                        foundCoordinates.Add((digit, new Point(x, y))); // 记录匹配到的字符及坐标
+                                        isFind = true;
+                                    }
+                                }
+                                else
+                                {
+                                    foundCoordinates.Add((digit, new Point(x, y))); // 记录匹配到的字符及坐标
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            // 按 X 坐标排序
+            foundCoordinates = foundCoordinates.OrderBy(c => c.Item2.X).ToList();
+
+            // 如果没有找到任何匹配项，返回 null
+            if (foundCoordinates.Count == 0)
+            {
+                return null;
+            }
+
+            // 根据坐标拼接字符串
+            string extractedString = string.Concat(foundCoordinates.Select(c => c.Item1));
+
+            // 尝试将字符串转换为 Point 类型
+            if (TryParsePoint(extractedString, out Point result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+        public Point? FindXyInPopupBitmap(Bitmap screenshot)
+        {
+            List<(char, Point)> foundCoordinates = new List<(char, Point)>();
+
+            // 预处理截图，将非白色像素设置为透明
+            Bitmap processedScreenshot = PreprocessScreenshot(screenshot);
+            // SaveImage(processedScreenshot);
+            // 遍历所有缓存的数字模板
+            foreach (var kvp in digitPopupBitmaps)
+            {
+                char digit = kvp.Key;
+                Bitmap digitBitmap = kvp.Value;
+                bool isFind = false;
+
+                // 滑动窗口比对
+                for (int y = 0; y <= processedScreenshot.Height - digitBitmap.Height; y++)
+                {
+                    for (int x = 0; x <= processedScreenshot.Width - digitBitmap.Width; x++)
+                    {
+                        Bitmap subRegion2 = processedScreenshot.Clone(
+                            new Rectangle(x, y, digitBitmap.Width, digitBitmap.Height),
+                            processedScreenshot.PixelFormat);
+                        // 提取截图中的子区域
+                        using (Bitmap subRegion = processedScreenshot.Clone(new Rectangle(x, y, digitBitmap.Width, digitBitmap.Height), processedScreenshot.PixelFormat))
+                        {
+                            // 判断是否匹配并验证左侧像素为空
+                            if (CompareBitmapWithValidation(subRegion, digitBitmap, processedScreenshot, x, y, digit))
+                            {
+                                if (digit == '3')
+                                {
+                                    var img8 = digitPopupBitmaps.ElementAt(8).Value;
                                     if (!CompareBitmapWithValidation(subRegion, img8, processedScreenshot, x, y, '8'))
                                     {
                                         foundCoordinates.Add((digit, new Point(x, y))); // 记录匹配到的字符及坐标
@@ -821,7 +925,259 @@ namespace TTTools
 
             return null;
         }
+        // popup弹窗里寻找坐标
+        public Point? FindXyInBitmapBlackPopup(Bitmap screenshot)
+        {
 
+            List<(char, Point)> foundCoordinates = new List<(char, Point)>();
+
+            // 遍历所有缓存的数字模板
+            foreach (var kvp in digitPopupBitmaps)
+            {
+                char digit = kvp.Key;
+                Bitmap digitBitmap = kvp.Value;
+                // 寻找数字在图片中的所有位置
+                List<Point> digitPositions = FindAllOccurrencesByAlphaMask(screenshot, digitBitmap);
+
+                // 记录找到的数字及其坐标
+                foreach (var position in digitPositions)
+                {
+                    foundCoordinates.Add((digit, position));
+                }
+            }
+
+            // 按 X 坐标排序
+            foundCoordinates = foundCoordinates.OrderBy(c => c.Item2.X).ToList();
+
+            // 如果没有找到任何匹配项，返回 null
+            if (foundCoordinates.Count == 0)
+            {
+                return null;
+            }
+
+            // 根据坐标拼接字符串
+            string extractedString = string.Concat(foundCoordinates.Select(c => c.Item1));
+
+            // 尝试将字符串转换为 Point 类型
+            if (TryParsePoint(extractedString, out Point result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
+        // 新增一个方法：把非白色像素设为透明
+        public Bitmap KeepOnlyWhite(Bitmap src, int tolerance = 10)
+        {
+            Bitmap result = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
+            for (int y = 0; y < src.Height; y++)
+            {
+                for (int x = 0; x < src.Width; x++)
+                {
+                    Color c = src.GetPixel(x, y);
+                    // 判断是否接近白色
+                    if (Math.Abs(c.R - 255) <= tolerance &&
+                        Math.Abs(c.G - 255) <= tolerance &&
+                        Math.Abs(c.B - 255) <= tolerance)
+                    {
+                        result.SetPixel(x, y, Color.White);
+                    }
+                    else
+                    {
+                        result.SetPixel(x, y, Color.Transparent);
+                    }
+                }
+            }
+            return result;
+        }
+
+        private static Bitmap Ensure32bppArgb(Bitmap src)
+        {
+            if (src.PixelFormat == PixelFormat.Format32bppArgb) return src;
+            var clone = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
+            using (var g = Graphics.FromImage(clone)) g.DrawImage(src, 0, 0);
+            return clone;
+        }
+
+        /**
+         * 形状匹配（只看 alpha，不看颜色），并要求匹配区域外圈1像素透明
+         *  - alphaThreshold: alpha > 阈值视为“有色”像素
+         *  - minMatchRatio: 模板有效像素命中比例阈值
+         *  - requireClearBorder: 命中后是否强制外圈一格透明
+         */
+        private List<Point> FindAllOccurrencesByAlphaMask(
+            Bitmap screenshot,
+            Bitmap template,
+            byte alphaThreshold = 16,
+            double minMatchRatio = 0.98,
+            bool requireClearBorder = true)
+        {
+            var positions = new List<Point>();
+
+            // 统一像素格式
+            bool scCloned = false, tpCloned = false;
+            Bitmap sc = screenshot, tp = template;
+            if (sc.PixelFormat != PixelFormat.Format32bppArgb) { sc = Ensure32bppArgb(screenshot); scCloned = sc != screenshot; }
+            if (tp.PixelFormat != PixelFormat.Format32bppArgb) { tp = Ensure32bppArgb(template); tpCloned = tp != template; }
+
+            int tpW = tp.Width, tpH = tp.Height;
+
+            // 预计算模板非透明掩码与有效像素计数
+            var tpMask = new bool[tpH, tpW];
+            int tpValidCount = 0;
+
+            var tpData = tp.LockBits(new Rectangle(0, 0, tpW, tpH), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            try
+            {
+                unsafe
+                {
+                    byte* tpPtr = (byte*)tpData.Scan0;
+                    int tpStride = tpData.Stride;
+                    for (int y = 0; y < tpH; y++)
+                    {
+                        byte* row = tpPtr + y * tpStride;
+                        for (int x = 0; x < tpW; x++)
+                        {
+                            byte a = row[x * 4 + 3]; // BGRA
+                            bool on = a > alphaThreshold;
+                            tpMask[y, x] = on;
+                            if (on) tpValidCount++;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                tp.UnlockBits(tpData);
+            }
+            if (tpValidCount == 0)
+            {
+                if (scCloned) sc.Dispose();
+                if (tpCloned) tp.Dispose();
+                return positions;
+            }
+
+            int scW = sc.Width, scH = sc.Height;
+            var scData = sc.LockBits(new Rectangle(0, 0, scW, scH), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            try
+            {
+                unsafe
+                {
+                    byte* scPtr = (byte*)scData.Scan0;
+                    int scStride = scData.Stride;
+
+                    int maxY = scH - tpH;
+                    int maxX = scW - tpW;
+
+                    int minHits = (int)Math.Ceiling(tpValidCount * minMatchRatio);
+                    int maxMiss = tpValidCount - minHits;
+
+                    // 局部函数：检查外圈1像素是否透明
+                    bool BorderIsTransparent(int x0, int y0)
+                    {
+                        // 扩展一圈
+                        int left = x0 - 1;
+                        int right = x0 + tpW;     // 注意：tpW-1 的右外一列是 x0 + tpW
+                        int top = y0 - 1;
+                        int bottom = y0 + tpH;
+
+                        // 上边
+                        if (top >= 0)
+                        {
+                            for (int x = Math.Max(0, left); x <= Math.Min(scW - 1, right); x++)
+                            {
+                                byte* p = scPtr + top * scStride + x * 4;
+                                if (p[3] > alphaThreshold) return false;
+                            }
+                        }
+                        // 下边
+                        if (bottom < scH)
+                        {
+                            for (int x = Math.Max(0, left); x <= Math.Min(scW - 1, right); x++)
+                            {
+                                byte* p = scPtr + bottom * scStride + x * 4;
+                                if (p[3] > alphaThreshold) return false;
+                            }
+                        }
+                        // 左边
+                        if (left >= 0)
+                        {
+                            for (int y = Math.Max(0, top); y <= Math.Min(scH - 1, bottom); y++)
+                            {
+                                byte* p = scPtr + y * scStride + left * 4;
+                                if (p[3] > alphaThreshold) return false;
+                            }
+                        }
+                        // 右边
+                        if (right < scW)
+                        {
+                            for (int y = Math.Max(0, top); y <= Math.Min(scH - 1, bottom); y++)
+                            {
+                                byte* p = scPtr + y * scStride + right * 4;
+                                if (p[3] > alphaThreshold) return false;
+                            }
+                        }
+                        return true;
+                    }
+
+                    for (int y = 0; y <= maxY; y++)
+                    {
+                        for (int x = 0; x <= maxX; x++)
+                        {
+                            int hit = 0, miss = 0;
+                            bool earlyBreak = false;
+
+                            for (int ty = 0; ty < tpH && !earlyBreak; ty++)
+                            {
+                                byte* scRow = scPtr + (y + ty) * scStride + x * 4;
+                                for (int tx = 0; tx < tpW; tx++)
+                                {
+                                    if (!tpMask[ty, tx])
+                                    {
+                                        scRow += 4;
+                                        continue; // 模板透明处不要求
+                                    }
+
+                                    byte aS = scRow[3];
+                                    if (aS > alphaThreshold) hit++;
+                                    else
+                                    {
+                                        miss++;
+                                        if (miss > maxMiss)
+                                        {
+                                            earlyBreak = true; // 命中不足，提前失败
+                                            break;
+                                        }
+                                    }
+                                    scRow += 4;
+                                }
+                            }
+
+                            if (earlyBreak) continue;
+
+                            if (hit >= minHits)
+                            {
+                                // 外圈 1 像素必须透明
+                                if (!requireClearBorder || BorderIsTransparent(x, y))
+                                {
+                                    positions.Add(new Point(x, y));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                sc.UnlockBits(scData);
+                if (scCloned) sc.Dispose();
+                if (tpCloned) tp.Dispose();
+            }
+
+            return positions;
+        }
         // 方法：寻找所有的匹配位置
         private List<Point> FindAllOccurrences(Bitmap screenshot, Bitmap template)
         {

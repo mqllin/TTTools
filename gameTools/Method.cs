@@ -637,9 +637,10 @@ namespace TTTools
 
                 // 1) 将对话内容处理为右上角地图同配色：黄字蓝底，便于匹配地图名
                 using var imgYellow = pic.ReplaceColor(taskImg, "#f8fcf8", "#ffff00");
-                pic.SaveImage(imgYellow);
+                using var imgYellowBg = pic.ReplaceColor(imgYellow, "#29548B", "#3978AC");
+                pic.SaveImage(imgYellowBg);
                 // 2) 提取地图名（返回字数最多的匹配结果）
-                string? mapName = pic.GetCurrentMapNameByImage(imgYellow);
+                string? mapName = pic.GetCurrentMapNameByImage(imgYellowBg);
                 // 3) 为坐标识别准备黑白图（白字黑底），便于数字模板匹配
                 using var imgWhite = pic.ReplaceColor(imgYellow, "#ffff00", "#ffffff");
                 using var imgBlack = pic.ReplaceOtherColor(imgWhite, "#ffffff", "#000000");
@@ -647,8 +648,8 @@ namespace TTTools
                 pic.SaveImage(imgBlack);
 
                 // 4) 在黑白图中定位坐标括号，裁剪中间区段后识别坐标
-                using var kuohao1 = ResourceLoader.LoadBitmap("data.xy.坐标括号1.png");
-                using var kuohao2 = ResourceLoader.LoadBitmap("data.xy.坐标括号2.png");
+                using var kuohao1 = ResourceLoader.LoadBitmap("data.xy.popup_坐标括号1.png");
+                using var kuohao2 = ResourceLoader.LoadBitmap("data.xy.popup_坐标括号2.png");
 
                 var p1 = pic.FindImageInImage(imgBlack, kuohao1);
                 var p2 = pic.FindImageInImage(imgBlack, kuohao2);
@@ -668,14 +669,15 @@ namespace TTTools
                         cropY + cropH <= imgBlack.Height)
                     {
                         using var center = pic.CaptureFromBitmap(imgBlack, cropX, cropY, cropW, cropH);
-                        xy = pic.FindXyInBitmapBlack(center);
+                        using var centerRGBA0 = pic.KeepOnlyWhite(center);
+                        xy = pic.FindXyInBitmapBlackPopup(centerRGBA0);
                     }
                 }
 
                 // 5) 如果括号未定位成功，尝试直接在整张黑白图中识别坐标（回退方案）
                 if (xy == null)
                 {
-                    xy = pic.FindXyInBitmapBlack(imgBlack);
+                    xy = pic.FindXyInBitmapBlackPopup(imgBlack);
                 }
 
                 if (mapName == null && xy == null)
